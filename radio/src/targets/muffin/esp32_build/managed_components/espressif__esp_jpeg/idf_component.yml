@@ -1,0 +1,9 @@
+dependencies:
+  idf: '>=5.0'
+description: 'JPEG Decoder: TJpgDec'
+repository: git://github.com/espressif/idf-extra-components.git
+repository_info:
+  commit_sha: 4eac7a4de7f8ca3d7798979f34f84bffd4f8090c
+  path: esp_jpeg
+url: https://github.com/espressif/idf-extra-components/tree/master/esp_jpeg/
+version: 1.2.1

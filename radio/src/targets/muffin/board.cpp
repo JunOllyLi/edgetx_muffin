@@ -87,8 +87,13 @@ LayoutFactory *layouts[20] = {
     &layout4P2
 };
 
+void usb_uvc_task(void * pdata);
+static RTOS_TASK_HANDLE taskIdUVC;
+RTOS_DEFINE_STACK(taskIdUVC, taskUVC_stack, 4096);
+
 void boardInit()
 {
+#if 0
     /* Initialize NVS — it is used to store PHY calibration data */
     esp_err_t ret = nvs_flash_init();
     if  (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -118,8 +123,13 @@ void boardInit()
     } else {
         TRACE_ERROR("Flysky Hall Gimbal NOT detected");
     }
-
+#endif
     //toplcdInit();
+    board_init_i2c();
+    keysInit();
+    usb_uvc_task(NULL);
+    while(1);
+    //RTOS_CREATE_TASK_EX(taskIdUVC,usb_uvc_task,"CAM task",taskUVC_stack,4096,12,MIXER_TASK_CORE);
 }
 
 void boardOff()

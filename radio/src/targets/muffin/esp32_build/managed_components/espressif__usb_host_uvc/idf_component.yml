@@ -1,0 +1,9 @@
+dependencies:
+  idf: '>=5.0'
+description: USB Host UVC driver
+repository: git://github.com/espressif/esp-usb.git
+repository_info:
+  commit_sha: 6a4a5af628dc2d82ebb8558735b9dc7577d43425
+  path: host/class/uvc/usb_host_uvc
+url: https://github.com/espressif/esp-usb/tree/master/host/class/uvc/usb_host_uvc
+version: 2.1.0

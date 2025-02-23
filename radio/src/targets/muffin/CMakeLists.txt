@@ -60,6 +60,9 @@ set(TARGET_SRC
   switch_driver.cpp
   module_drivers.cpp
   mcp23017_io_driver.cpp
+  uvc_main.cpp
+  uvc_display.cpp
+  uvc_yuy2.cpp
   )
 
 set(FIRMWARE_TARGET_SRC
