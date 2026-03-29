@@ -28,6 +28,8 @@
 
 #undef errno
 extern int errno;
+
+#if !defined(ESP_PLATFORM)
 extern int _heap_start;
 extern int _heap_end;
 
@@ -45,6 +47,7 @@ extern caddr_t _sbrk(int nbytes)
     return ((void *)-1);
   }
 }
+#endif
 
 #if defined(THREADSAFE_MALLOC) && !defined(BOOT)
 
@@ -124,11 +127,13 @@ extern int _getpid()
 }
 #endif
 
+#if !defined(ESP_PLATFORM)
 extern void _exit(int status)
 {
   TRACE("_exit(%d)", status);
   for (;;);
 }
+#endif
 
 extern void _kill(int pid, int sig)
 {

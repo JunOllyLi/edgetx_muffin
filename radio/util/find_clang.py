@@ -128,6 +128,7 @@ def initLibClang():
     try:
         index = Index.create()
     except Exception as e:
+        print(e, file=sys.stderr)
         print("ERROR (find_clang): could not load libclang from '%s'." % library_path, file=sys.stderr)
         print("                  : detected platform '%s'" % sys.platform, file=sys.stderr)
         return False

@@ -67,6 +67,8 @@ extern const char CHR_INPUT;
 #define CHAR_BW_DEGREE       '@'
 
 #define STR_UPDATE_LIST STR_DELAYDOWN
+    "ESPNOW",                        \
+    "POWERUP_BLUETOOTH",             \
 
 #define STR_V (STR_VTELEMUNIT[1])
 #define STR_A (STR_VTELEMUNIT[2])

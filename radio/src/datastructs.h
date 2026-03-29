@@ -53,6 +53,7 @@ static inline void check_struct()
   CHKSIZE(TrainerData, 16);
   CHKSIZE(FlightModeData, 4 + 2 * MAX_GVARS + 2 * MAX_TRIMS + LEN_FLIGHT_MODE_NAME);
   CHKSIZE(CustomFunctionData, 11);
+// TODO-MUFFIN
 
 #if defined(PCBX7) || defined(PCBXLITE) || defined(PCBX9LITE)
   CHKSIZE(LimitData, 11);
@@ -94,6 +95,9 @@ static inline void check_struct()
   CHKSIZE(ModelData, 6391);
 #elif defined(RADIO_GX12)
   CHKSIZE(ModelData, 6419);
+#elif defined(PCB_MUFFIN)
+  CHKSIZE(RadioData, 1048);
+  CHKSIZE(ModelData, 11475);
 #elif defined(PCBX9E)
   CHKSIZE(ModelData, 6771);
 #elif defined(PCBX9D) || defined(PCBX9DP)

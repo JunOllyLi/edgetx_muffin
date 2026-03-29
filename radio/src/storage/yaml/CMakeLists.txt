@@ -15,6 +15,8 @@ endif()
 #          in the same directory.
 
 if((PCB STREQUAL X10) OR (PCB STREQUAL X12S) OR (PCB STREQUAL STM32H7S78_DK))
+elseif(PCB STREQUAL MUFFIN)
+  set(YAML_GEN_OUTPUT storage/yaml/yaml_datastructs_muffin.cpp)
   if(PCBREV STREQUAL T15)
     set(YAML_GEN_OUTPUT storage/yaml/yaml_datastructs_t15.cpp)
   elseif(PCBREV STREQUAL F16)
