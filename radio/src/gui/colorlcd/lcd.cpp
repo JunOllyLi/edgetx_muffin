@@ -40,8 +40,14 @@ char* get_lvgl_mem(int nbytes)
 }
 #endif
 
+#if defined(DRAW_BUF_STRIP_DMA)
+pixel_t *LCD_FIRST_FRAME_BUFFER = NULL;
+pixel_t *LCD_SECOND_FRAME_BUFFER= NULL;
+#else
+#define DRAW_BUF_H LCD_H
 pixel_t LCD_FIRST_FRAME_BUFFER[DISPLAY_BUFFER_SIZE] __SDRAM __ALIGNED(64);
 pixel_t LCD_SECOND_FRAME_BUFFER[DISPLAY_BUFFER_SIZE] __SDRAM __ALIGNED(64);
+#endif
 
 static lv_disp_draw_buf_t disp_buf;
 static lv_disp_drv_t disp_drv;
@@ -72,11 +78,13 @@ void lcdRefresh() {}
 static void flushLcd(lv_disp_drv_t* disp_drv, const lv_area_t* area,
                      lv_color_t* color_p)
 {
+#if !defined(DRAW_BUF_STRIP_DMA)
   // we're only interested in the last flush in direct mode
   if (disp_drv->direct_mode && !lv_disp_flush_is_last(disp_drv)) {
     lv_disp_flush_ready(disp_drv);
     return;
   }
+#endif
 
 #if defined(DEBUG_WINDOWS)
   if (area->x1 != 0 || area->x2 != LCD_W - 1 || area->y1 != 0 ||
@@ -100,8 +108,8 @@ static void flushLcd(lv_disp_drv_t* disp_drv, const lv_area_t* area,
 
 static void clear_frame_buffers()
 {
-  memset(LCD_FIRST_FRAME_BUFFER, 0, sizeof(LCD_FIRST_FRAME_BUFFER));
-  memset(LCD_SECOND_FRAME_BUFFER, 0, sizeof(LCD_SECOND_FRAME_BUFFER));
+  memset(LCD_FIRST_FRAME_BUFFER, 0, sizeof(LCD_W * DRAW_BUF_H * sizeof(pixel_t)));
+  memset(LCD_SECOND_FRAME_BUFFER, 0, sizeof(LCD_W * DRAW_BUF_H * sizeof(pixel_t)));
 }
 
 static void init_lvgl_disp_drv()
@@ -118,7 +126,7 @@ static void init_lvgl_disp_drv()
   lv_disp_draw_buf_init(&disp_buf,
                         LCD_FIRST_FRAME_BUFFER,
                         direct_mode ? LCD_SECOND_FRAME_BUFFER : nullptr,
-                        LCD_W * LCD_H);
+                        LCD_W * DRAW_BUF_H);
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
   disp_drv.draw_buf = &disp_buf; /*Set an initialized buffer*/
@@ -141,6 +149,9 @@ void lcdInitDisplayDriver()
 
 #if !LV_USE_GPU_STM32_DMA2D && !defined(SIMU)
   DMAInit();
+#endif
+#if defined(DRAW_BUF_STRIP_DMA)
+  board_get_drawbuf((void**)&LCD_FIRST_FRAME_BUFFER, (void**)&LCD_SECOND_FRAME_BUFFER);
 #endif
 
   // Full LVGL init in firmware mode

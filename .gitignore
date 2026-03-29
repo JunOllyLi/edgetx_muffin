@@ -13,6 +13,10 @@ radio/src/tests/gtest*.tar.gz
 .editorconfig
 .cache
 compile_commands.json
+
+radio/src/targets/muffin/esp32_build/build/
+sdkconfig.old
+
 /ys_Doc
 /.idea
 /.vs
@@ -22,8 +26,12 @@ _deps
 _wasi_sdk_fetch
 *.pyc
 
+.codex
+build_codex
+
 # MkDocs
 /site/
 
 output/
 .devcontainer/devcontainer-lock.json
+radio/src/targets/muffin/esp32_build/managed_components

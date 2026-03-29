@@ -2,6 +2,9 @@ get_target_build_options() {
     local target_name=$1
 
     case $target_name in
+        muffin)
+            BUILD_OPTIONS+="-DPCB=MUFFIN"
+            ;;
         x9lite)
             BUILD_OPTIONS+="-DPCB=X9LITE"
             ;;

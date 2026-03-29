@@ -56,6 +56,8 @@
  #else
   #include "yaml_datastructs_pl18.cpp"
  #endif
+#elif defined(PCB_MUFFIN)
+ #include "yaml_datastructs_muffin.cpp"
 #elif defined(PCBST16)
  #include "yaml_datastructs_st16.cpp"
 #elif defined(PCBC14)

@@ -1,7 +1,7 @@
 include(CMakeForceCompiler)
 include(Bitmaps)
 
-set(PCB_TYPES X9LITE X9LITES X7 XLITE XLITES X9D X9D+ X9E X10 X12S PL18 T15PRO ST16 PA01 TX15 TX16SMK3 T22 V12)
+set(PCB_TYPES MUFFIN X9LITE X9LITES X7 XLITE XLITES X9D X9D+ X9E X10 X12S PL18 T15PRO ST16 PA01 TX15 TX16SMK3 T22 V12)
 set(RADIO_LANGUAGES CN CZ DA DE EN ES FI FR HE HU IT JP KO NL PL PT RU SE SK TW UA)
 set(TTS_LANGUAGES CN CZ DA DE EN ES FI FR HE HU IT JP KO NL PL PT RU SE SK TW UA)
 
@@ -111,6 +111,8 @@ elseif(PCB STREQUAL STM32H7S78_DK)
   include(targets/stm32h7s78-dk/CMakeLists.txt)
 elseif(PCB STREQUAL X9E OR PCB STREQUAL X9D+ OR PCB STREQUAL X9D OR PCB STREQUAL X7 OR PCB STREQUAL X9LITE OR PCB STREQUAL X9LITES OR PCB STREQUAL XLITE OR PCB STREQUAL XLITES)
   include(targets/taranis/CMakeLists.txt)
+elseif(PCB STREQUAL MUFFIN)
+  include(targets/muffin/CMakeLists.txt)
 else()
   message(FATAL_ERROR "Unknown PCB '${PCB}'")
 endif()
@@ -128,11 +130,13 @@ add_definitions(
 
 set(HW_DESC_JSON ${FLAVOUR}.json)
 
+if(!ESP_PLATFORM)
+
 # Generate files from radio JSON
 AddHWGenTarget(${HW_DESC_JSON} hal_settings hal_settings.h)
 
 AddHWGenTarget(${HW_DESC_JSON} hal_keys hal_keys.inc)
-AddHWGenTarget(${HW_DESC_JSON} hal_adc_inputs hal_adc_inputs.inc)
+#AddHWGenTarget(${HW_DESC_JSON} hal_adc_inputs hal_adc_inputs.inc)
 
 AddHWGenTarget(${HW_DESC_JSON} yaml_inputs yaml_inputs.inc)
 
@@ -152,7 +156,7 @@ AddHWGenTarget(${HW_DESC_JSON} hal_keys_lock hal_keys_lock.h)
 
 add_dependencies(board hal_settings hal_keys hal_keys_lock hal_adc_inputs stm32_keys stm32_switches stm32_adc_inputs stm32_pwm_inputs yaml_inputs lua_inputs lua_mixsrc lua_keys)
 add_dependencies(board_bl hal_settings hal_keys stm32_keys)
-
+endif()
 
 include(hal/CMakeLists.txt)
 
@@ -306,7 +310,7 @@ endif()
 
 set(SRC ${SRC} sdcard.cpp rtc.cpp logs.cpp lib_file.cpp)
 
-if(BLUETOOTH)
+if(BLUETOOTH AND NOT ESP_PLATFORM)
   add_definitions(-DBLUETOOTH)
   set(SRC ${SRC} bluetooth.cpp)
 endif()
@@ -625,6 +629,7 @@ if(NATIVE_BUILD)
   return()
 endif()
 
+if(!ESP_PLATFORM)
 # Silence CMake 2.8+ warning about unused variable (ie. if specified when not relevant)
 set(ignore_USE_UNSUPPORTED_TOOLCHAIN "${USE_UNSUPPORTED_TOOLCHAIN}")
 
@@ -670,12 +675,20 @@ else()
   add_definitions(-DUSE_CUSTOM_ALLOCATOR)
   set(SRC ${SRC} lua/custom_allocator.cpp)
 endif()
+endif() #!ESP_PLATFORM
 
 # Bootloader
 if(BOOTLOADER)
   add_subdirectory(bootloader)
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/bootloader)
   set(RADIO_DEPENDENCIES ${RADIO_DEPENDENCIES} bootloader)
+endif()
+
+if(ESP_PLATFORM)
+    add_library(radiolib_esp32 STATIC ${SRC})
+    target_compile_definitions(radiolib_esp32 PUBLIC FREE_RTOS)
+    add_dependencies(radiolib_esp32 ${RADIO_DEPENDENCIES})
+    set_target_properties(radiolib_esp32 PROPERTIES EXCLUDE_FROM_ALL TRUE)
 endif()
 
 add_executable(firmware ${SRC})
@@ -690,7 +703,9 @@ endif()
 target_compile_definitions(board PUBLIC FREE_RTOS)
 target_compile_definitions(board_lib PUBLIC FREE_RTOS)
 target_compile_definitions(firmware PUBLIC FREE_RTOS)
+if(!ESP_PLATFORM)
 target_compile_definitions(stm32_drivers_w_dbg_fw PUBLIC FREE_RTOS)
+endif()
 
 target_sources(firmware PUBLIC
   os/async_freertos.cpp
@@ -703,7 +718,9 @@ target_sources(firmware PUBLIC
 if(DEBUG)
   target_compile_definitions(board PRIVATE -DDEBUG)
   target_compile_definitions(firmware PRIVATE -DDEBUG)
+if(!ESP_PLATFORM)
   target_compile_definitions(stm32_drivers_w_dbg_fw PRIVATE -DDEBUG)
+endif()
 endif()
 
 set(LINKER_SCRIPT firmware.ld)

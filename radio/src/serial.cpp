@@ -107,7 +107,12 @@ extern "C" void dbgSerialPrintf(const char * format, ...)
 {
   va_list arglist;
   char tmp[PRINTF_BUFFER_SIZE+1];
-
+#if defined(ESP_PLATFORM)
+  va_start(arglist, format);
+  snprintf(tmp, PRINTF_BUFFER_SIZE, LOG_COLOR_I "EdgeTX: " LOG_RESET_COLOR "%s", format);
+  vprintf(tmp, arglist);
+  va_end(arglist);
+#else
   // no need to do anything if we don't have an output
   if (!dbg_serial_putc) return;
 
@@ -120,6 +125,7 @@ extern "C" void dbgSerialPrintf(const char * format, ...)
   while (*t && dbg_serial_putc) {
     dbg_serial_putc(dbg_serial_ctx, *t++);
   }
+#endif
 }
 #endif
 

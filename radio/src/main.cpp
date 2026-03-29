@@ -163,7 +163,7 @@ static UsbSDConnected* usbConnectedWindow = nullptr;
 
 void handleUsbConnection()
 {
-#if defined(STM32) && !defined(SIMU)
+#if (defined(STM32) || defined(ESP_PLATFORM)) && !defined(SIMU)
 
   static bool _pluggedUsb = false;
 
@@ -233,7 +233,7 @@ void handleUsbConnection()
     TRACE("reset selected USB mode");
     setSelectedUsbMode(USB_UNSELECTED_MODE);
   }
-#endif  // defined(STM32) && !defined(SIMU)
+#endif  // (defined(STM32) || defined(ESP32)) && !defined(SIMU)
 }
 
 void checkSpeakerVolume()
@@ -664,6 +664,10 @@ void perMain()
   setTopBatteryValue(g_vbat100mV);
   setTopBatteryState(GET_TXBATT_BARS(10), IS_TXBATT_WARNING());
   toplcdRefreshEnd();
+#endif
+
+#if defined(PCB_MUFFIN)
+  toplcdRefresh();
 #endif
 
 #if defined(INTERNAL_GPS)

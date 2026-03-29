@@ -198,6 +198,7 @@
 #define STR_QM_GLOB_FUNC currentLangStrings->STR_QM_GLOB_FUNC
 #define STR_QM_GLOBAL_VARS currentLangStrings->STR_QM_GLOBAL_VARS
 #define STR_QM_HARDWARE currentLangStrings->STR_QM_HARDWARE
+#define STR_QM_WIFI currentLangStrings->STR_QM_WIFI
 #define STR_QM_INPUTS currentLangStrings->STR_QM_INPUTS
 #define STR_QM_LOGICAL_SW currentLangStrings->STR_QM_LOGICAL_SW
 #define STR_QM_LS_MON currentLangStrings->STR_QM_LS_MON
@@ -604,6 +605,7 @@
 #define STR_GV currentLangStrings->STR_GV
 #define STR_GVARS currentLangStrings->STR_GVARS
 #define STR_HARDWARE currentLangStrings->STR_HARDWARE
+#define STR_WIFI currentLangStrings->STR_WIFI
 #define STR_HEARTBEAT_LABEL currentLangStrings->STR_HEARTBEAT_LABEL
 #define STR_HOLD_UPPERCASE currentLangStrings->STR_HOLD_UPPERCASE
 #define STR_HOLD currentLangStrings->STR_HOLD

@@ -26,13 +26,17 @@
 #include <errno.h>
 #include "debug.h"
 
+#if !defined(ESP_PLATFORM)
 #undef errno
 extern int errno;
+#endif
+
 extern int _heap_start;
 extern int _heap_end;
 
 unsigned char * heap = (unsigned char *)&_heap_start;
 
+#if !defined(ESP_PLATFORM)
 extern caddr_t _sbrk(int nbytes)
 {
   if (heap + nbytes < (unsigned char *)&_heap_end) {
@@ -45,6 +49,7 @@ extern caddr_t _sbrk(int nbytes)
     return ((void *)-1);
   }
 }
+#endif
 
 #if defined(THREADSAFE_MALLOC) && !defined(BOOT)
 
@@ -124,17 +129,20 @@ extern int _getpid()
 }
 #endif
 
+#if !defined(ESP_PLATFORM)
 extern void _exit(int status)
 {
   TRACE("_exit(%d)", status);
   for (;;);
 }
+#endif
 
 extern void _kill(int pid, int sig)
 {
   return;
 }
 
+#if !defined(ESP_PLATFORM)
 extern void __assert_func (const char *p1, int p2, const char *p3, const char *p4)
 {
   asm("BKPT");
@@ -142,3 +150,4 @@ extern void __assert_func (const char *p1, int p2, const char *p3, const char *p
   while(1);
 #endif
 }
+#endif

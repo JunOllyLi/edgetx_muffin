@@ -47,6 +47,9 @@
 #include "view_main.h"
 #include "view_statistics.h"
 #include "view_text.h"
+#if defined(ETX_SUPPORT_WIFI)
+#include "radio_wifi.h"
+#endif
 
 const PageDef modelMenuItems[] = {
   { ICON_MODEL_SETUP, STR_DEF(STR_QM_MODEL_SETTINGS), STR_DEF(STR_MAIN_MODEL_SETTINGS), PAGE_CREATE, QM_MODEL_SETUP, [](const PageDef& pageDef) { return new ModelSetupPage(pageDef); }},
@@ -82,6 +85,9 @@ const PageDef radioMenuItems[] = {
   { ICON_RADIO_GLOBAL_FUNCTIONS, STR_DEF(STR_QM_GLOB_FUNC), STR_DEF(STR_MENUSPECIALFUNCS), PAGE_CREATE, QM_RADIO_GF, [](const PageDef& pageDef) { return new GlobalFunctionsPage(pageDef); }, radioGFEnabled},
   { ICON_RADIO_TRAINER, STR_DEF(STR_QM_TRAINER), STR_DEF(STR_MENUTRAINER), PAGE_CREATE, QM_RADIO_TRAINER, [](const PageDef& pageDef) { return new RadioTrainerPage(pageDef); }, radioTrainerEnabled},
   { ICON_RADIO_HARDWARE, STR_DEF(STR_QM_HARDWARE), STR_DEF(STR_HARDWARE), PAGE_CREATE, QM_RADIO_HARDWARE, [](const PageDef& pageDef) { return new RadioHardwarePage(pageDef); }},
+#if defined(ETX_SUPPORT_WIFI)
+  { ICON_RADIO_WIFI, STR_DEF(STR_QM_WIFI), STR_DEF(STR_WIFI), PAGE_CREATE, QM_RADIO_WIFI, [](const PageDef& pageDef) { return new RadioWiFiPage(pageDef); }},
+#endif
   { ICON_RADIO_VERSION, STR_DEF(STR_QM_ABOUT), STR_DEF(STR_MAIN_MENU_ABOUT_EDGETX), PAGE_CREATE, QM_RADIO_VERSION, [](const PageDef& pageDef) { return new RadioVersionPage(pageDef); }},
   { EDGETX_ICONS_COUNT }
 };

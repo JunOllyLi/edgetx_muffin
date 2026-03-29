@@ -30,7 +30,15 @@ extern "C++" {
   static inline void RTOS_START() {}
 
 #elif defined(FREE_RTOS)
+#if defined(ESP_PLATFORM)
+    #include "freertos/FreeRTOS.h"
+    #include "freertos/task.h"
+    #include "freertos/semphr.h"
+    #include "freertos/event_groups.h"
 
+	// ESP had already started the scheduler before app_main()    
+    static inline void RTOS_START() {}
+#else
   #include <FreeRTOS/include/FreeRTOS.h>
   #include <FreeRTOS/include/task.h>
   
@@ -38,6 +46,7 @@ extern "C++" {
   {
     vTaskStartScheduler();
   }
+#endif
 
 #endif  // RTOS type
 

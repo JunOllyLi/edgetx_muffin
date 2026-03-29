@@ -101,6 +101,13 @@ set(GUI_SRC
   radio/radio_mic_recorder.cpp
   )
 
+if(ESP_PLATFORM)
+set(GUI_SRC
+  ${GUI_SRC}
+  radio/radio_wifi.cpp
+)
+endif()
+
 macro(add_gui_src src)
   set(GUI_SRC
     ${GUI_SRC}

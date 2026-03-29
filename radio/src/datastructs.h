@@ -82,6 +82,8 @@ static inline void check_struct()
   CHKSIZE(RadioData, 1183);
 #elif defined(RADIO_V12)
   CHKSIZE(RadioData, 1180);
+#elif defined(PCB_MUFFIN)
+  CHKSIZE(RadioData, 1146);
 #elif defined(COLORLCD)
   #if defined(IMU)
     CHKSIZE(RadioData, 1063);
@@ -100,6 +102,8 @@ static inline void check_struct()
   CHKSIZE(ModelData, 6391);
 #elif defined(RADIO_GX12)
   CHKSIZE(ModelData, 6419);
+#elif defined(PCB_MUFFIN)
+  CHKSIZE(ModelData, 6841);
 #elif defined(PCBX9E)
   CHKSIZE(ModelData, 6771);
 #elif defined(PCBX9D) || defined(PCBX9DP)

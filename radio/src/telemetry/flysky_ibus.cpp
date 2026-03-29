@@ -113,6 +113,7 @@ enum
   AFHDS2A_ID_VOLT_FULL = 0xF0,
   AFHDS2A_ID_ACC_FULL = 0xEF,
   AFHDS2A_ID_TX_RSSI = 0x200,           // Pseudo id outside 1 byte range of FlySky sensors
+  AFHDS2A_ID_FAKE_RX_RSSI = 0x201,      // Pseudo id for fallback RSSI derived from TRSS
 };
 
 // telemetry sensors ID
@@ -197,6 +198,7 @@ const FlySkySensor flySkySensors[] = {
   FS( AFHDS2A_ID_RX_SIG_AFHDS3,         STR_DEF(STR_SENSOR_RX_QUALITY),    UNIT_PERCENT,           0 ),  // RX error rate
   FS( AFHDS2A_ID_RX_SNR_AFHDS3,         STR_DEF(STR_SENSOR_RX_SNR),        UNIT_DB,                1 ),  // RX SNR
   FS( AFHDS2A_ID_TX_RSSI,               STR_DEF(STR_SENSOR_TX_RSSI),       UNIT_DBM,               0 ),  // Pseudo sensor for TRSSI
+  FS( AFHDS2A_ID_FAKE_RX_RSSI,          STR_DEF(STR_SENSOR_RSSI),          UNIT_PERCENT,           0 ),  // Pseudo sensor for fallback RSSI
 
   FS( 0x00,                            NULL,                      UNIT_RAW,               0 ),  // sentinel
 };
@@ -207,7 +209,51 @@ uint16_t  sns_RFCurrentPower;
 int32_t getALT(uint32_t value);
 inline int setFlyskyTelemetryValue( int16_t type, uint8_t instance, int32_t value, uint32_t unit, uint32_t prec)
 {
+  switch (type) {
+    case SENSOR_TYPE_RX_VOL:
+    case SENSOR_TYPE_RX_SNR:
+    case SENSOR_TYPE_RX_NOISE:
+    case SENSOR_TYPE_RX_RSSI:
+    case SENSOR_TYPE_RX_ERR_RATE:
+    case AFHDS2A_ID_RX_SIG_AFHDS3:
+    case AFHDS2A_ID_RX_SNR_AFHDS3:
+    case AFHDS2A_ID_TX_RSSI:
+    case AFHDS2A_ID_FAKE_RX_RSSI:
+      instance = 0;
+      break;
+  }
   return setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, type, 0, instance, value, unit, prec );
+}
+
+static bool flySkySensorProvidesRssi(uint8_t id)
+{
+  return id == AFHDS2A_ID_RX_RSSI || id == AFHDS2A_ID_RX_ERR_RATE ||
+         id == AFHDS2A_ID_RX_SIG_AFHDS3;
+}
+
+static uint8_t fakeRssiFromTrss(uint8_t trss)
+{
+  if (trss == 0) {
+    return 0;
+  }
+
+  // Empirical fallback for receivers that don't report RX RSSI.
+  int value = 20 + trss * 2;
+  if (value > 100) {
+    value = 100;
+  }
+
+  static uint8_t filtered = 0;
+  filtered = (filtered * 3 + value) / 4;
+  return filtered;
+}
+
+static void publishFallbackRssiFromTrss(uint8_t trss)
+{
+  uint8_t rssi = fakeRssiFromTrss(trss);
+  telemetryData.rssi.set(rssi);
+  setFlyskyTelemetryValue(AFHDS2A_ID_FAKE_RX_RSSI, 0, rssi, UNIT_PERCENT, 0);
+  telemetryStreaming = TELEMETRY_TIMEOUT10ms;
 }
 
 void processFlySkyAFHDS3Sensor(const uint8_t * packet, uint8_t len )
@@ -338,9 +384,11 @@ void processFlySkySensor(const uint8_t * packet, uint8_t type)
   }
   else if (id == SENSOR_TYPE_PRES && value) {
     // Extract temperature to a new sensor
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, id | 0x100, 0, instance, ((value >> 19) - 400), UNIT_CELSIUS, 1);
+    setFlyskyTelemetryValue(id | 0x100, instance, ((value >> 19) - 400),
+                            UNIT_CELSIUS, 1);
     // Extract alt to a new sensor
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, AFHDS2A_ID_ALT, 0, instance, getALT(value), UNIT_METERS, 2);
+    setFlyskyTelemetryValue(AFHDS2A_ID_ALT, instance, getALT(value),
+                            UNIT_METERS, 2);
     value &= PRESSURE_MASK;
   }
   else if ((id >= AFHDS2A_ID_ACC_X && id <= AFHDS2A_ID_VERTICAL_SPEED) || id == AFHDS2A_ID_CLIMB_RATE || id == AFHDS2A_ID_ALT_FLYSKY) {
@@ -351,7 +399,8 @@ void processFlySkySensor(const uint8_t * packet, uint8_t type)
   }
   else if (id == AFHDS2A_ID_GPS_FULL) {
     //(AC FRAME)[ID][inst][size][fix][sats][LAT]x4[LON]x4[ALT]x4
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, AFHDS2A_ID_GPS_STATUS, 0, instance, packet[4], UNIT_RAW, 0);
+    setFlyskyTelemetryValue(AFHDS2A_ID_GPS_STATUS, instance, packet[4],
+                            UNIT_RAW, 0);
 
     for (uint8_t sensorID = AFHDS2A_ID_GPS_LAT; sensorID <= AFHDS2A_ID_GPS_ALT; sensorID++) {
       int index = 5 + (sensorID - AFHDS2A_ID_GPS_LAT) * 4;
@@ -366,15 +415,15 @@ void processFlySkySensor(const uint8_t * packet, uint8_t type)
   } else if (id == AFHDS2A_ID_GPS_LAT) {
     uint8_t instance2 = 0;  // Assume one instance, RX would only have one GPS
     value = value / 10;
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, AFHDS2A_ID_GPS_LAT, 0,
-                      instance2, value, UNIT_GPS_LATITUDE, 0);
+    setFlyskyTelemetryValue(AFHDS2A_ID_GPS_LAT, instance2, value,
+                            UNIT_GPS_LATITUDE, 0);
     return;
   } else if (id == AFHDS2A_ID_GPS_LON) {  // Remapped to single GPS sensor:
                                           // AFHDS2A_ID_GPS_LAT
     uint8_t instance2 = 0;
     value = value / 10;
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, AFHDS2A_ID_GPS_LAT, 0,
-                      instance2, value, UNIT_GPS_LONGITUDE, 0);
+    setFlyskyTelemetryValue(AFHDS2A_ID_GPS_LAT, instance2, value,
+                            UNIT_GPS_LONGITUDE, 0);
     return;
   } else if (id == AFHDS2A_ID_VOLT_FULL) {
     //(AC FRAME)[ID][inst][size][ACC_X]x2[ACC_Y]x2[ACC_Z]x2[ROLL]x2[PITCH]x2[YAW]x2
@@ -403,38 +452,53 @@ void processFlySkySensor(const uint8_t * packet, uint8_t type)
     if (sensor->type != id) continue;
     if (sensor->unit == UNIT_CELSIUS) value -= 400; // Temperature sensors have 40 degree offset
     else if (sensor->unit == UNIT_VOLTS) value = (int16_t) value; // Voltage types are unsigned 16bit integers
-    setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, id, 0, instance, value, sensor->unit, sensor->precision);
+    setFlyskyTelemetryValue(id, instance, value, sensor->unit,
+                            sensor->precision);
     return;
   }
   //unknown
-  setTelemetryValue(PROTOCOL_TELEMETRY_FLYSKY_IBUS, id, 0, instance, value, UNIT_RAW, 0);
+  setFlyskyTelemetryValue(id, instance, value, UNIT_RAW, 0);
 }
 
 void processFlySkyPacket(const uint8_t * packet)
 {
   // Set TX RSSI Value, reverse MULTIs scaling
-  setFlyskyTelemetryValue(AFHDS2A_ID_TX_RSSI, 0, packet[0], UNIT_RAW, 0);
+  uint8_t trss = packet[0];
+  setFlyskyTelemetryValue(AFHDS2A_ID_TX_RSSI, 0, trss, UNIT_RAW, 0);
 
   const uint8_t * buffer = packet + 1;
   int sensor = 0;
+  bool gotRealRssi = false;
   while (sensor++ < 7) {
     if (*buffer == SENSOR_TYPE_END) break;
+    gotRealRssi = gotRealRssi || flySkySensorProvidesRssi(buffer[0]);
     processFlySkySensor(buffer, 0xAA);
     buffer += 4;
+  }
+
+  if (!gotRealRssi && trss > 0) {
+    publishFallbackRssiFromTrss(trss);
   }
 }
 
 void processFlySkyPacketAC(const uint8_t * packet)
 {
   // Set TX RSSI Value, reverse MULTIs scaling
-  setFlyskyTelemetryValue(AFHDS2A_ID_TX_RSSI, 0, packet[0], UNIT_RAW, 0);
+  uint8_t trss = packet[0];
+  setFlyskyTelemetryValue(AFHDS2A_ID_TX_RSSI, 0, trss, UNIT_RAW, 0);
   const uint8_t * buffer = packet + 1;
+  bool gotRealRssi = false;
   while (buffer - packet < 26) //28 + 1(multi TX rssi) - 3(ac header)
   {
     if (*buffer == SENSOR_TYPE_END) break;
     uint8_t size = buffer[2];
+    gotRealRssi = gotRealRssi || flySkySensorProvidesRssi(buffer[0]);
     processFlySkySensor(buffer, 0xAC);
     buffer += size + 3;
+  }
+
+  if (!gotRealRssi && trss > 0) {
+    publishFallbackRssiFromTrss(trss);
   }
 }
 

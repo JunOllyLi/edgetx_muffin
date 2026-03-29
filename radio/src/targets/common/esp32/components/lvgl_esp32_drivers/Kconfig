@@ -1,0 +1,8 @@
+menu "LVGL ESP Drivers"
+
+    rsource "lvgl_tft/Kconfig"
+
+    rsource "lvgl_touch/Kconfig"
+
+endmenu
+

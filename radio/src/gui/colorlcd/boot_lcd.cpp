@@ -202,3 +202,6 @@ void lcdRefresh()
   lcd.setData((pixel_t*)draw_buf->buf_act);
   lcd.reset();
 }
+
+void lcdSetInitalFrameBuffer(void* fbAddress) {
+}
