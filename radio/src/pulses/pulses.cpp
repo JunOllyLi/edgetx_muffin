@@ -91,6 +91,10 @@ uint8_t* pulsesGetModuleBuffer(uint8_t module)
   return _module_buffers[module]._buffer;
 }
 
+#if defined(ESPNOW) || defined(BT_POWERUP)
+#include "pulses_esp32.h"
+#endif
+
 ModuleState moduleState[NUM_MODULES];
 TrainerPulsesData trainerPulsesData __DMA_NO_CACHE;
 
@@ -352,6 +356,18 @@ uint8_t getRequiredProtocol(uint8_t module)
       protocol = PROTOCOL_CHANNELS_DSMP;
       break;
       
+#if defined(ESPNOW)
+    case MODULE_TYPE_ESPNOW:
+      protocol = PROTOCOL_CHANNELS_ESPNOW;
+      break;
+#endif
+
+#if defined(BT_POWERUP)
+    case MODULE_TYPE_BT_POWERUP:
+      protocol = PROTOCOL_CHANNELS_BT_POWERUP;
+      break;
+#endif
+
     default:
       protocol = PROTOCOL_CHANNELS_NONE;
       break;
@@ -489,6 +505,18 @@ static void pulsesEnableModule(uint8_t module, uint8_t protocol)
 #if defined(DSM2)
     case PROTOCOL_CHANNELS_DSMP:
       _init_module(module, &DSMPDriver);
+      break;
+#endif
+
+#if defined(ESPNOW)
+    case PROTOCOL_CHANNELS_ESPNOW:
+      _init_module(module, &EspNowDriver);
+      break;
+#endif
+
+#if defined(BT_POWERUP)
+    case PROTOCOL_CHANNELS_BT_POWERUP:
+      _init_module(module, &BtPowerUPDriver);
       break;
 #endif
 

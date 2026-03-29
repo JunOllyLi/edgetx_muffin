@@ -19,6 +19,7 @@
  * GNU General Public License for more details.
  */
 
+#if !defined(ESP_PLATFORM)
 #pragma once
 
 // Avoid using any other header file
@@ -127,3 +128,7 @@ standard names. */
 #if defined(DEBUG_SEGGER_SYSVIEW)
 #include "SEGGER_SYSVIEW_FreeRTOS.h"
 #endif
+
+#else  // defined(ESP_PLATFORM)
+#include <freertos/FreeRTOSConfig.h>
+#endif // defined(ESP_PLATFORM)

@@ -1,7 +1,7 @@
 include(CMakeForceCompiler)
 include(Bitmaps)
 
-set(PCB_TYPES X9LITE X9LITES X7 XLITE XLITES X9D X9D+ X9E X10 X12S PL18 T15PRO ST16 PA01 TX15 TX16SMK3)
+set(PCB_TYPES MUFFIN X9LITE X9LITES X7 XLITE XLITES X9D X9D+ X9E X10 X12S PL18 T15PRO ST16 PA01 TX15 TX16SMK3)
 set(RADIO_LANGUAGES CN CZ DA DE EN ES FI FR HE HU IT JP KO NL PL PT RU SE SK TW UA)
 set(TTS_LANGUAGES CN CZ DA DE EN ES FI FR HE HU IT JP KO NL PL PT RU SE SK TW UA)
 
@@ -104,6 +104,8 @@ elseif(PCB STREQUAL STM32H7S78_DK)
   include(targets/stm32h7s78-dk/CMakeLists.txt)
 elseif(PCB STREQUAL X9E OR PCB STREQUAL X9D+ OR PCB STREQUAL X9D OR PCB STREQUAL X7 OR PCB STREQUAL X9LITE OR PCB STREQUAL X9LITES OR PCB STREQUAL XLITE OR PCB STREQUAL XLITES)
   include(targets/taranis/CMakeLists.txt)
+elseif(PCB STREQUAL MUFFIN)
+  include(targets/muffin/CMakeLists.txt)
 else()
   message(FATAL_ERROR "Unknown PCB '${PCB}'")
 endif()
@@ -589,6 +591,11 @@ if(NATIVE_BUILD)
   return()
 endif()
 
+if(ESP_PLATFORM)
+    add_library(radiolib_esp32 STATIC ${SRC})
+    add_dependencies(radiolib_esp32 ${RADIO_DEPENDENCIES})
+    set_target_properties(radiolib_esp32 PROPERTIES EXCLUDE_FROM_ALL TRUE)
+else() #ESP_PLATFORM
 # Silence CMake 2.8+ warning about unused variable (ie. if specified when not relevant)
 set(ignore_USE_UNSUPPORTED_TOOLCHAIN "${USE_UNSUPPORTED_TOOLCHAIN}")
 
@@ -634,6 +641,7 @@ else()
   add_definitions(-DUSE_CUSTOM_ALLOCATOR)
   set(SRC ${SRC} lua/custom_allocator.cpp)
 endif()
+endif() #ESP_PLATFORM
 
 # Bootloader
 if(BOOTLOADER)
