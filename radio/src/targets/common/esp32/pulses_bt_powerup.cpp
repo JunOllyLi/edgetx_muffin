@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  */ 
  
-#include "opentx.h"
+#include "edgetx.h"
 #include "pulses_esp32.h"
 #include "esp_random.h"
 
@@ -35,7 +35,7 @@ extern "C" {
 #define TASKPWRUP_PRIO 5
 
 static RTOS_TASK_HANDLE taskIdPWRUP;
-EXT_RAM_BSS_ATTR RTOS_DEFINE_STACK(taskIdPWRUP, taskPWRUP_stack, TASKPWRUP_STACK_SIZE);
+RTOS_DEFINE_STACK(taskIdPWRUP, taskPWRUP_stack, TASKPWRUP_STACK_SIZE);
 static void* BtPowerUPInit(uint8_t module)
 {
     if (NULL == pwrup_task_handle) {

@@ -25,7 +25,7 @@
 #include "nvs_flash.h"
 #include "esp_task.h"
 #define HASASSERT
-#include "opentx.h"
+#include "edgetx.h"
 #include "WiFi.h"
 
 extern "C" {

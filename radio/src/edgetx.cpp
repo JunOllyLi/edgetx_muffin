@@ -20,7 +20,7 @@
  */
 
 #include "os/sleep.h"
-#if !defined(SIMU)
+#if !defined(SIMU) && !defined(ESP_PLATFORM)
 #include "stm32_ws2812.h"
 #include "boards/generic_stm32/rgb_leds.h"
 #include "stm32_hal.h"
@@ -130,6 +130,7 @@ void toggleLatencySwitch()
 
 void checkValidMCU(void)
 {
+#if !defined(ESP_PLATFORM)
 #if !defined(SIMU) && !defined(BOOT)
   // Checks the radio MCU type matches intended firmware type
   uint32_t idcode = DBGMCU->IDCODE & 0xFFF;
@@ -167,6 +168,7 @@ void checkValidMCU(void)
   }
 #endif
 #endif
+#endif // !defined(ESP_PLATFORM)
 }
 
 void per10ms()
@@ -1662,7 +1664,7 @@ int main()
   SEGGER_SYSVIEW_Start();
 #endif
 
-#if !defined(SIMU)
+#if !defined(SIMU) && !defined(ESP_PLATFORM)
   /* Ensure all priority bits are assigned as preemption priority bits. */
   NVIC_SetPriorityGrouping( NVIC_PRIORITYGROUP_4 );
 #endif

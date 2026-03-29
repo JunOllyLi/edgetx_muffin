@@ -20,7 +20,10 @@
  */
 
 #pragma once
-
+#if defined(ESP_PLATFORM)
+    #include "freertos/FreeRTOS.h"
+#else
 #include <FreeRTOS/include/FreeRTOS.h>
+#endif
 
 typedef TickType_t time_point_t;

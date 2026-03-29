@@ -1,6 +1,20 @@
 #ifndef _MCP_PINS_FOR_BOARD_H_
 #define _MCP_PINS_FOR_BOARD_H_
 
+#define GPIO_PIN_0 0
+#define GPIO_PIN_1 1
+#define GPIO_PIN_2 2
+#define GPIO_PIN_3 3
+#define GPIO_PIN_4 4
+#define GPIO_PIN_5 5
+#define GPIO_PIN_6 6
+#define GPIO_PIN_7 7
+
+#define MCP_PORT_0 0
+#define MCP_PORT_1 1
+#define MCP_PORT_2 2
+#define MCP_PORT_3 3
+
 #define MCP23017_DIR_REG 0x00FFFFFF
 #define MCP23017_PULLUP  0x00FFFFFF
 

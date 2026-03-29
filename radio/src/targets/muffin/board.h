@@ -21,7 +21,17 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+#if defined(ESP_PLATFORM)
 #include "board_common.h"
+#else
+// for YAML generation TODO-MUFFIN
+#include <inttypes.h>
+#include "definitions.h"
+#include "edgetx_constants.h"
+#include "hal.h"
+#include "hal/serial_port.h"
+#include "hal/watchdog_driver.h"
+#endif
 
 #define auxSerialGetPort(port_nr) nullptr
 
@@ -47,6 +57,10 @@ void boardOff();
 #define PULSES_TASK_CORE 0
 #define MENU_TASK_CORE 1
 #define AUDIO_TASK_CORE 1
+
+#define SLAVE_MODE()                    (g_model.trainerData.mode == TRAINER_MODE_SLAVE)
+#define DMAInit()
+void lcdSetInitalFrameBuffer(void* fbAddress);
 
 /*
 From Kconfig
@@ -205,5 +219,10 @@ void resume_espnow();
 void init_bind_espnow();
 void stop_bind_espnow();
 bool is_binding_espnow();
+
+#define ADS1015_0 0
+#define ADS1015_1 1
+#define ADC_SAMPLING_TIME_1MS 1
+#define ADC_SAMPLING_TIME_30MS 30
 
 #endif // _BOARD_H_

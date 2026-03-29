@@ -10,22 +10,15 @@
 
 #include <inttypes.h>
 #include "definitions.h"
-#include "opentx_constants.h"
+#include "edgetx_constants.h"
 #include "hal.h"
 #include "hal/serial_port.h"
 #include "hal/watchdog_driver.h"
 
 #define SYSTEM_TICKS_1MS pdMS_TO_TICKS(1)
 
-static inline uint32_t ticksNow() {
-#if defined(ESP_PLATFORM)
-    return xTaskGetTickCount();
-#else
-    // for yaml_data
-    return 0;
-#endif
-}
-
 void init2MhzTimer();
+
+#define UINT16_MIN 0U
 
 #endif // ESP32_COMMON_H

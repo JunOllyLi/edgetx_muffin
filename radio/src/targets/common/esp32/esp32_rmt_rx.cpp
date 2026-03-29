@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "esp32_rmt_rx.h"
 
 static void esp32_rmt_ctx_free(rmt_ctx_t *ctx);

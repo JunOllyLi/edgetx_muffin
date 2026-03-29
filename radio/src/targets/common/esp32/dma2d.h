@@ -1,6 +1,6 @@
 #pragma once
 
-#include "opentx_types.h"
+#include "edgetx_types.h"
 
 static inline void DMAWait() {}
 

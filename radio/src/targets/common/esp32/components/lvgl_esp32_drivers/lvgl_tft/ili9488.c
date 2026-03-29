@@ -110,7 +110,10 @@ void ili9488_init(void)
     ili9488_set_orientation(CONFIG_LV_DISPLAY_ORIENTATION);
     do {
         mybuf = (uint8_t *) heap_caps_malloc(DISP_BUF_SIZE * 3, MALLOC_CAP_DMA);
-        if (mybuf == NULL)  ESP_LOGW(TAG, "Could not allocate enough DMA memory!");
+        if (mybuf == NULL)   {
+			ESP_LOGE(TAG, "Could not allocate enough DMA memory!");
+			assert(0);
+		}
     } while (mybuf == NULL);
 }
 

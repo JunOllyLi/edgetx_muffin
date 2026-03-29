@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "hal/adc_driver.h"
 #include <string.h>
 #include <stdio.h>

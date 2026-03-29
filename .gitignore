@@ -14,7 +14,9 @@ radio/src/tests/gtest*.tar.gz
 .cache
 compile_commands.json
 
+radio/src/targets/muffin/esp32_build/build/
 sdkconfig.old
+
 /ys_Doc
 /.idea
 /.vs
@@ -26,3 +28,5 @@ _wasi_sdk_fetch
 
 # MkDocs
 /site/
+
+

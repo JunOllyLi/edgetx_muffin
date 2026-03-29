@@ -20,7 +20,7 @@
 #include "esp_check.h"
 #include "ili9488.h"
 
-static uint8_t *dmabuf;
+static uint8_t dmabuf[DISP_BUF_SIZE * sizeof(lv_color16_t)] DRAM_ATTR;
 
 typedef struct {
     uint8_t cmd;
@@ -205,11 +205,6 @@ static esp_err_t panel_ili9488_init(esp_lcd_panel_t *panel)
 #if defined(LV_DISPLAY_ORIENTATION_LANDSCAPE_INVERTED) || defined(LV_DISPLAY_ORIENTATION_PORTRAIT_INVERTED)
     panel_ili9488_mirror(panel, true, true);
 #endif
-
-    do {
-        dmabuf = (uint8_t *) heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color16_t), MALLOC_CAP_DMA);
-        if (dmabuf == NULL)  ESP_LOGW(TAG, "Could not allocate enough DMA memory!");
-    } while (dmabuf == NULL);
     return ESP_OK;
 }
 

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include <driver/i2s_std.h>
 
 static uint32_t _sampleRate = AUDIO_SAMPLE_RATE;

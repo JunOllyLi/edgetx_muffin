@@ -29,12 +29,12 @@
 #undef errno
 extern int errno;
 
-#if !defined(ESP_PLATFORM)
 extern int _heap_start;
 extern int _heap_end;
 
 unsigned char * heap = (unsigned char *)&_heap_start;
 
+#if !defined(ESP_PLATFORM)
 extern caddr_t _sbrk(int nbytes)
 {
   if (heap + nbytes < (unsigned char *)&_heap_end) {
@@ -140,6 +140,7 @@ extern void _kill(int pid, int sig)
   return;
 }
 
+#if !defined(ESP_PLATFORM)
 extern void __assert_func (const char *p1, int p2, const char *p3, const char *p4)
 {
   asm("BKPT");
@@ -147,3 +148,4 @@ extern void __assert_func (const char *p1, int p2, const char *p3, const char *p
   while(1);
 #endif
 }
+#endif

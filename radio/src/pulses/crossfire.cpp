@@ -427,7 +427,7 @@ static void crossfireDeInit(void* ctx)
   memset(&crossfireModuleStatus[modulePortGetModule(mod_st)], 0,
          sizeof(CrossfireModuleStatus));
 
-#if !defined(SIMU) && defined(HARDWARE_EXTERNAL_MODULE)
+#if !defined(SIMU) && defined(HARDWARE_EXTERNAL_MODULE) && !defined(ESP_PLATFORM)
   if (mod_st && (modulePortGetModule(mod_st) == EXTERNAL_MODULE)) {
     auto drv = modulePortGetSerialDrv(mod_st->rx);
     auto ctx = modulePortGetCtx(mod_st->rx);

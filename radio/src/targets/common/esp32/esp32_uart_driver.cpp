@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "esp32_uart_driver.h"
 
 #include "esp_log.h"
@@ -175,6 +175,11 @@ void espUartWaitForTxCompleted(void* ctx)
     uart_wait_tx_done(port->port, portMAX_DELAY);
 }
 
+bool espTxCompleted(void* ctx) {
+    esp32_uart_ctx_t *port = ctx_to_port(ctx);
+    return (ESP_OK == uart_wait_tx_done(port->port, 0));
+}
+
 static int espUartGetByte(void* ctx, uint8_t* data)
 {
     esp32_uart_ctx_t *port = ctx_to_port(ctx);
@@ -215,6 +220,7 @@ const etx_serial_driver_t ESPUartSerialDriver = {
     .deinit = espUartSerialStop,
     .sendByte = espUartSendByte,
     .sendBuffer = espUartSendBuffer,
+    .txCompleted = espTxCompleted,
     .waitForTxCompleted = espUartWaitForTxCompleted,
     .getByte = espUartGetByte,
     .getBufferedBytes = espUartGetBufferedBytes,

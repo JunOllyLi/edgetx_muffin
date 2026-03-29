@@ -6,15 +6,15 @@
 {% set ads_adcs = adc_inputs.adcs | selectattr('name', '==', 'EXT') | list %}
 {% for ads in ads_adcs %}
 #define MS_BETWEEN_CHANNEL {{ ads.sample_time }}
-#define NUM_OF_ADS {{ ads.adc }}
+#define NUM_OF_ADS {{ ads.adc.split(',') | length }}
 static i2c_master_dev_handle_t ads[NUM_OF_ADS] = {0};
 {% endfor %}
 
 static const i2c_device_config_t i2c_dev_conf[NUM_OF_ADS] = {
   {% for ads in ads_adcs %}
-  {% for i in range(ads.adc) %}
+  {% for item in ads.adc.split(',') %}
   {
-    .device_address = ADS1X15_ADDRESS + {{ loop.index0 }},
+    .device_address = ADS1X15_ADDRESS + {{ item.strip() }},
     .scl_speed_hz = 400000,
   },
   {% endfor %}

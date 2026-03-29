@@ -10,7 +10,7 @@ set(GUI_DIR colorlcd)
 set(BITMAPS_DIR 480x272)
 add_definitions(-DCOLORLCD -DLIBOPENUI -DHARDWARE_TOUCH -DHARDWARE_KEYS)
 add_definitions(-DBATTGRAPH -DTHRTRACE)
-set(BITMAPS_TARGET muffin_bitmaps)
+set(BITMAPS_TARGET bm480_bitmaps)
 set(STORAGE_MODELSLIST YES)
 
 set(STATUS_LEDS NO)
@@ -48,17 +48,19 @@ option(EXTERNAL_MODULE_BT_POWERUP "Support for Bluetooth internal module for POW
 
 include(${RADIO_SRC_DIR}/targets/common/esp32/CMakeLists.txt)
 
-set(TARGET_SRC
-  ${TARGET_SRC}
-  sh1107_top_lcd.cpp
-  trainer_driver.cpp
-  lcd_lvgl_esp.cpp
-  backlight_driver.cpp
-  flyskyHallStick_driver.cpp
-  ads1015_adc.cpp
-  switch_driver.cpp
-  module_drivers.cpp
-  mcp23017_io_driver.cpp
+set(MUFFIN_SRC_DIR ${CMAKE_CURRENT_LIST_DIR})
+
+set(MUFFIN_TGT_SRC
+  ${MUFFIN_TGT_SRC}
+  ${MUFFIN_SRC_DIR}/sh1107_top_lcd.cpp
+  ${MUFFIN_SRC_DIR}/trainer_driver.cpp
+  ${MUFFIN_SRC_DIR}/lcd_lvgl_esp.cpp
+  ${MUFFIN_SRC_DIR}/backlight_driver.cpp
+  ${MUFFIN_SRC_DIR}/flyskyHallStick_driver.cpp
+  ${MUFFIN_SRC_DIR}/ads1015_adc.cpp
+  ${MUFFIN_SRC_DIR}/switch_driver.cpp
+  ${MUFFIN_SRC_DIR}/module_drivers.cpp
+  ${MUFFIN_SRC_DIR}/mcp23017_io_driver.cpp
   )
 
 set(FIRMWARE_TARGET_SRC
@@ -73,7 +75,7 @@ set(RADIO_DEPENDENCIES ${RADIO_DEPENDENCIES} ${BITMAPS_TARGET})
 
 foreach(LANGUAGE ${TTS_LANGUAGES})
   string(TOLOWER ${LANGUAGE} lang_lower)
-  set(SRC ${SRC} translations/tts_${lang_lower}.cpp)
+  set(SRC ${SRC} translations/tts/tts_${lang_lower}.cpp)
 endforeach()
 
 if (MULTIMODULE)
@@ -96,11 +98,13 @@ AddHWGenTarget(${HW_DESC_JSON} ads1015_adc_inputs ads1015_adc_inputs.inc)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(board_lib OBJECT EXCLUDE_FROM_ALL
+add_library(board OBJECT EXCLUDE_FROM_ALL
   ${CMAKE_CURRENT_BINARY_DIR}/mcp23017_keys.inc
   ${CMAKE_CURRENT_BINARY_DIR}/mcp23017_switches.inc
   ${CMAKE_CURRENT_BINARY_DIR}/hal_adc_inputs.inc
   ${CMAKE_CURRENT_BINARY_DIR}/ads1015_adc_inputs.inc
   ${CMAKE_CURRENT_BINARY_DIR}/${HW_DESC_JSON}
+  ${MUFFIN_TGT_SRC}
   )
 
+target_include_directories(board PRIVATE ${RADIO_SRC_DIR}/targets/common/esp32)

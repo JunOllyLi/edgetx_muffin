@@ -1,4 +1,4 @@
-#include "opentx.h"
+#include "edgetx.h"
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
 #include "lvgl.h"

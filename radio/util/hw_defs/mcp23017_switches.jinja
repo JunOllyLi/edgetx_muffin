@@ -14,6 +14,7 @@ static const mcp_switch_t _switch_defs[] = {
     .bit_high = 0,
     .bit_low = (1 << ((({{ switch.gpio }} - 1) * 8) + {{ switch.pin }})),
     .type = SWITCH_HW_2POS,
+    .config = SWITCH_2POS,
     .flags = {{ 'SWITCH_HW_INVERTED' if switch.inverted else 0 }}
   },
   {% elif switch.type == '3POS' %}
@@ -22,6 +23,7 @@ static const mcp_switch_t _switch_defs[] = {
     .bit_high = (1 << ((({{ switch.gpio_high }} - 1) * 8) + {{ switch.pin_high }})),
     .bit_low  = (1 << ((({{ switch.gpio_low }} - 1)* 8) + {{ switch.pin_low }})),
     .type = SWITCH_HW_3POS,
+    .config = SWITCH_3POS,
     .flags = {{ 'SWITCH_HW_INVERTED' if switch.inverted else 0 }}
   },
   {% endif %}
