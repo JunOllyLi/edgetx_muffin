@@ -1,0 +1,52 @@
+info: INFO: Symbol LV_I2C defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:464
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_tft/Kconfig:1080
+info: INFO: Symbol LV_TOUCH_SPI_MISO defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:213
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:83
+info: INFO: Symbol LV_TOUCH_SPI_MOSI defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:224
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:92
+info: INFO: Symbol LV_TOUCH_SPI_CLK defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:101
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:236
+info: INFO: Symbol LV_TOUCH_SPI_CS defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:109
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:245
+info: INFO: Symbol LV_TOUCH_X_MIN defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:129
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:336
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:257
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:376
+info: INFO: Symbol LV_TOUCH_Y_MIN defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:382
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:135
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:341
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:262
+info: INFO: Symbol LV_TOUCH_X_MAX defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:346
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:141
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:267
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:388
+info: INFO: Symbol LV_TOUCH_Y_MAX defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:351
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:394
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:272
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:147
+info: INFO: Symbol LV_TOUCH_XY_SWAP defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:153
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:277
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:356
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:400
+info: INFO: Symbol LV_TOUCH_INVERT_X defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:361
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:405
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:158
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:282
+info: INFO: Symbol LV_TOUCH_INVERT_Y defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:410
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:287
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:366
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:163
+-- Bootloader contained in firmware binary
+TARGET firmware: cpp compiler /home/junl/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ v13.2.0

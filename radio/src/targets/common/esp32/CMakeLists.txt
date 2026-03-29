@@ -4,8 +4,7 @@ add_definitions(-DSBUS_TRAINER)
 
 add_definitions(-DSTORAGE_USE_SDCARD_SPI)
 
-# TARGET_SRC relative dir TODO-MUFFIN
-set(ESP_CMN_FOLDER ../common/esp32)
+set(ESP_CMN_FOLDER ${CMAKE_CURRENT_LIST_DIR})
 
 set(CPU_FAMILY ESP32)
 
@@ -36,8 +35,8 @@ if(INTERNAL_MODULE_BT_POWERUP OR EXTERNAL_MODULE_BT_POWERUP)
   endif()
 
   add_definitions(-DBT_POWERUP)
-  set(TARGET_SRC
-    ${TARGET_SRC}
+  set(ESP32_CMN_SRC
+    ${ESP32_CMN_SRC}
     ${ESP_CMN_FOLDER}/esp_ble_powerup.c
     ${ESP_CMN_FOLDER}/pulses_bt_powerup.cpp
     )
@@ -56,8 +55,8 @@ if(INTERNAL_MODULE_ESPNOW OR EXTERNAL_MODULE_ESPNOW)
   endif()
 
   add_definitions(-DESPNOW)
-  set(TARGET_SRC
-    ${TARGET_SRC}
+  set(ESP32_CMN_SRC
+    ${ESP32_CMN_SRC}
     ${ESP_CMN_FOLDER}/pulses_espnow.cpp
     )
 endif()
@@ -99,6 +98,11 @@ set(SRC
   telemetry/flysky_ibus.cpp
   crc.cpp
   vario.cpp
+  os/async_freertos.cpp
+  os/sleep_freertos.cpp
+  os/timer_freertos.cpp
+  os/time_freertos.cpp
+  os/task_freertos.cpp
   )
 
 set(SRC
@@ -138,8 +142,8 @@ endif()
 
 if(BLUETOOTH)
   add_definitions(-DBLUETOOTH)
-  set(TARGET_SRC
-    ${TARGET_SRC}
+  set(ESP32_CMN_SRC
+    ${ESP32_CMN_SRC}
     #../common/arm/stm32/bluetooth_driver.cpp
     )
   set(SRC
@@ -148,8 +152,8 @@ if(BLUETOOTH)
     )
 endif()
 
-set(TARGET_SRC
-  ${TARGET_SRC}
+set(ESP32_CMN_SRC
+  ${ESP32_CMN_SRC}
   ${ESP_CMN_FOLDER}/diskio_spi.cpp
   ${ESP_CMN_FOLDER}/sound_i2s.cpp
   ${ESP_CMN_FOLDER}/abnormal_reboot.cpp
@@ -174,3 +178,7 @@ include_directories(
     gui/${GUI_DIR}
     ${RADIO_SRC_DIR}/targets/common/esp32/ota_server/include
 )
+
+add_library(board_lib ${ESP32_CMN_SRC})
+
+target_include_directories(board_lib PRIVATE ${ESP_CMN_FOLDER})

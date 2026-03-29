@@ -175,6 +175,9 @@ struct CustomFunctionsContext {
 #endif
 
 #if !defined(SIMU)
+#ifdef assert
+#undef assert
+#endif
   #define assert(x)
   #if !defined(DEBUG)
     #define printf printf_not_allowed

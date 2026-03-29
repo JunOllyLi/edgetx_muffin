@@ -2,6 +2,8 @@
 #ifndef _TIMERS_DRIVER_H_
 #define _TIMERS_DRIVER_H_
 
+#include "edgetx_types.h"
+
 tmr10ms_t get_tmr10ms();
 uint16_t getTmr2MHz();
 

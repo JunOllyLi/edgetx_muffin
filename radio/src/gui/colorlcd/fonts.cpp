@@ -163,7 +163,7 @@ void initFontBuffers()
   sz += getSize(fontTable);
 
   // Allocate buffer and assign to fonts
-#if defined(SIMU)
+#if defined(SIMU) || defined(ESP_PLATFORM)
   uint8_t* b = (uint8_t*)malloc(sz);
 #else
   uint8_t* b = (uint8_t*)sbrk(sz);

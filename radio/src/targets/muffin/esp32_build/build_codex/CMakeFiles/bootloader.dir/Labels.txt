@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/CMakeFiles/bootloader
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/CMakeFiles/bootloader.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/CMakeFiles/bootloader-complete.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

@@ -18,8 +18,9 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "driver/gptimer.h"
+#include <lvgl/lvgl.h>
 
 static gptimer_handle_t MyTim2Mhz = NULL;
 static SemaphoreHandle_t sem5ms;
@@ -50,6 +51,7 @@ static void task5ms(void * pdata) {
     if (xSemaphoreTake(sem5ms, portMAX_DELAY)) {
       ++pre_scale;
       per5ms();
+      lv_tick_inc(5); // TODO-MUFFIN xTaskGetTickCount LV_TICK_CUSTOM
 
       if (pre_scale == 2) {
         pre_scale = 0;
@@ -121,12 +123,3 @@ uint32_t timersGetUsTick()
     gptimer_get_raw_count(MyTim2Mhz, &count);
     return (uint32_t)((count / 2) & 0xFFFFFFFF); // 2MHz => 1MHz
 }
-
-#if configUSE_TICK_HOOK > 0
-#include <lvgl/lvgl.h>
-
-extern "C" void vApplicationTickHook( void )
-{
-  lv_tick_inc(1);
-}
-#endif

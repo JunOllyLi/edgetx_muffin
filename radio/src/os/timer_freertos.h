@@ -21,8 +21,13 @@
 
 #pragma once
 
+#if defined(ESP_PLATFORM)
+    #include "freertos/FreeRTOS.h"
+    #include "freertos/timers.h"
+#else
 #include <FreeRTOS/include/FreeRTOS.h>
 #include <FreeRTOS/include/timers.h>
+#endif
 
 struct timer_handle_t;
 

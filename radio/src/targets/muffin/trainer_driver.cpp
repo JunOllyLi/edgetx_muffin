@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "esp32_rmt_rx.h"
 #if 0
 static rmt_ctx_t* rmt_send = NULL;

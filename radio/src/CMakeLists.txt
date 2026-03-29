@@ -592,7 +592,9 @@ if(NATIVE_BUILD)
 endif()
 
 if(ESP_PLATFORM)
+    # TODO-MUFFIN
     add_library(radiolib_esp32 STATIC ${SRC})
+    target_compile_definitions(radiolib_esp32 PUBLIC FREE_RTOS)
     add_dependencies(radiolib_esp32 ${RADIO_DEPENDENCIES})
     set_target_properties(radiolib_esp32 PROPERTIES EXCLUDE_FROM_ALL TRUE)
 else() #ESP_PLATFORM
@@ -662,7 +664,9 @@ endif()
 target_compile_definitions(board PUBLIC FREE_RTOS)
 target_compile_definitions(board_lib PUBLIC FREE_RTOS)
 target_compile_definitions(firmware PUBLIC FREE_RTOS)
+if(!ESP_PLATFORM)
 target_compile_definitions(stm32_drivers_w_dbg_fw PUBLIC FREE_RTOS)
+endif()
 
 target_sources(firmware PUBLIC
   os/async_freertos.cpp
@@ -675,7 +679,9 @@ target_sources(firmware PUBLIC
 if(DEBUG)
   target_compile_definitions(board PRIVATE -DDEBUG)
   target_compile_definitions(firmware PRIVATE -DDEBUG)
+if(!ESP_PLATFORM)
   target_compile_definitions(stm32_drivers_w_dbg_fw PRIVATE -DDEBUG)
+endif()
 endif()
 
 set(LINKER_SCRIPT firmware.ld)

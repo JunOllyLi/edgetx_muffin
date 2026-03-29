@@ -363,7 +363,7 @@ void RadioSdManagerPage::fileAction(const char* path, const char* name,
     }
     if (!strcasecmp(ext, FIRMWARE_EXT)) {
 //TODO: Find out why UF2FirmwareUpdate is bricking
-#if !defined(FIRMWARE_FORMAT_UF2)
+#if !defined(FIRMWARE_FORMAT_UF2) && !defined(ESP_PLATFORM)
       if (isBootloader(fullpath)) {
         menu->addLine(STR_FLASH_BOOTLOADER,
                       [=]() { BootloaderUpdate(fullpath); });

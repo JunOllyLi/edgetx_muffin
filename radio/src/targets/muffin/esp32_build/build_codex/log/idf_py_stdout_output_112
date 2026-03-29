@@ -1,0 +1,710 @@
+[1/485] Generating muffin.json.h
+[2/485] Linking C static library esp-idf/esp_driver_gpio/libesp_driver_gpio.a
+[3/485] Linking C static library esp-idf/xtensa/libxtensa.a
+[4/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/ftp-server/WiFi.c.obj
+[5/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/ota_server/ota_server.c.obj
+[6/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/ftp-server/ftp.c.obj
+[7/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/rmt_uart_tx_encoder.cpp.obj
+[8/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/esp32_rmt_uart.cpp.obj
+[9/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/esp32_rmt_rx.cpp.obj
+[10/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/mixer_scheduler_driver.cpp.obj
+[11/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board_lib.dir/targets/common/esp32/ftp-server/initWiFi.cpp.obj
+[12/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/hitec.cpp.obj
+[13/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/spektrum.cpp.obj
+[14/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/multi.cpp.obj
+[15/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/hott.cpp.obj
+[16/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/mlink.cpp.obj
+[17/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/multi.cpp.obj
+[18/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/tasks.cpp.obj
+[19/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/dump.cpp.obj
+[20/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/io/multi_firmware_update.cpp.obj
+[21/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/haptic.cpp.obj
+[22/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/main.cpp.obj
+/home/junl/muffin/radio/src/main.cpp:161:24: warning: 'usbConnectedWindow' defined but not used [-Wunused-variable]
+  161 | static UsbSDConnected* usbConnectedWindow = nullptr;
+      |                        ^~~~~~~~~~~~~~~~~~
+[23/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/pulses.cpp.obj
+[24/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/audio.cpp.obj
+[25/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/crossfire.cpp.obj
+[26/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/frsky.cpp.obj
+[27/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/frsky_d.cpp.obj
+[28/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/crc.cpp.obj
+[29/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/telemetry_sensors.cpp.obj
+[30/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/telemetry.cpp.obj
+[31/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/os/async_freertos.cpp.obj
+[32/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/os/sleep_freertos.cpp.obj
+[33/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/crossfire.cpp.obj
+[34/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/os/timer_freertos.cpp.obj
+[35/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/os/time_freertos.cpp.obj
+[36/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/frsky_sport.cpp.obj
+[37/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/os/task_freertos.cpp.obj
+[38/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/frsky_pxx2.cpp.obj
+[39/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/telemetry/flysky_ibus.cpp.obj
+[40/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/vario.cpp.obj
+[41/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/sbus.cpp.obj
+[42/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_cz.cpp.obj
+[43/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_cn.cpp.obj
+[44/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/io/frsky_firmware_update.cpp.obj
+[45/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/bluetooth.cpp.obj
+[46/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_da.cpp.obj
+[47/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_fi.cpp.obj
+[48/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_es.cpp.obj
+[49/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_en.cpp.obj
+[50/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_de.cpp.obj
+[51/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_fr.cpp.obj
+[52/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_hu.cpp.obj
+[53/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_he.cpp.obj
+[54/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_nl.cpp.obj
+[55/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_it.cpp.obj
+[56/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_jp.cpp.obj
+[57/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_pt.cpp.obj
+[58/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_pl.cpp.obj
+[59/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_ko.cpp.obj
+[60/485] Performing configure step for 'bootloader'
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- The C compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /home/junl/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/junl/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/junl/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32s3
+-- Project sdkconfig file /home/junl/muffin/radio/src/targets/muffin/esp32_build/sdkconfig
+-- Compiler supported targets: xtensa-esp-elf
+-- Adding linker script /home/junl/esp/esp-idf/components/soc/esp32s3/ld/esp32s3.peripherals.ld
+-- Bootloader project name: "bootloader" version: 1
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.api.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.bt_funcs.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.libgcc.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.wdt.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.version.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.newlib.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/bootloader/subproject/main/ld/esp32s3/bootloader.ld
+-- Adding linker script /home/junl/esp/esp-idf/components/bootloader/subproject/main/ld/esp32s3/bootloader.rom.ld
+-- Components: bootloader bootloader_support efuse esp_app_format esp_bootloader_format esp_common esp_hw_support esp_rom esp_system esptool_py freertos hal log main micro-ecc newlib partition_table soc spi_flash xtensa
+-- Component paths: /home/junl/esp/esp-idf/components/bootloader /home/junl/esp/esp-idf/components/bootloader_support /home/junl/esp/esp-idf/components/efuse /home/junl/esp/esp-idf/components/esp_app_format /home/junl/esp/esp-idf/components/esp_bootloader_format /home/junl/esp/esp-idf/components/esp_common /home/junl/esp/esp-idf/components/esp_hw_support /home/junl/esp/esp-idf/components/esp_rom /home/junl/esp/esp-idf/components/esp_system /home/junl/esp/esp-idf/components/esptool_py /home/junl/esp/esp-idf/components/freertos /home/junl/esp/esp-idf/components/hal /home/junl/esp/esp-idf/components/log /home/junl/esp/esp-idf/components/bootloader/subproject/main /home/junl/esp/esp-idf/components/bootloader/subproject/components/micro-ecc /home/junl/esp/esp-idf/components/newlib /home/junl/esp/esp-idf/components/partition_table /home/junl/esp/esp-idf/components/soc /home/junl/esp/esp-idf/components/spi_flash /home/junl/esp/esp-idf/components/xtensa
+-- Configuring done (17.3s)
+-- Generating done (0.2s)
+-- Build files have been written to: /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader
+[61/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/key_driver.cpp.obj
+[62/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_ru.cpp.obj
+[63/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/usb_driver.cpp.obj
+[64/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/storage.cpp.obj
+[65/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_se.cpp.obj
+[66/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/fatfs_diskio.cpp.obj
+[67/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/flash_driver.cpp.obj
+[68/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_sk.cpp.obj
+[69/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/module_port.cpp.obj
+[70/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/FatFs/ffunicode.c.obj
+[71/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_tw.cpp.obj
+[72/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/tts/tts_ua.cpp.obj
+[73/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/switch_driver.cpp.obj
+[74/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/FatFs/ff.c.obj
+[75/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/hal/adc_driver.cpp.obj
+[76/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw.c.obj
+[77/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_img.c.obj
+[78/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/debug.cpp.obj
+[79/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/io/multi_protolist.cpp.obj
+[80/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_refr.c.obj
+[81/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_line.c.obj
+[82/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_img_cache.c.obj
+[83/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_rect.c.obj
+[84/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_img_buf.c.obj
+[85/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_transform.c.obj
+[86/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw.c.obj
+[87/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_label.c.obj
+[88/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/widgets.cpp.obj
+[89/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_img_decoder.c.obj
+[90/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_img.c.obj
+[91/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_letter.c.obj
+[92/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_layer.c.obj
+[93/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_polygon.c.obj
+[94/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/lua_widget_factory.cpp.obj
+[95/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/lua_widget.cpp.obj
+[96/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_arc.c.obj
+[97/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_line.c.obj
+[98/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/font/lv_font.c.obj
+[99/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c.obj
+[100/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/hal/lv_hal_tick.c.obj
+[101/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/font/lv_font_fmt_txt.c.obj
+[102/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_gc.c.obj
+[103/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_blend.c.obj
+[104/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_color.c.obj
+[105/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_transform.c.obj
+[106/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_area.c.obj
+[107/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_utils.c.obj
+[108/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/hal/lv_hal_disp.c.obj
+[109/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_ll.c.obj
+[110/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_mem.c.obj
+[111/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_group.c.obj
+[112/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_event.c.obj
+[113/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_txt.c.obj
+[114/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_draw.c.obj
+[115/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_theme.c.obj
+[116/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj.c.obj
+[117/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_indev.c.obj
+[118/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_disp.c.obj
+[119/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_rect.c.obj
+[120/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_class.c.obj
+[121/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_scroll.c.obj
+[122/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_style_gen.c.obj
+[123/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_layer.c.obj
+[124/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_tree.c.obj
+[125/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_arc.c.obj
+[126/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_indev_scroll.c.obj
+[127/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_triangle.c.obj
+[128/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/sw/lv_draw_sw_gradient.c.obj
+[129/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/hal/lv_hal_indev.c.obj
+[130/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_templ.c.obj
+[131/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_timer.c.obj
+[132/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_anim.c.obj
+[133/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_style_gen.c.obj
+[134/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_style.c.obj
+[135/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_math.c.obj
+[136/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_fs.c.obj
+[137/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_bidi.c.obj
+[138/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_style.c.obj
+[139/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_async.c.obj
+[140/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/core/lv_obj_pos.c.obj
+[141/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_objx_templ.c.obj
+[142/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_dropdown.c.obj
+[143/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_line.c.obj
+[144/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_anim_timeline.c.obj
+[145/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_roller.c.obj
+[146/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_tlsf.c.obj
+[147/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_switch.c.obj
+[148/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/draw/lv_draw_mask.c.obj
+[149/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_btn.c.obj
+[150/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/misc/lv_printf.c.obj
+[151/485] Generating ld/sections.ld
+info: INFO: Symbol LV_I2C defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_tft/Kconfig:1080
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:464
+info: INFO: Symbol LV_TOUCH_SPI_MISO defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:213
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:83
+info: INFO: Symbol LV_TOUCH_SPI_MOSI defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:224
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:92
+info: INFO: Symbol LV_TOUCH_SPI_CLK defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:236
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:101
+info: INFO: Symbol LV_TOUCH_SPI_CS defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:109
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:245
+info: INFO: Symbol LV_TOUCH_X_MIN defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:257
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:129
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:336
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:376
+info: INFO: Symbol LV_TOUCH_Y_MIN defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:341
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:135
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:382
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:262
+info: INFO: Symbol LV_TOUCH_X_MAX defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:267
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:388
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:346
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:141
+info: INFO: Symbol LV_TOUCH_Y_MAX defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:147
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:351
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:394
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:272
+info: INFO: Symbol LV_TOUCH_XY_SWAP defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:356
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:277
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:153
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:400
+info: INFO: Symbol LV_TOUCH_INVERT_X defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:405
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:361
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:282
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:158
+info: INFO: Symbol LV_TOUCH_INVERT_Y defined in multiple locations (see below). Please check if this is a correct behavior or a random name match:
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:366
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:287
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:163
+    /home/junl/muffin/radio/src/targets/common/esp32/components/lvgl_esp32_drivers/lvgl_touch/Kconfig:410
+[152/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_canvas.c.obj
+[153/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_checkbox.c.obj
+[154/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_bar.c.obj
+[155/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/lv_extra.c.obj
+[156/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_slider.c.obj
+[157/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_img.c.obj
+[158/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_btnmatrix.c.obj
+[159/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/others/snapshot/lv_snapshot.c.obj
+[160/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/libs/qrcode/lv_qrcode.c.obj
+[161/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_label.c.obj
+[162/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/lua_lvgl_widget.cpp.obj
+[163/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_arc.c.obj
+[164/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c.obj
+[165/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_table.c.obj
+[166/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/widgets/lv_textarea.c.obj
+[167/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/widgets/tileview/lv_tileview.c.obj
+[168/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_bl.c.obj
+[169/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/layouts/grid/lv_grid.c.obj
+[170/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_XXS.c.obj
+[171/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/layouts/flex/lv_flex.c.obj
+[172/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/widgets/keyboard/lv_keyboard.c.obj
+[173/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_bold_STD.c.obj
+[174/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_XXS.c.obj
+[175/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_XS.c.obj
+[176/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_XS.c.obj
+[177/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_STD.c.obj
+[178/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_L.c.obj
+[179/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_L.c.obj
+[180/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_bold_LXL.c.obj
+[181/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_bold_XL.c.obj
+[182/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_L.c.obj
+[183/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_bold_STD.c.obj
+[184/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_bold_XXL.c.obj
+[185/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_en_STD.c.obj
+[186/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_bold_STD.c.obj
+[187/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_XS.c.obj
+[188/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_XXS.c.obj
+[189/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_bold_XL.c.obj
+[190/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_he_STD.c.obj
+[191/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_cn_bold_XL.c.obj
+[192/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_XXS.c.obj
+[193/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_XS.c.obj
+[194/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_L.c.obj
+[195/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_bold_STD.c.obj
+[196/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_XS.c.obj
+[197/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_L.c.obj
+[198/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_XXS.c.obj
+[199/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_L.c.obj
+[200/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_bold_STD.c.obj
+[201/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_STD.c.obj
+[202/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_XXS.c.obj
+[203/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_XS.c.obj
+[204/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_bold_STD.c.obj
+[205/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_jp_bold_XL.c.obj
+[206/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_bold_XL.c.obj
+[207/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_STD.c.obj
+[208/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ko_bold_XL.c.obj
+[209/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ru_STD.c.obj
+[210/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_L.c.obj
+[211/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_XXS.c.obj
+[212/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_XS.c.obj
+[213/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_XS.c.obj
+[214/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_XXS.c.obj
+[215/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_bold_STD.c.obj
+[216/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_bold_XL.c.obj
+[217/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_ua_STD.c.obj
+[218/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_bold_STD.c.obj
+[219/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_L.c.obj
+[220/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_STD.c.obj
+[221/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/fonts/lvgl/std/lv_font_tw_bold_XL.c.obj
+[222/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_bits.cpp.obj
+[223/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_parser.cpp.obj
+[224/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lvgl/src/extra/libs/qrcode/qrcodegen.c.obj
+[225/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_tree_walker.cpp.obj
+[226/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/screenshot.cpp.obj
+[227/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/storage_common.cpp.obj
+[228/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/sdcard_common.cpp.obj
+[229/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/sdcard_yaml.cpp.obj
+[230/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_modelslist.cpp.obj
+[231/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_labelslist.cpp.obj
+[232/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/lz4/lz4.c.obj
+[233/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/yaml/yaml_datastructs.cpp.obj
+[234/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/lua_event.cpp.obj
+[235/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/interface.cpp.obj
+/home/junl/muffin/radio/src/lua/interface.cpp: In function 'int luaLoadScriptFileToState(lua_State*, const char*, const char*)':
+/home/junl/muffin/radio/src/lua/interface.cpp:546:7: warning: unused variable 't' [-Wunused-variable]
+  546 |   int t = lua_gettop(L);
+      |       ^
+[236/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lctype.c.obj
+[237/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/api_general.cpp.obj
+[238/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lcode.c.obj
+[239/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ldump.c.obj
+[240/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ldo.c.obj
+[241/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/api_filesystem.cpp.obj
+[242/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ldebug.c.obj
+[243/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lapi.c.obj
+[244/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lfunc.c.obj
+[245/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lopcodes.c.obj
+[246/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lmem.c.obj
+[247/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/llex.c.obj
+[248/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lstate.c.obj
+[249/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/api_model.cpp.obj
+[250/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lobject.c.obj
+[251/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lstring.c.obj
+[252/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ltm.c.obj
+[253/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lzio.c.obj
+[254/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lundump.c.obj
+[255/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lgc.c.obj
+[256/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ltable.c.obj
+[257/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/linit.c.obj
+[258/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lbitlib.c.obj
+[259/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lbaselib.c.obj
+[260/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/loadlib.c.obj
+[261/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lparser.c.obj
+[262/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lmathlib.c.obj
+[263/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lcorolib.c.obj
+[264/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lauxlib.c.obj
+[265/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/liolib.c.obj
+[266/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lvm.c.obj
+[267/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/api_colorlcd.cpp.obj
+[268/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/ltablib.c.obj
+[269/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/thirdparty/Lua/src/lstrlib.c.obj
+[270/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lib_file.cpp.obj
+[271/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/sdcard.cpp.obj
+[272/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gvars.cpp.obj
+[273/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/rtc.cpp.obj
+[274/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/logs.cpp.obj
+[275/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/curves.cpp.obj
+[276/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/datastructs_model.cpp.obj
+[277/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/storage/modelslist.cpp.obj
+[278/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/datastructs_radio.cpp.obj
+[279/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/mixer_scheduler.cpp.obj
+[280/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/analogs.cpp.obj
+[281/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/lua/api_colorlcd_lvgl.cpp.obj
+[282/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/stamp.cpp.obj
+[283/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/functions.cpp.obj
+[284/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/edgetx.cpp.obj
+[285/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/mixes.cpp.obj
+[286/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/switches.cpp.obj
+/home/junl/muffin/radio/src/switches.cpp: In function 'void logicalSwitchesTimerTick()':
+/home/junl/muffin/radio/src/switches.cpp:1084:30: warning: taking address of packed member of 'LogicalSwitchContext' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1084 |         int16_t *lastValue = &LS_LAST_VALUE(fm, i);
+      |                              ^
+[287/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/timers.cpp.obj
+[288/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/mixer.cpp.obj
+[289/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/strhelpers.cpp.obj
+[290/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/model_init.cpp.obj
+[291/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/serial.cpp.obj
+[292/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/trainer.cpp.obj
+[293/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/cfn_sort.cpp.obj
+[294/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/model_audio.cpp.obj
+[295/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/keys.cpp.obj
+[296/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/tasks/mixer_task.cpp.obj
+[297/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/input_mapping.cpp.obj
+[298/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/inactivity_timer.cpp.obj
+[299/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/bitmapbuffer.cpp.obj
+[300/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/translations/translations.cpp.obj
+[301/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/maths.cpp.obj
+[302/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/button.cpp.obj
+[303/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/gui_common.cpp.obj
+[304/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/bitmapbuffer_draw_extra.cpp.obj
+[305/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/button_matrix.cpp.obj
+[306/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/file_browser.cpp.obj
+[307/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/choice.cpp.obj
+[308/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/file_preview.cpp.obj
+[309/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/dialog.cpp.obj
+[310/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/etx_lv_theme.cpp.obj
+[311/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/form.cpp.obj
+[312/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/file_carosell.cpp.obj
+[313/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/keyboard_base.cpp.obj
+[314/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/keyboard_number.cpp.obj
+[315/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/filechoice.cpp.obj
+[316/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/keyboard_text.cpp.obj
+[317/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/mainwindow.cpp.obj
+[318/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/fullscreen_dialog.cpp.obj
+[319/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/messaging.cpp.obj
+[320/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/menu.cpp.obj
+[321/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/listbox.cpp.obj
+[322/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/list_line_button.cpp.obj
+[323/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/modal_window.cpp.obj
+[324/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/menutoolbar.cpp.obj
+[325/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/numberedit.cpp.obj
+[326/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/progress.cpp.obj
+[327/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/popups.cpp.obj
+[328/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/slider.cpp.obj
+[329/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/table.cpp.obj
+[330/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/static.cpp.obj
+[331/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/page.cpp.obj
+[332/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/toggleswitch.cpp.obj
+[333/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/textedit.cpp.obj
+[334/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/timeedit.cpp.obj
+[335/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/window.cpp.obj
+[336/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/view_text.cpp.obj
+[337/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1+2.cpp.obj
+[338/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1+3.cpp.obj
+[339/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x1.cpp.obj
+[340/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x1AppMode.cpp.obj
+[341/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x2.cpp.obj
+[342/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1+4.cpp.obj
+[343/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/libui/bitmapbuffer_fileio.cpp.obj
+[344/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x4.cpp.obj
+[345/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/themes/theme_manager.cpp.obj
+[346/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x3.cpp.obj
+[347/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2+3.cpp.obj
+[348/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout1x6.cpp.obj
+[349/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2+1.cpp.obj
+[350/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2x1.cpp.obj
+[351/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2x2.cpp.obj
+[352/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2x4.cpp.obj
+[353/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout2x3.cpp.obj
+[354/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout4+2.cpp.obj
+[355/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/layouts/layout4+2b.cpp.obj
+[356/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/text.cpp.obj
+[357/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/modelbmp.cpp.obj
+[358/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/timer.cpp.obj
+[359/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/gauge.cpp.obj
+[360/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/radio_info.cpp.obj
+[361/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/outputs.cpp.obj
+[362/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/widgets/value.cpp.obj
+[363/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/layout.cpp.obj
+[364/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/screen_user_interface.cpp.obj
+[365/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/sliders.cpp.obj
+[366/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/screen_setup.cpp.obj
+[367/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/trims.cpp.obj
+[368/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/topbar.cpp.obj
+[369/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/view_logical_switches.cpp.obj
+[370/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/view_channels.cpp.obj
+[371/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/view_main_decoration.cpp.obj
+[372/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/view_main.cpp.obj
+[373/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/widgets_container.cpp.obj
+[374/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/view_statistics.cpp.obj
+[375/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/widget.cpp.obj
+[376/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/widgets_setup.cpp.obj
+[377/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/key_shortcuts.cpp.obj
+[378/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/mainview/widget_settings.cpp.obj
+[379/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/qmpagechoice.cpp.obj
+[380/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/quick_menu_group.cpp.obj
+[381/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/pagegroup.cpp.obj
+[382/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/quick_menu_favorites.cpp.obj
+[383/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/channel_range.cpp.obj
+[384/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/quick_menu.cpp.obj
+[385/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/color_editor.cpp.obj
+[386/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/color_list.cpp.obj
+[387/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/channel_bar.cpp.obj
+[388/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/curve.cpp.obj
+[389/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/color_picker.cpp.obj
+[390/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/fm_matrix.cpp.obj
+[391/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/setup_menus/quick_menu_data.cpp.obj
+[392/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/curve_param.cpp.obj
+[393/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/input_source.cpp.obj
+[394/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/source_numberedit.cpp.obj
+[395/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/colors.cpp.obj
+[396/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/fonts.cpp.obj
+[397/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/bitmaps.cpp.obj
+[398/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/switch_warn_dialog.cpp.obj
+[399/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/lcd.cpp.obj
+[400/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/gvar_numberedit.cpp.obj
+[401/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/sourcechoice.cpp.obj
+[402/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/controls/switchchoice.cpp.obj
+[403/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/LvglWrapper.cpp.obj
+[404/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/startup_shutdown.cpp.obj
+[405/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/input_edit.cpp.obj
+[406/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/curveedit.cpp.obj
+[407/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/mixer_edit_adv.cpp.obj
+[408/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/mixer_edit.cpp.obj
+[409/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_curves.cpp.obj
+[410/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_flightmodes.cpp.obj
+[411/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_inputs.cpp.obj
+[412/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_gvars.cpp.obj
+[413/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_outputs.cpp.obj
+[414/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_mixes.cpp.obj
+[415/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/output_edit.cpp.obj
+[416/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_templates.cpp.obj
+[417/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_logical_switches.cpp.obj
+[418/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/trainer_setup.cpp.obj
+[419/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/timer_setup.cpp.obj
+[420/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/preflight_checks.cpp.obj
+[421/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/bind_menu_d16.cpp.obj
+[422/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/custom_failsafe.cpp.obj
+/home/junl/muffin/radio/src/gui/colorlcd/module/custom_failsafe.cpp: In member function 'void ChannelFailsafeEdit::toggle()':
+/home/junl/muffin/radio/src/gui/colorlcd/module/custom_failsafe.cpp:138:18: warning: taking address of packed member of 'ModelData' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  138 |     auto value = &(g_model.failsafeChannels[channel]);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[423/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/hw_extmodule.cpp.obj
+[424/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/special_functions.cpp.obj
+[425/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/ppm_settings.cpp.obj
+[426/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_select.cpp.obj
+[427/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_setup.cpp.obj
+[428/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_telemetry.cpp.obj
+[429/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/hw_intmodule.cpp.obj
+[430/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/hw_inputs.cpp.obj
+[431/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/hw_serial.cpp.obj
+[432/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/preview_window.cpp.obj
+[433/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/module_setup.cpp.obj
+[434/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_calibration.cpp.obj
+[435/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_diagkeys.cpp.obj
+[436/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_diaganas.cpp.obj
+[437/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_version.cpp.obj
+[438/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_hardware.cpp.obj
+[439/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_gps_tool.cpp.obj
+[440/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_tools.cpp.obj
+[441/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_sdmanager.cpp.obj
+[442/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_trainer.cpp.obj
+[443/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_wifi.cpp.obj
+[444/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/standalone_lua.cpp.obj
+[445/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_theme.cpp.obj
+[446/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_heli.cpp.obj
+[447/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/multi_rfprotos.cpp.obj
+[448/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/crossfire_settings.cpp.obj
+[449/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_mixer_scripts.cpp.obj
+[450/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_spectrum_analyser.cpp.obj
+[451/485] Building C object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/syscalls.c.obj
+[452/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/trainer_bluetooth.cpp.obj
+[453/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/hw_bluetooth.cpp.obj
+[454/485] Generating mcp23017_keys.inc
+[455/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/modules_helpers.cpp.obj
+[456/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/module/mpm_settings.cpp.obj
+[457/485] Linking CXX static library esp-idf/main/edgetx/radio/src/libboard_lib.a
+[458/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/ppm.cpp.obj
+[459/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/usb_joystick.cpp.obj
+[460/485] Generating mcp23017_switches.inc
+[461/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/pulses/dsm2.cpp.obj
+[462/485] Generating hal_adc_inputs.inc
+[463/485] Generating ads1015_adc_inputs.inc
+[464/485] Building C object CMakeFiles/edgetx.elf.dir/project_elf_src_esp32s3.c.obj
+[465/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/switch_driver.cpp.obj
+[466/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/model/model_usbjoystick.cpp.obj
+[467/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/ads1015_adc.cpp.obj
+[468/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/backlight_driver.cpp.obj
+[469/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/trainer_driver.cpp.obj
+[470/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/lcd_lvgl_esp.cpp.obj
+[471/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/flyskyHallStick_driver.cpp.obj
+[472/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/sh1107_top_lcd.cpp.obj
+[473/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/radiolib_esp32.dir/gui/colorlcd/radio/radio_setup.cpp.obj
+[474/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/module_drivers.cpp.obj
+[475/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/mcp23017_io_driver.cpp.obj
+[476/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/board.cpp.obj
+[477/485] Performing build step for 'bootloader'
+[1/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_crc.c.obj
+[2/114] Building ASM object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_longjmp.S.obj
+[3/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_gpio.c.obj
+[4/114] Building C object esp-idf/log/CMakeFiles/__idf_log.dir/log_noos.c.obj
+[5/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_sys.c.obj
+[6/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_efuse.c.obj
+[7/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_systimer.c.obj
+[8/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_uart.c.obj
+[9/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_spiflash.c.obj
+[10/114] Building ASM object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_writeback_esp32s3.S.obj
+[11/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_wdt.c.obj
+[12/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/esp_memory_utils.c.obj
+[13/114] Building C object esp-idf/log/CMakeFiles/__idf_log.dir/log_buffers.c.obj
+[14/114] Building C object esp-idf/esp_common/CMakeFiles/__idf_esp_common.dir/src/esp_err_to_name.c.obj
+[15/114] Building C object esp-idf/log/CMakeFiles/__idf_log.dir/log.c.obj
+[16/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/esp_cpu_intr.c.obj
+[17/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/cpu_region_protect.c.obj
+[18/114] Building C object esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_esp32s2_esp32s3.c.obj
+[19/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/cpu.c.obj
+[20/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/chip_info.c.obj
+[21/114] Linking C static library esp-idf/log/liblog.a
+[22/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk_init.c.obj
+[23/114] Linking C static library esp-idf/esp_rom/libesp_rom.a
+[24/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_table.c.obj
+[25/114] Building C object esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/esp_err.c.obj
+[26/114] Linking C static library esp-idf/esp_common/libesp_common.a
+[27/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_rtc_calib.c.obj
+[28/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_sleep.c.obj
+[29/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk.c.obj
+[30/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_fields.c.obj
+[31/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_init.c.obj
+[32/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_utility.c.obj
+[33/114] Building C object esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_time.c.obj
+[34/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_fields.c.obj
+[35/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_mem.c.obj
+[36/114] Linking C static library esp-idf/esp_hw_support/libesp_hw_support.a
+[37/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_init.c.obj
+[38/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random.c.obj
+[39/114] Linking C static library esp-idf/esp_system/libesp_system.a
+[40/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_efuse.c.obj
+[41/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common.c.obj
+[42/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_api.c.obj
+[43/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common_loader.c.obj
+[44/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/secure_boot.c.obj
+[45/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_encrypt.c.obj
+[46/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random_esp32s3.c.obj
+[47/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c.obj
+[48/114] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_utility.c.obj
+[49/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_partitions.c.obj
+[50/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_loader.c.obj
+[51/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console_loader.c.obj
+[52/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/flash_qio_mode.c.obj
+[53/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_sha.c.obj
+[54/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_soc.c.obj
+[55/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console.c.obj
+[56/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash_config_esp32s3.c.obj
+[57/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_init.c.obj
+[58/114] Linking C static library esp-idf/efuse/libefuse.a
+[59/114] Building C object esp-idf/esp_bootloader_format/CMakeFiles/__idf_esp_bootloader_format.dir/esp_bootloader_desc.c.obj
+[60/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_panic.c.obj
+[61/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/mpu_hal.c.obj
+[62/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/hal_utils.c.obj
+[63/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/efuse_hal.c.obj
+[64/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash.c.obj
+[65/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_esp32s3.c.obj
+[66/114] Building C object esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/spi_flash_wrap.c.obj
+[67/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/esp32s3/efuse_hal.c.obj
+[68/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/dport_access_common.c.obj
+[69/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/interrupts.c.obj
+[70/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/lldesc.c.obj
+[71/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/mmu_hal.c.obj
+[72/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/uart_periph.c.obj
+[73/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gpio_periph.c.obj
+[74/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/adc_periph.c.obj
+[75/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_utility.c.obj
+[76/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/dedic_gpio_periph.c.obj
+[77/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gdma_periph.c.obj
+[78/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/ledc_periph.c.obj
+[79/114] Building C object esp-idf/hal/CMakeFiles/__idf_hal.dir/cache_hal.c.obj
+[80/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/pcnt_periph.c.obj
+[81/114] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp_image_format.c.obj
+[82/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/spi_periph.c.obj
+[83/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rmt_periph.c.obj
+[84/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdm_periph.c.obj
+[85/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/temperature_sensor_periph.c.obj
+[86/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2s_periph.c.obj
+[87/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2c_periph.c.obj
+[88/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/lcd_periph.c.obj
+[89/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/timer_periph.c.obj
+[90/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mpi_periph.c.obj
+[91/114] Linking C static library esp-idf/bootloader_support/libbootloader_support.a
+[92/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/touch_sensor_periph.c.obj
+[93/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdmmc_periph.c.obj
+[94/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mcpwm_periph.c.obj
+[95/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/twai_periph.c.obj
+[96/114] Generating project_elf_src_esp32s3.c
+[97/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/wdt_periph.c.obj
+[98/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/usb_dwc_periph.c.obj
+[99/114] Linking C static library esp-idf/esp_bootloader_format/libesp_bootloader_format.a
+[100/114] Building C object esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/eri.c.obj
+[101/114] Building C object CMakeFiles/bootloader.elf.dir/project_elf_src_esp32s3.c.obj
+[102/114] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/bootloader_start.c.obj
+[103/114] Building C object esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rtc_io_periph.c.obj
+[104/114] Linking C static library esp-idf/spi_flash/libspi_flash.a
+[105/114] Linking C static library esp-idf/hal/libhal.a
+[106/114] Building C object esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/xt_trax.c.obj
+[107/114] Building C object esp-idf/micro-ecc/CMakeFiles/__idf_micro-ecc.dir/uECC_verify_antifault.c.obj
+[108/114] Linking C static library esp-idf/micro-ecc/libmicro-ecc.a
+[109/114] Linking C static library esp-idf/soc/libsoc.a
+[110/114] Linking C static library esp-idf/xtensa/libxtensa.a
+[111/114] Linking C static library esp-idf/main/libmain.a
+[112/114] Linking C executable bootloader.elf
+[113/114] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader/bootloader.bin
+[114/114] cd /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader/esp-idf/esptool_py && /home/junl/.espressif/python_env/idf5.3_py3.12_env/bin/python /home/junl/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader/bootloader.bin
+Bootloader binary size 0x3930 bytes. 0x46d0 bytes (55%) free.
+[478/485] No install step for 'bootloader'
+[479/485] Completed 'bootloader'
+[480/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/rtc_driver.cpp.obj
+[481/485] Building CXX object esp-idf/main/edgetx/radio/src/CMakeFiles/board.dir/targets/muffin/pwr_driver.cpp.obj
+[482/485] Linking CXX static library esp-idf/main/edgetx/radio/src/libradiolib_esp32.a
+[483/485] Linking CXX executable edgetx.elf
+[484/485] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/edgetx.bin
+[485/485] cd /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/esp-idf/esptool_py && /home/junl/.espressif/python_env/idf5.3_py3.12_env/bin/python /home/junl/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/partition_table/partition-table.bin /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/edgetx.bin
+edgetx.bin binary size 0x29e5b0 bytes. Smallest app partition is 0x2ee000 bytes. 0x4fa50 bytes (11%) free.

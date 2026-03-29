@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 
 extern "C" {
 #include <stdbool.h>
@@ -52,6 +52,10 @@ void lcdInit()
 {
     lvgl_driver_init();
     lcdSetFlushCb(lcd_flush);
+}
+
+void lcdSetInitalFrameBuffer(void* fbAddress)
+{
 }
 
 static TouchState internalTouchState = {0};
@@ -104,8 +108,13 @@ void DMACopyBitmap(uint16_t *dest, uint16_t destw, uint16_t desth, uint16_t x,
                    uint16_t srch, uint16_t srcx, uint16_t srcy, uint16_t w,
                    uint16_t h)
 {
+    uint16_t *desty = dest + y * destw + x;
+    const uint16_t *srcy_calc = src + srcy * srcw + srcx;
+    uint16_t dw = 2 * w;
     for (int i = 0; i < h; i++) {
-        memcpy(dest + (y + i) * destw + x, src + (srcy + i) * srcw + srcx, 2 * w);
+        memcpy(desty, srcy_calc, dw);
+        desty += destw;
+        srcy_calc += srcw;
     }
 }
 
@@ -116,9 +125,11 @@ void DMACopyAlphaBitmap(uint16_t *dest, uint16_t destw, uint16_t desth,
                         uint16_t srcw, uint16_t srch, uint16_t srcx,
                         uint16_t srcy, uint16_t w, uint16_t h)
 {
+    uint16_t *p1 = dest + y * destw + x;
+    const uint16_t *q1 = src + srcy * srcw + srcx;
     for (coord_t line = 0; line < h; line++) {
-        uint16_t *p = dest + (y + line) * destw + x;
-        const uint16_t *q = src + (srcy + line) * srcw + srcx;
+        uint16_t *p = p1;
+        const uint16_t *q = q1;
         for (coord_t col = 0; col < w; col++) {
             uint8_t alpha = *q >> 12;
             uint8_t red = ((((*q >> 8) & 0x0f) << 1) * alpha + (*p >> 11) * (0x0f - alpha)) / 0x0f;
@@ -130,6 +141,8 @@ void DMACopyAlphaBitmap(uint16_t *dest, uint16_t destw, uint16_t desth,
             p++;
             q++;
         }
+        p1 += destw;
+        q1 += srcw;
     }
 }
 
@@ -142,9 +155,11 @@ void DMACopyAlphaMask(uint16_t *dest, uint16_t destw, uint16_t desth,
 {
     RGB_SPLIT(fg_color, red, green, blue);
 
+    uint16_t *p1 = dest + y * destw + x;
+    const uint8_t *q1 = src + srcy * srcw + srcx;
     for (coord_t line = 0; line < h; line++) {
-        uint16_t *p = dest + (y + line) * destw + x;
-        const uint8_t *q = src + (srcy + line) * srcw + srcx;
+        uint16_t *p = p1;
+        const uint8_t *q = q1;
         for (coord_t col = 0; col < w; col++) {
             uint16_t opacity = *q >> 4;  // convert to 4 bits (stored in 8bit for DMA)
             uint8_t bgWeight = OPACITY_MAX - opacity;
@@ -156,5 +171,7 @@ void DMACopyAlphaMask(uint16_t *dest, uint16_t destw, uint16_t desth,
             p++;
             q++;
         }
+        p1 += destw;
+        q1 += srcw;
     }
 }

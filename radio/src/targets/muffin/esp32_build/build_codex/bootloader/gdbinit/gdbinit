@@ -1,0 +1,2 @@
+source /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader/gdbinit/symbols
+source /home/junl/muffin/radio/src/targets/muffin/esp32_build/build_codex/bootloader/gdbinit/connect

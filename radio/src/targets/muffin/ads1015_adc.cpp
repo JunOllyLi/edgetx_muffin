@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "hal/adc_driver.h"
 #include <string.h>
 #include <stdio.h>
@@ -137,6 +137,16 @@ static void task_adc(void * pdata) {
             index = 0;
         }
     }
+}
+
+uint16_t getBatteryVoltage()
+{
+  return getAnalogValue(ADC_INPUT_VBAT);
+}
+
+uint16_t getRTCBatteryVoltage()
+{
+  return getAnalogValue(ADC_INPUT_VBAT);
 }
 
 #define TASKADC_STACK_SIZE (1024 * 4)

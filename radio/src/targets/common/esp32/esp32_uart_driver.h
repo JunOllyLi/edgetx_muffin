@@ -22,7 +22,7 @@
 #if !defined(_ETX_ESP32_UART_H_)
 #define _ETX_ESP32_UART_H_
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
 

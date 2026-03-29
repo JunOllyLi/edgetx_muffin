@@ -69,13 +69,6 @@ typedef const char* (*STR_TYP)();
 #endif
 #endif
 
-#if defined(ESP_PLATFORM)
-  #define __SDRAM   EXT_RAM_BSS_ATTR
-#if defined(COLORLCD)
-  #define __SDRAMFONTS __attribute__((section(".sdram_fonts"), aligned(4)))
-#endif
-#else
-#endif
 #if __GNUC__
   #define PACK(__Declaration__) __Declaration__ __attribute__((__packed__))
 #else

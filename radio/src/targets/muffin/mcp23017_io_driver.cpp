@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "i2c_driver.h"
 #include "mcp23xxx.h"
 
@@ -45,13 +45,15 @@ static void mcp_set_gpio(uint32_t pin, uint32_t level) {
     ESP_ERROR_CHECK(i2c_register_write_byte(MCP_HANDLE(port), MCP_REG_ADDR(MCP23XXX_GPIO, port), pShadowData[port]));
 }
 
-uint32_t readKeys()
-{
-    uint32_t result = 0;
-
+void pollKeys() {
     for (int i = 0; i < 4; i++) {
         ESP_ERROR_CHECK(i2c_register_read(MCP_HANDLE(i), MCP_REG_ADDR(MCP23XXX_GPIO, i), &pShadowInput[i], 1));
     }
+}
+
+uint32_t readKeys()
+{
+    uint32_t result = 0;
 
     for (int i = 0; i < sizeof(key_mapping)/sizeof(key_mapping[0]); i++) {
         if ((key_mapping[i].bit & ShadowInput) ^ key_mapping[i].xor_bit) {

@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  */
 
-#include "opentx.h"
+#include "edgetx.h"
 #include "flyskyHallStick_driver.h"
 #include "esp32_rmt_rx.h"
 #include "hal/adc_driver.h"

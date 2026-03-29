@@ -215,3 +215,8 @@ void lcdRefresh()
   lv_disp_t* d = _lv_refr_get_disp_refreshing();
   _draw_buf_flush(d);
 }
+
+void lcdSetInitalFrameBuffer(void* fbAddress) {
+  // TODO-Muffin
+  //initialFrameBuffer = fbAddress;
+}
