@@ -1020,7 +1020,7 @@ PACK(struct QMFavorite {
 
 PACK(struct RadioData {
 
-#if defined(PCB_MUFFIN)
+#if defined(ETX_SUPPORT_WIFI)
   char wifi_ssid[32];
   char wifi_password[32];
   char ftppass[20];

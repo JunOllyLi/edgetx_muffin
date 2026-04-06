@@ -1,0 +1,7 @@
+dependencies:
+  espressif/esp_tinyusb: ~2.1.1
+
+  nimble_central_utils:
+    # Point to the local path inside your ESP-IDF installation
+    path: ${IDF_PATH}/examples/bluetooth/nimble/common/nimble_central_utils
+    version: "*"

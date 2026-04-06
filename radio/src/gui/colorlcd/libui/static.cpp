@@ -235,7 +235,7 @@ void StaticImage::setSource(std::string filename)
     lv_img_set_src(image, fullpath.c_str());
     if (!hasImage()) {
       // Failed to load
-      // TODO-MUFFIN TRACE_ERROR("could not load image '%s' - %s\n", filename.c_str(), stbi_failure_reason());
+      TRACE_ERROR("could not load image '%s' - %s\n", filename.c_str(), stbi_failure_reason());
       clearSource();
     }
     setZoom();

@@ -19,10 +19,6 @@
  * GNU General Public License for more details.
  */
 
-#if defined(ESP_PLATFORM)
-#include "esp_log.h"
-#endif
-
 #include "serial.h"
 #include "board.h"
 #include "debug.h"

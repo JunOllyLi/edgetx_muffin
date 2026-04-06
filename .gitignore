@@ -26,7 +26,10 @@ _deps
 _wasi_sdk_fetch
 *.pyc
 
+.codex
+build_codex
+
 # MkDocs
 /site/
 
-
+radio/src/targets/muffin/esp32_build/managed_components

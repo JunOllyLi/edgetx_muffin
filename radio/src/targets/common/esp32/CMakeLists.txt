@@ -3,6 +3,7 @@ add_definitions(-DAUDIO -DVOICE -DRTCLOCK)
 add_definitions(-DSBUS_TRAINER)
 
 add_definitions(-DSTORAGE_USE_SDCARD_SPI)
+add_definitions(-DAUDIO_SAMPLE_FMT=AUDIO_SAMPLE_FMT_S16)
 
 set(ESP_CMN_FOLDER ${CMAKE_CURRENT_LIST_DIR})
 
@@ -70,7 +71,6 @@ if(INTERNAL_MODULE_MULTI OR EXTERNAL_MODULE_MULTI)
     add_definitions(-DINTERNAL_MODULE_MULTI)
   endif()
 
-  add_definitions(-DUSE_MULTI_RX)
   option(DSM2 "DSM2 TX Module" ON)
   add_definitions(-DDSM2)
   option(MULTIMODULE "DIY Multiprotocol TX Module (https://github.com/pascallanger/DIY-Multiprotocol-TX-Module)" ON)
@@ -144,11 +144,11 @@ if(BLUETOOTH)
   add_definitions(-DBLUETOOTH)
   set(ESP32_CMN_SRC
     ${ESP32_CMN_SRC}
-    #../common/arm/stm32/bluetooth_driver.cpp
+    ${ESP_CMN_FOLDER}/bluetooth_driver.cpp
     )
   set(SRC
     ${SRC}
-    bluetooth.cpp
+    ${ESP_CMN_FOLDER}/bluetooth.cpp
     )
 endif()
 

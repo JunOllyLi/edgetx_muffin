@@ -36,6 +36,17 @@ void task_create(task_handle_t* h, task_func_t func, const char* name,
                         (StackType_t*)stack, &h->_task_struct);
 }
 
+#if defined(ESP_PLATFORM)
+void task_create_on_core(task_handle_t* h, task_func_t func, const char* name,
+                 void* stack, unsigned stack_size, unsigned priority, const unsigned xCoreID)
+{
+  h->_stack_size = stack_size;
+  h->_rtos_handle =
+      xTaskCreateStaticPinnedToCore(_task_stub, name, stack_size, (void*)func, priority,
+                        (StackType_t*)stack, &h->_task_struct, xCoreID);
+}
+#endif
+
 unsigned task_get_stack_usage(task_handle_t* h)
 {
   return (h->_stack_size - uxTaskGetStackHighWaterMark(h->_rtos_handle)) *

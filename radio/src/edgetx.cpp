@@ -131,8 +131,7 @@ void toggleLatencySwitch()
 
 void checkValidMCU(void)
 {
-#if !defined(ESP_PLATFORM)
-#if !defined(SIMU) && !defined(BOOT)
+#if !defined(SIMU) && !defined(BOOT) && !defined(ESP_PLATFORM)
   // Checks the radio MCU type matches intended firmware type
   uint32_t idcode = DBGMCU->IDCODE & 0xFFF;
 
@@ -169,7 +168,6 @@ void checkValidMCU(void)
   }
 #endif
 #endif
-#endif // !defined(ESP_PLATFORM)
 }
 
 void per10ms()

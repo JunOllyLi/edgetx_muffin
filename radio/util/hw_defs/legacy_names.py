@@ -1089,6 +1089,7 @@ LEGACY_NAMES = [
         },
     },
     {
+        "targets": {"pa01"},
         "inputs": {
             "LH": {"yaml": "Rud", "lua": "rud", "description": "Rudder"},
             "LV": {"yaml": "Ele", "lua": "ele", "description": "Elevator"},

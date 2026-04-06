@@ -1,0 +1,12 @@
+[scheme:to_diram]
+entries:
+    text -> iram0_text
+    bss -> dram0_bss
+    data -> dram0_data
+
+[mapping:radiolib_esp32]
+archive: libradiolib_esp32.a
+entries:
+    mixer_scheduler (to_diram)
+    * (default)
+

@@ -30,9 +30,7 @@
 #include "lvgl_helpers.h"
 
 #include "nvs_flash.h"
-/* BLE */
-//#include "nimble/nimble_port.h"
-//#include "nimble/nimble_port_freertos.h"
+#include "hal/usb_driver.h"
 
 #include "driver/i2c_master.h"
 #include "flyskyHallStick_driver.h"
@@ -115,6 +113,7 @@ void boardInit()
     audioInit();
     ads1015_adc_init();
 
+    usbInit();
     if (flysky_gimbal_init()) {
         TRACE("Flysky Hall Gimbal detected");
     } else {
@@ -129,10 +128,6 @@ void boardOff()
     pwrOff();
 }
 
-int usbPlugged() {
-    return 0;// TODO-MUFFIN
-}
-
 void enableVBatBridge() {
 }
 void disableVBatBridge() {
@@ -141,10 +136,22 @@ bool isVBatBridgeEnabled() {
     return false;
 }
 
-void per5ms() {}
+static unsigned char drawbuf0[LCD_W* DRAW_BUF_H * sizeof(pixel_t)] DRAM_ATTR;
+static unsigned char drawbuf1[LCD_W* DRAW_BUF_H * sizeof(pixel_t)] DRAM_ATTR;
+//static void *drawbuf0;
+//static void *drawbuf1;
+void board_get_drawbuf(void **buf0, void **buf1) {
+    *buf0 = drawbuf0;
+    *buf1 = drawbuf1;
+}
 
 extern int main();
-
 extern "C" void app_main(){
+    //drawbuf0 = heap_caps_malloc(LCD_W* DRAW_BUF_H * sizeof(pixel_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA);
+    //drawbuf1 = heap_caps_malloc(LCD_W* DRAW_BUF_H * sizeof(pixel_t), MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA);
+
     main();
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(1000 * 60 * 60));
+    }
 }

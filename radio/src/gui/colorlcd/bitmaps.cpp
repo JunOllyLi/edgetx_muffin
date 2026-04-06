@@ -168,6 +168,11 @@ static const uint8_t mask_radio_global_functions[] __FLASH = {
 static const uint8_t mask_radio_hardware[] __FLASH = {
 #include "mask_icon_radio_hardware.lbm"
 };
+#if defined(ETX_SUPPORT_WIFI)
+static const uint8_t mask_radio_wifi[] __FLASH = {
+#include "mask_icon_radio_wifi.lbm"
+};
+#endif
 static const uint8_t mask_radio_trainer[] __FLASH = {
 #include "mask_icon_radio_trainer.lbm"
 };
@@ -406,6 +411,9 @@ static const _BuiltinIcon _builtinIcons[EDGETX_ICONS_COUNT] = {
     BI(ICON_RADIO_GLOBAL_FUNCTIONS, mask_radio_global_functions),
     BI(ICON_RADIO_TRAINER, mask_radio_trainer),
     BI(ICON_RADIO_HARDWARE, mask_radio_hardware),
+#if defined(ETX_SUPPORT_WIFI)
+    BI(ICON_RADIO_WIFI, mask_radio_wifi),
+#endif
     BI(ICON_RADIO_CALIBRATION, mask_radio_calibration),
     BI(ICON_RADIO_EDIT_THEME, mask_ui_themes),
     BI(ICON_RADIO_VERSION, mask_radio_about),

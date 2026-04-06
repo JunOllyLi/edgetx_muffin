@@ -20,11 +20,16 @@
  */
 
 #include "edgetx.h"
+#include "os/task.h"
+#include "os/time.h"
+#include "os/sleep.h"
 #include "flyskyHallStick_driver.h"
 #include "esp32_rmt_rx.h"
 #include "hal/adc_driver.h"
 #include "esp32_uart_driver.h"
 #include "crc.h"
+
+#define TAG "Gimbal"
 
 #if FLYSKY_UART_PORT == USE_RMT
 // Use RMT UART for gimbal. It works fine, except for roughly 1 out of 10000 packets gets CRC error.
@@ -35,7 +40,7 @@ static const etx_rmt_uart_hw_def_t gimbal_uart_hw_def = {
     .rx_task_stack_size = 1024 * 6,
     .resolution_hz = 80000000,
     .idle_threshold_in_ns = 400000,
-    .min_pulse_in_ns = 800,
+    .min_pulse_in_ns = 0,
 };
 static const etx_serial_driver_t *pUart = &rmtuartSerialDriver;
 #else
@@ -119,7 +124,7 @@ static void _fs_parse(STRUCT_HALL *hallBuffer, unsigned char ch)
             crc_ok_cnt++;
         } else {
             crc_err_cnt++;
-            TRACE("Gimbal CRC err: %d, OK: %d", crc_err_cnt, crc_ok_cnt);
+            ESP_LOGI(TAG, "CRC err: %d, OK: %d", crc_err_cnt, crc_ok_cnt);
         }
         hallBuffer->status = GET_START;
         break;
@@ -170,7 +175,7 @@ bool flysky_gimbal_init()
 
     // Wait 70ms for FlySky gimbals to respond. According to LA trace, minimally 23ms is required
     for (uint8_t i = 0; i < 70; i++) {
-        RTOS_WAIT_MS(1);
+        sleep_ms(1);
         if (_fs_gimbal_detected) {
             // Mask the first 4 inputs (sticks)
             return true;

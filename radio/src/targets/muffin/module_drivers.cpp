@@ -25,8 +25,32 @@
 #include "dataconstants.h"
 #include "debug.h"
 #include "esp32_uart_driver.h"
+#include "esp32_rmt_rx.h"
+#include "esp32_uart_driver.h"
 
 #if defined(HARDWARE_INTERNAL_MODULE)
+#if INTMOD_UART_PORT == USE_RMT
+// Use RMT UART for gimbal.
+static const etx_rmt_uart_hw_def_t intmod_uart_hw_def = {
+    .rx_pin = INTMOD_ESP_UART_RX,
+    .tx_pin = INTMOD_ESP_UART_TX,
+    .memsize = 256,
+    .rx_task_stack_size = 1024 * 6,
+    .resolution_hz = 80000000,
+    .idle_threshold_in_ns = 400000,
+    .min_pulse_in_ns = 0,
+};
+
+const etx_module_port_t _internal_ports[] = {
+    {
+        .port = ETX_MOD_PORT_UART,
+        .type = ETX_MOD_TYPE_SERIAL,
+        .dir_flags = ETX_MOD_DIR_TX_RX | ETX_MOD_FULL_DUPLEX,
+        .drv = { .serial = &rmtuartSerialDriver },
+        .hw_def = (void *)&intmod_uart_hw_def,
+    },
+};
+#else
 static const etx_esp32_uart_hw_def_t intmod_uart_hw_def = {
     .uart_port = INTMOD_UART_PORT,
     .rx_pin = INTMOD_ESP_UART_RX,
@@ -44,6 +68,7 @@ const etx_module_port_t _internal_ports[] = {
         .hw_def = (void *)&intmod_uart_hw_def,
     },
 };
+#endif
 
 static void _set_internal_module_power(uint8_t on) {
     if (on) {

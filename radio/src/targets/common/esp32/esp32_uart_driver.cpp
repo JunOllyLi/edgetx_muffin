@@ -33,7 +33,7 @@ typedef struct {
     TaskHandle_t rx_task;
 } esp32_uart_ctx_t;
 
-static esp32_uart_ctx_t uarts[SOC_UART_HP_NUM]; // TODO-MUFFIN init
+static esp32_uart_ctx_t uarts[SOC_UART_HP_NUM];
 
 static inline esp32_uart_ctx_t *ctx_to_port(void* ctx) {
     return (esp32_uart_ctx_t *)ctx;
@@ -206,7 +206,7 @@ int espUartGetBufferedBytes(void* ctx) {
     if (ESP_OK != uart_get_buffered_data_len(port->port, &size)) {
       size = 0U;
     }
-    return 0;
+    return size;
 }
 
 int espUartCopyRxBuffer(void* ctx, uint8_t* buf, uint32_t len) {

@@ -12,6 +12,7 @@
 #include "freertos/task.h"
 #include "i2c_driver.h"
 #include "lvgl.h"
+#include "telemetry/frsky.h"
 
 extern i2c_master_bus_handle_t toplcd_i2c_bus_handle;
 static i2c_master_dev_handle_t toplcd_handle = NULL;
@@ -27,6 +28,9 @@ static i2c_master_dev_handle_t toplcd_handle = NULL;
 #define OLED_H 64
 
 #define MAX_CHAR_IN_STR 16
+#define FLYSKY_EXT_VOLTAGE_ID 0x0003
+#define FLYSKY_RX_BVD_ID 0x0103
+#define FLYSKY_RX_VOLTAGE_ID 0x1000
 
 /*The LCD needs a bunch of command/argument values to be initialized. They are stored in this struct. */
 typedef struct {
@@ -35,15 +39,25 @@ typedef struct {
     uint8_t databytes; //No of data in data; bit 7 = delay after set; 0xFF = end of cmds.
 } lcd_init_cmd_t;
 
+typedef struct {
+    lv_font_glyph_dsc_t dsc;
+    const uint8_t *bitmap;
+} toplcd_glyph_t;
+
 /**********************
  *  STATIC PROTOTYPES
  **********************/
 static esp_err_t sh1107_send_cmd(uint8_t cmd);
 static void sh1107_send_data(void *data, uint16_t length);
+static void advance_oled_cursor(uint8_t *&col, uint8_t &bit);
+static uint8_t get_glyph_pixel(const toplcd_glyph_t &glyph, int local_x, int local_y);
+static uint32_t get_str_width(const char *str, LcdFlags flags);
+static int findTopLcdRxBatterySensor();
+static void formatTopLcdVoltage(char *buf, size_t len, int32_t value, uint8_t prec);
 
 static bool top_lcd_exists = true;
 
-EXT_RAM_BSS_ATTR static uint8_t oled_buf[OLED_H][(OLED_W / 8) + 1];
+static uint8_t oled_buf[OLED_H][(OLED_W / 8) + 1] EXT_RAM_BSS_ATTR;
 
 /**********************
  *   STATIC FUNCTIONS
@@ -136,78 +150,151 @@ static void sh1107_send_data(void *data, uint16_t length) {
     }
 }
 
-static void draw_str(uint32_t start_x, uint32_t start_y, char *str, LcdFlags flags) {
-    const lv_font_t *pfont = getFont(flags);
-    const unsigned char *bitmaps[MAX_CHAR_IN_STR] = {0};
-    lv_font_glyph_dsc_t g[MAX_CHAR_IN_STR] = {0};
-    int num_letters = 0;
+static void advance_oled_cursor(uint8_t *&col, uint8_t &bit)
+{
+    if (bit == 0x80) {
+        col++;
+        bit = 0x01;
+    }
+    else {
+        bit <<= 1;
+    }
+}
 
-    int top = 0, bottom = 0;
+static uint8_t get_glyph_pixel(const toplcd_glyph_t &glyph, int local_x, int local_y)
+{
+    int pixel_index = local_y * glyph.dsc.box_w + local_x;
+    uint8_t packed = glyph.bitmap[pixel_index / 2];
+    return (pixel_index & 1) ? (packed & 0x0F) : ((packed >> 4) & 0x0F);
+}
+
+static uint32_t get_str_width(const char *str, LcdFlags flags)
+{
+    const lv_font_t *font = getFont(flags);
+    uint32_t width = 0;
+
+    for (int i = 0; i < MAX_CHAR_IN_STR && str[i] != '\0'; i++) {
+        lv_font_glyph_dsc_t glyph = {0};
+        lv_font_get_glyph_dsc(font, &glyph, str[i], str[i + 1]);
+        width += glyph.adv_w;
+    }
+
+    return width;
+}
+
+static void draw_str(uint32_t start_x, uint32_t start_y, const char *str, LcdFlags flags) {
+    if (start_x >= OLED_W || start_y >= OLED_H) {
+        return;
+    }
+
+    const lv_font_t *font = getFont(flags);
+    toplcd_glyph_t glyphs[MAX_CHAR_IN_STR] = {0};
+    int glyph_count = 0;
+    int top = 0;
+    int bottom = 0;
+
     for (int i = 0; i < MAX_CHAR_IN_STR; i++) {
-        if ('\0' == str[i]) {
+        if (str[i] == '\0') {
             break;
         }
-        num_letters++;
-        lv_font_get_glyph_dsc(pfont, &g[i], str[i], str[i+1]);
-        if (g[i].ofs_y - g[i].box_h < top) {
-            top = g[i].ofs_y - g[i].box_h;
+
+        lv_font_get_glyph_dsc(font, &glyphs[glyph_count].dsc, str[i], str[i + 1]);
+        glyphs[glyph_count].bitmap = lv_font_get_glyph_bitmap(font, str[i]);
+
+        if (glyphs[glyph_count].dsc.ofs_y - glyphs[glyph_count].dsc.box_h < top) {
+            top = glyphs[glyph_count].dsc.ofs_y - glyphs[glyph_count].dsc.box_h;
         }
-        if (-g[i].ofs_y > bottom) {
-            bottom = -g[i].ofs_y;
+        if (-glyphs[glyph_count].dsc.ofs_y > bottom) {
+            bottom = -glyphs[glyph_count].dsc.ofs_y;
         }
-        bitmaps[i]= lv_font_get_glyph_bitmap(pfont, str[i]);
+
+        glyph_count++;
     }
 
     for (int y = top; y < bottom; y++) {
-        // top is negative, caller's needs to make sure to have a positive position offset
-        uint8_t *col = (uint8_t *)&oled_buf[y + start_y][start_x/8 + 1];
+        int row = static_cast<int>(start_y) + y;
+        if (row < 0 || row >= OLED_H) {
+            continue;
+        }
+
+        uint8_t *col = &oled_buf[row][start_x / 8 + 1];
         uint8_t bit = (1 << (start_x % 8));
-        for (int i = 0; i < num_letters; i++) {
-            if ((y >= - g[i].ofs_y - g[i].box_h) && (y < -g[i].ofs_y)) {
-                for (int x = 0; x < g[i].adv_w; x++) {
-                    if (x < g[i].ofs_x || x >= (g[i].ofs_x + g[i].box_w)) {
-                        *col &= ~bit;
-                        if (bit == 0x80) {
-                            col++;
-                            bit = 1;
-                        } else {
-                            bit <<= 1;
-                        }
-                    } else {
-                        int idx_pixel = (y + g[i].box_h + g[i].ofs_y) * g[i].box_w + x - g[i].ofs_x;
-                        uint8_t pix = 0;
-                        if (0 != (idx_pixel & 1)) {
-                            pix = bitmaps[i][(idx_pixel / 2)] & 0x0F;
-                        } else {
-                            pix = (bitmaps[i][(idx_pixel / 2)] >> 4) & 0x0F;
-                        }
+        int current_x = start_x;
 
-                        if (pix & 0x08) {
-                            *col |= bit;
-                        } else {
-                            *col &= ~bit;
-                        }
+        for (int i = 0; i < glyph_count; i++) {
+            const toplcd_glyph_t &glyph = glyphs[i];
+            int glyph_top = -glyph.dsc.ofs_y - glyph.dsc.box_h;
+            int glyph_bottom = -glyph.dsc.ofs_y;
 
-                        if (bit == 0x80) {
-                            col++;
-                            bit = 1;
-                        } else {
-                            bit <<= 1;
-                        }
-                    }
+            for (int x = 0; x < glyph.dsc.adv_w && current_x < OLED_W; x++) {
+                bool pixel_on = false;
+
+                if (y >= glyph_top && y < glyph_bottom &&
+                    x >= glyph.dsc.ofs_x && x < glyph.dsc.ofs_x + glyph.dsc.box_w &&
+                    glyph.bitmap != nullptr) {
+                    int local_x = x - glyph.dsc.ofs_x;
+                    int local_y = y - glyph_top;
+                    pixel_on = (get_glyph_pixel(glyph, local_x, local_y) & 0x08) != 0;
                 }
-            } else {
-                for (int x = 0; x < g[i].adv_w; x++) {
+
+                if (pixel_on) {
+                    *col |= bit;
+                }
+                else {
                     *col &= ~bit;
-                    if (bit == 0x80) {
-                        col++;
-                        bit = 1;
-                    } else {
-                        bit <<= 1;
-                    }
                 }
+
+                advance_oled_cursor(col, bit);
+                current_x++;
             }
         }
+    }
+}
+
+static int findTopLcdRxBatterySensor()
+{
+    int fallback = -1;
+    int receiverRail = -1;
+
+    for (int idx = 0; idx < MAX_TELEMETRY_SENSORS; ++idx) {
+        const TelemetrySensor &sensor = g_model.telemetrySensors[idx];
+        if (!sensor.isAvailable() || sensor.unit != UNIT_VOLTS) {
+            continue;
+        }
+
+        if (fallback < 0) {
+            fallback = idx;
+        }
+
+        // On FlySky setups with a flight pack wired to the receiver, A3 is the
+        // useful pack voltage while A1/BVD can just be the receiver rail.
+        if (sensor.id == FLYSKY_EXT_VOLTAGE_ID) {
+            return idx;
+        }
+
+        if (receiverRail < 0 &&
+            (sensor.id == FLYSKY_RX_VOLTAGE_ID || sensor.id == FLYSKY_RX_BVD_ID)) {
+            receiverRail = idx;
+        }
+    }
+
+    if (receiverRail >= 0) {
+        return receiverRail;
+    }
+
+    return fallback;
+}
+
+static void formatTopLcdVoltage(char *buf, size_t len, int32_t value, uint8_t prec)
+{
+    if (prec == 0) {
+        snprintf(buf, len, "%d", value);
+    }
+    else if (prec == 1) {
+        snprintf(buf, len, "%d.%01d", value / 10, abs(value % 10));
+    }
+    else {
+        snprintf(buf, len, "%d.%02d", value / 100, abs(value % 100));
     }
 }
 
@@ -230,27 +317,28 @@ void toplcdInit()
 
 void toplcdRefresh()
 {
-#if 1
-    // TODO: this is only getting the RX VBATT and TRSS from the FlySKy2A RX. need to figure out more generic way
     reset_oled_buf();
-    for (uint8_t idx = 0; idx < MAX_TELEMETRY_SENSORS; idx++) {
-        if (g_model.telemetrySensors[idx].isAvailable()) {
-            TelemetryItem & telemetryItem = telemetryItems[idx];
-            int index = idx;// - ITEM_TELEMETRY_SENSOR_FIRST;
-            //TRACE("====== %s %d %d", g_model.telemetrySensors[idx].label, isTelemetryFieldAvailable(idx), getValue(MIXSRC_FIRST_TELEM+3*index));
-            if (strcmp(g_model.telemetrySensors[idx].label, "A3") == 0) {
-                char buf[20] = {0};
-                sprintf(buf, "%0.1f", ((float)getValue(MIXSRC_FIRST_TELEM+3*index)) / 100.);
-                draw_str(0, 50, buf, FONT(XL));
-            }
-            if (strcmp(g_model.telemetrySensors[idx].label, "TRSS") == 0) {
-                char buf[20] = {0};
-                sprintf(buf, "%d", getValue(MIXSRC_FIRST_TELEM+3*index));
-                draw_str(64, 50, buf, FONT(XL));
-            }
+    draw_str(0, 22, "RXBAT", FONT(STD));
+    const char *rssi_label = "RSSI";
+    draw_str(OLED_W - get_str_width(rssi_label, FONT(STD)), 22, rssi_label, FONT(STD));
+
+    int rxBatterySensor = findTopLcdRxBatterySensor();
+    if (rxBatterySensor >= 0) {
+        const TelemetrySensor &sensor = g_model.telemetrySensors[rxBatterySensor];
+        TelemetryItem &item = telemetryItems[rxBatterySensor];
+        if (item.isAvailable()) {
+            char buf[20] = {0};
+            formatTopLcdVoltage(buf, sizeof(buf), item.value, sensor.prec);
+            draw_str(0, 50, buf, FONT(XL));
         }
     }
-#endif
+
+    if (TELEMETRY_RSSI() > 0) {
+        char buf[20] = {0};
+        snprintf(buf, sizeof(buf), "%u", TELEMETRY_RSSI());
+        draw_str(OLED_W - get_str_width(buf, FONT(L)), 50, buf, FONT(L));
+    }
+
     if (top_lcd_exists) {
         sh1107_flush();
     }

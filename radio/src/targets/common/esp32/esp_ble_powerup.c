@@ -5,17 +5,12 @@
  */
 
 #include "esp_log.h"
-#include "nvs_flash.h"
 /* BLE */
-#include "nimble/nimble_port.h"
-#include "nimble/nimble_port_freertos.h"
 #include "host/ble_hs.h"
 #include "host/ble_gatt.h"
 #include "host/util/util.h"
-#include "console/console.h"
-#include "services/gap/ble_svc_gap.h"
-#include "modlog/modlog.h"
 #include "esp_central.h"
+#include "bluetooth_driver.h"
 
 struct ble_hs_adv_fields;
 struct ble_gap_conn_desc;
@@ -48,13 +43,29 @@ static const struct peer *g_pwrup = NULL;
 static const struct peer_chr *thr = NULL;
 static const struct peer_chr *rdr = NULL;
 
-static const char *tag = TAG;
 static int blecent_gap_event(struct ble_gap_event *event, void *arg);
-
-void ble_store_config_init(void);
 
 static uint8_t current_thr = 0U;
 static int8_t current_rdr = 0U;
+static uint16_t pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
+
+static int
+count_peer_cb(const struct peer *peer, void *arg)
+{
+    int *count = arg;
+
+    ++(*count);
+    return 0;
+}
+
+static int
+peer_count(void)
+{
+    int count = 0;
+
+    peer_traverse_all(count_peer_cb, &count);
+    return count;
+}
 
 static int
 pwrup_on_write(uint16_t conn_handle, const struct ble_gatt_error *error,
@@ -72,7 +83,7 @@ void ble_write_pwrup_rudder(int8_t data) {
     current_rdr = data;
 }
 
-void task_pwrup(void * pdata) {
+void task_pwrup() {
     int next_send = 0;
 
     while(1) {
@@ -309,26 +320,14 @@ blecent_gap_event(struct ble_gap_event *event, void *arg)
             print_conn_desc(&desc);
             ESP_LOGI(TAG, "\n");
 
-            disc_cb = blecent_on_disc_complete;
-
-            /* Remember peer. */
-            rc = peer_add(event->connect.conn_handle);
-            if (rc != 0) {
-                ESP_LOGE(TAG, "Failed to add peer; rc=%d\n", rc);
-                return 0;
-            }
-
-            /* Perform service discovery. */
-            rc = peer_disc_all(event->connect.conn_handle,
-                               disc_cb, NULL);
-            if (rc != 0) {
-                ESP_LOGE(TAG, "Failed to discover services; rc=%d\n", rc);
-                return 0;
-            }
+            pending_conn_handle = event->connect.conn_handle;
+            ESP_LOGI(TAG, "Waiting for link establishment; conn_handle=%d",
+                        pending_conn_handle);
         } else {
             /* Connection attempt failed; resume scanning. */
             ESP_LOGE(TAG, "Error: Connection failed; status=%d\n",
                         event->connect.status);
+            pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
             blecent_scan();
         }
 
@@ -346,7 +345,13 @@ blecent_gap_event(struct ble_gap_event *event, void *arg)
         ESP_LOGI(TAG, "\n");
 
         /* Forget about peer. */
+        ESP_LOGI(TAG, "Deleting peer for conn_handle=%d active_peers=%d max=%d",
+                    event->disconnect.conn.conn_handle, peer_count(),
+                    MYNEWT_VAL(BLE_MAX_CONNECTIONS));
         peer_delete(event->disconnect.conn.conn_handle);
+        ESP_LOGI(TAG, "Deleted peer for conn_handle=%d active_peers=%d max=%d",
+                    event->disconnect.conn.conn_handle, peer_count(),
+                    MYNEWT_VAL(BLE_MAX_CONNECTIONS));
 
         /* Resume scanning. */
         blecent_scan();
@@ -357,78 +362,125 @@ blecent_gap_event(struct ble_gap_event *event, void *arg)
                     event->disc_complete.reason);
         return 0;
 
+    case BLE_GAP_EVENT_LINK_ESTAB:
+        ESP_LOGI(TAG, "link estab; status=%d conn_handle=%d",
+                    event->link_estab.status, event->link_estab.conn_handle);
+        if (event->link_estab.status != 0) {
+            pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
+            return 0;
+        }
+
+        if (pending_conn_handle != event->link_estab.conn_handle) {
+            ESP_LOGW(TAG, "link estab for unexpected conn_handle=%d pending=%d",
+                        event->link_estab.conn_handle, pending_conn_handle);
+        }
+
+        rc = ble_gap_conn_find(event->link_estab.conn_handle, &desc);
+        if (rc == 0) {
+            ESP_LOGI(TAG, "Link fully established ");
+            print_conn_desc(&desc);
+            ESP_LOGI(TAG, "\n");
+        }
+
+        disc_cb = blecent_on_disc_complete;
+
+        ESP_LOGI(TAG, "Adding peer for conn_handle=%d active_peers=%d max=%d",
+                    event->link_estab.conn_handle, peer_count(),
+                    MYNEWT_VAL(BLE_MAX_CONNECTIONS));
+        rc = peer_add(event->link_estab.conn_handle);
+        if (rc != 0) {
+            ESP_LOGE(TAG, "Failed to add peer; rc=%d active_peers=%d max=%d\n",
+                        rc, peer_count(), MYNEWT_VAL(BLE_MAX_CONNECTIONS));
+            pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
+            return 0;
+        }
+        ESP_LOGI(TAG, "Added peer for conn_handle=%d active_peers=%d max=%d",
+                    event->link_estab.conn_handle, peer_count(),
+                    MYNEWT_VAL(BLE_MAX_CONNECTIONS));
+
+        rc = peer_disc_all(event->link_estab.conn_handle, disc_cb, NULL);
+        if (rc != 0) {
+            ESP_LOGE(TAG, "Failed to discover services; rc=%d\n", rc);
+            pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
+            return 0;
+        }
+
+        pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
+        return 0;
+
+    case BLE_GAP_EVENT_CONN_UPDATE:
+        rc = ble_gap_conn_find(event->conn_update.conn_handle, &desc);
+        if (rc == 0) {
+            ESP_LOGI(TAG, "conn update; status=%d conn_handle=%d itvl=%d latency=%d timeout=%d",
+                        event->conn_update.status, event->conn_update.conn_handle,
+                        desc.conn_itvl, desc.conn_latency, desc.supervision_timeout);
+        } else {
+            ESP_LOGI(TAG, "conn update; status=%d conn_handle=%d desc_rc=%d",
+                        event->conn_update.status, event->conn_update.conn_handle, rc);
+        }
+        return 0;
+
+    case BLE_GAP_EVENT_TERM_FAILURE:
+        ESP_LOGE(TAG, "terminate failed; conn_handle=%d status=%d",
+                    event->term_failure.conn_handle, event->term_failure.status);
+        return 0;
+
+    case BLE_GAP_EVENT_ENC_CHANGE:
+        ESP_LOGI(TAG, "enc change; status=%d conn_handle=%d",
+                    event->enc_change.status, event->enc_change.conn_handle);
+        return 0;
+
+    case BLE_GAP_EVENT_NOTIFY_RX:
+        ESP_LOGI(TAG, "notify rx; conn_handle=%d attr_handle=%d indication=%d len=%d",
+                    event->notify_rx.conn_handle, event->notify_rx.attr_handle,
+                    event->notify_rx.indication, OS_MBUF_PKTLEN(event->notify_rx.om));
+        return 0;
+
+    case BLE_GAP_EVENT_MTU:
+        ESP_LOGI(TAG, "mtu update; conn_handle=%d cid=%d mtu=%d",
+                    event->mtu.conn_handle, event->mtu.channel_id, event->mtu.value);
+        return 0;
+
+    case BLE_GAP_EVENT_REPEAT_PAIRING:
+        ESP_LOGW(TAG, "repeat pairing; conn_handle=%d",
+                    event->repeat_pairing.conn_handle);
+        return BLE_GAP_REPEAT_PAIRING_RETRY;
+
     default:
+        ESP_LOGI(TAG, "Unhandled GAP event type=%d", event->type);
         return 0;
     }
 }
 
-static void
-blecent_on_reset(int reason)
-{
-    ESP_LOGE(TAG, "Resetting state; reason=%d\n", reason);
-}
-
-static void
-blecent_on_sync(void)
-{
-    int rc;
-
-    /* Make sure we have proper identity address set (public preferred) */
-    rc = ble_hs_util_ensure_addr(0);
-    assert(rc == 0);
-
-    /* Begin scanning for a peripheral to connect to. */
-    blecent_scan();
-}
-
-void blecent_host_task(void *param)
-{
-    ESP_LOGI(tag, "BLE Host Task Started");
-    /* This function will return only when nimble_port_stop() is executed */
-    nimble_port_run();
-
-    vTaskDelete(NULL);
-}
-
-static StaticTask_t task_struct;
-EXT_RAM_BSS_ATTR static StackType_t task_stack[NIMBLE_HS_STACK_SIZE];
-
 void
 esp_start_ble_scan(void)
 {
-    int rc;
     g_pwrup = NULL;
     thr = NULL;
     rdr = NULL;
+    pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
 
     if (NULL == mutex_handle) {
         mutex_handle = xSemaphoreCreateBinaryStatic(&mutex_struct);
         xSemaphoreGive(mutex_handle);
     }
 
-    /* Configure the host. */
-    ble_hs_cfg.reset_cb = blecent_on_reset;
-    ble_hs_cfg.sync_cb = blecent_on_sync;
-    ble_hs_cfg.store_status_cb = ble_store_util_status_rr;
+    bluetoothEnsureHostStarted();
 
-    /* Initialize data structures to track connected peers. */
-    rc = peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64);
-    assert(rc == 0);
+    for (int retry = 0; retry < 50; ++retry) {
+        if (bluetoothIsHostSynced()) {
+            blecent_scan();
+            return;
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
 
-    /* Set the default device name. */
-    rc = ble_svc_gap_device_name_set("blecent-powerup");
-    assert(rc == 0);
-
-    /* XXX Need to have template for store */
-    ble_store_config_init();
-
-    xTaskCreateStaticPinnedToCore(blecent_host_task, "nimble_host", NIMBLE_HS_STACK_SIZE,
-            NULL, (configMAX_PRIORITIES - 4), task_stack, &task_struct, NIMBLE_CORE);
+    ESP_LOGE(TAG, "BLE host did not sync before PowerUP scan start");
 }
 
 void esp_end_ble(void) {
     g_pwrup = NULL;
     thr = NULL;
     rdr = NULL;
-    nimble_port_stop();
+    pending_conn_handle = BLE_HS_CONN_HANDLE_NONE;
 }

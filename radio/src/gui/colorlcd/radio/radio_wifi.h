@@ -19,37 +19,25 @@
  * GNU General Public License for more details.
  */
 
-#pragma once
+#ifndef _RADIO_WIFI_H_
+#define _RADIO_WIFI_H_
 
-#ifdef __cplusplus
-extern "C++" {
-#endif
+#include "pagegroup.h"
+#include "textedit.h"
 
-#if defined(SIMU)
+class StaticText;
 
-  static inline void RTOS_START() {}
+class RadioWiFiPage: public PageGroupItem {
+    void checkEvents() override;
 
-#elif defined(FREE_RTOS)
-#if defined(ESP_PLATFORM)
-    #include "freertos/FreeRTOS.h"
-    #include "freertos/task.h"
-    #include "freertos/semphr.h"
-    #include "freertos/event_groups.h"
+  public:
+    RadioWiFiPage(const PageDef& pageDef);
+    void build(Window* window) override;
 
-	// ESP had already started the scheduler before app_main()    
-    static inline void RTOS_START() {}
-#else
-  #include <FreeRTOS/include/FreeRTOS.h>
-  #include <FreeRTOS/include/task.h>
-  
-  static inline void RTOS_START()
-  {
-    vTaskStartScheduler();
-  }
-#endif
+  protected:
+    void cleanup() override;
 
-#endif  // RTOS type
+    RadioTextEdit *status;
+};
 
-#ifdef __cplusplus
-}
-#endif
+#endif //_RADIO_WIFI_H_

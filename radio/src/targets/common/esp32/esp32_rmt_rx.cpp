@@ -23,7 +23,6 @@
 
 static void esp32_rmt_ctx_free(rmt_ctx_t *ctx);
 
-rmt_symbol_word_t raw_symbols[512];  // TODO-MUFFIN
 static void esp32_rmt_rx_task(void * pdata) {
     rmt_ctx_t *ctx = (rmt_ctx_t *)pdata;
     
@@ -32,7 +31,9 @@ static void esp32_rmt_rx_task(void * pdata) {
     rmt_enable(ctx->rmt);
     while(!ctx->exit) {
         // ready to receive
-        ESP_ERROR_CHECK(rmt_receive(ctx->rmt, raw_symbols, sizeof(raw_symbols), &ctx->rx_cfg));
+        ESP_ERROR_CHECK(rmt_receive(ctx->rmt, ctx->data,
+                                    ctx->memsize * sizeof(rmt_symbol_word_t),
+                                    &ctx->rx_cfg));
         xQueueReceive(ctx->rxQueue, &rx_data, portMAX_DELAY);
         if (!ctx->exit) {
             ctx->decoder(ctx->decoder_ctx, &rx_data);
@@ -64,24 +65,30 @@ void esp32_rmt_rx_init(rmt_ctx_t *ctxmem, int pin, rmt_reserve_memsize_t memsize
     };
     ESP_ERROR_CHECK(rmt_new_rx_channel(&rx_channel_cfg, &ctxmem->rmt));
 
+    ctxmem->memsize = memsize;
+    ctxmem->tick_in_ns = 1000000000.0f / resolution_hz;
+    ctxmem->data = (rmt_symbol_word_t *)heap_caps_malloc(
+            memsize * sizeof(rmt_symbol_word_t),
+            MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA);
+    assert(NULL != ctxmem->data);
     ctxmem->decoder = dec_fn;
 }
 
-StaticTask_t rx_task_buf;
+StaticTask_t rx_task_buf DRAM_ATTR;
 void esp32_rmt_rx_start(rmt_ctx_t *ctx, void *decoder_ctx, size_t rx_task_stack_size, size_t idle_threshold_in_ns, size_t min_pulse_in_ns) {
     assert(NULL != ctx);
     ctx->stack_size = rx_task_stack_size;
     ctx->rmt_task_stack = (StackType_t *)malloc(ctx->stack_size);
     assert(NULL != ctx->rmt_task_stack);
 
-    ctx->rxQueue = xQueueCreate(1, sizeof(rmt_rx_done_event_data_t));
+    ctx->rxQueue = xQueueCreate(4, sizeof(rmt_rx_done_event_data_t));
     assert(NULL != ctx->rxQueue);
     ctx->exit = false;
     ctx->rx_cfg.signal_range_min_ns = min_pulse_in_ns;
     ctx->rx_cfg.signal_range_max_ns = idle_threshold_in_ns;
     ctx->decoder_ctx = decoder_ctx;
     ctx->task_id = xTaskCreateStaticPinnedToCore(esp32_rmt_rx_task, "esp32_rmt_rx_task", ctx->stack_size,
-            ctx, 5, ctx->rmt_task_stack, &rx_task_buf, TRAINER_PPM_OUT_TASK_CORE); // TODO-MUFFIN priority
+            ctx, RMT_UART_TASK_PRIOTIRY, ctx->rmt_task_stack, &rx_task_buf, RMT_UART_TASK_CORE);
     rmt_rx_event_callbacks_t cbs = {
         .on_recv_done = rmt_rx_done_callback,
     };
@@ -101,7 +108,10 @@ void esp32_rmt_stop(rmt_ctx_t *ctx) {
 static void esp32_rmt_ctx_free(rmt_ctx_t *ctx) {
     if (NULL != ctx) {
         rmt_del_channel(ctx->rmt);
-        free(ctx);
+        free(ctx->data);
+        ctx->data = NULL;
+        free(ctx->rmt_task_stack);
+        ctx->rmt_task_stack = NULL;
     }
 }
 

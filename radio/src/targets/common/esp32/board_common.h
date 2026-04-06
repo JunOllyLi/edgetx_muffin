@@ -14,6 +14,7 @@
 #include "hal.h"
 #include "hal/serial_port.h"
 #include "hal/watchdog_driver.h"
+#include "esp_log.h"
 
 #define SYSTEM_TICKS_1MS pdMS_TO_TICKS(1)
 

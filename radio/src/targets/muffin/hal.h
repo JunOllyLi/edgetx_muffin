@@ -47,9 +47,10 @@
 // For ADS1015 driver, the ADC_GPIO_PIN_<xyz> is defined to the mux to be used
 #define ADC_GPIO_PIN_POT1               ADS1X15_REG_CONFIG_MUX_DIFF_0_1
 #define ADC_GPIO_PIN_POT2               ADS1X15_REG_CONFIG_MUX_DIFF_0_1
-#define ADC_GPIO_PIN_BATT               ADS1X15_REG_CONFIG_MUX_DIFF_2_3
+// Battery is measured single-ended against GND. The divider output is expected on AIN2.
+#define ADC_GPIO_PIN_BATT               ADS1X15_REG_CONFIG_MUX_SINGLE_2
 // Muffin RTC uses the main battery.
-#define ADC_GPIO_PIN_RTC_BAT            ADS1X15_REG_CONFIG_MUX_DIFF_2_3
+#define ADC_GPIO_PIN_RTC_BAT            ADS1X15_REG_CONFIG_MUX_SINGLE_2
 
 // For ADS1015 driver, the ADC_EXT is the total number of ads1015 chip
 #define ADC_EXT                         2

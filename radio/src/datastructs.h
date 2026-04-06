@@ -53,7 +53,6 @@ static inline void check_struct()
   CHKSIZE(TrainerData, 16);
   CHKSIZE(FlightModeData, 4 + 2 * MAX_GVARS + 2 * MAX_TRIMS + LEN_FLIGHT_MODE_NAME);
   CHKSIZE(CustomFunctionData, 11);
-// TODO-MUFFIN
 
 #if defined(PCBX7) || defined(PCBXLITE) || defined(PCBX9LITE)
   CHKSIZE(LimitData, 11);

@@ -67,9 +67,19 @@ static DSTATUS sdcard_spi_initialize(BYTE lun)
     return 0;
 }
 
+bool sdcardSpiEnsureInitialized()
+{
+    return sdcard_spi_initialize(0) == 0 && card_present;
+}
+
+sdmmc_card_t * sdcardSpiGetCard()
+{
+    return card_present ? card : nullptr;
+}
+
 static DSTATUS sdcard_spi_status(BYTE lun)
 {
-    DSTATUS stat = 0;
+    DSTATUS stat = card_present ? 0 : STA_NODISK;
     return stat;
 }
 
@@ -121,4 +131,3 @@ const diskio_driver_t sdcard_spi_driver = {
     .write = sdcard_spi_write,
     .ioctl = sdcard_spi_ioctl,
 };
-

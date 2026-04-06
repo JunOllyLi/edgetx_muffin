@@ -25,7 +25,15 @@
 #define LV_VER_RES_MAX 272
 #endif
 
+#define DRAW_BUF_STRIP_DMA
+#define DRAW_BUF_H 40
+
 #include "lv_conf.h"
+
+#undef LV_TICK_CUSTOM
+#define LV_TICK_CUSTOM 1
+#define LV_TICK_CUSTOM_INCLUDE "esp_timer.h"
+#define LV_TICK_CUSTOM_SYS_TIME_EXPR ((esp_timer_get_time() / 1000LL))
 
 #endif /*LV_CONF_EDGETX_H*/
 

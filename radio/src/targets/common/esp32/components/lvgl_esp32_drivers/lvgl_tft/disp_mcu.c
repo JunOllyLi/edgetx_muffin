@@ -90,72 +90,29 @@ static esp_lcd_panel_io_i80_config_t io_config = {
 static esp_lcd_panel_handle_t panel_handle = NULL;
 static esp_lcd_panel_dev_config_t panel_config = {
     .reset_gpio_num = CONFIG_LV_TFT_MCU_RST_NUM,
-    .color_space = ESP_LCD_COLOR_SPACE_BGR,
+    .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
     .bits_per_pixel = 16,
 };
 
 
 static struct mcu_panel_draw_ctx_t {
-    lv_area_t area;
-    lv_color_t *color_map;
     lv_disp_drv_t *drv;
-    int width;
-    int y;
-    lv_color_t *next_stripe;
-    int max_rows;
-    bool done;
-    bool next;
 } draw_ctx;
-
-static void flush_next_stripe(struct mcu_panel_draw_ctx_t *ctx) {
-    lv_area_t area = {.x1= ctx->area.x1, .x2= ctx->area.x2, .y1= ctx->y};
-    lv_color_t *pcolor = ctx->next_stripe;
-
-    int h = ctx->area.y2 - ctx->y;
-    if (h > ctx->max_rows) h = ctx->max_rows;
-
-    ctx->y += h;
-    area.y2 = ctx->y;
-    ctx->next_stripe += (ctx->width * h);
-    //ESP_LOGI("DIS", "area %d %d %d %d h %d w %d", area.x1, area.y1, area.x2, area.y2, h, ctx->width);
-    draw_ctx.next = false;
-    esp_lcd_panel_draw_bitmap(panel_handle, area.x1, area.y1, area.x2, area.y2, pcolor);
-}
 
 static bool mcu_notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
     struct mcu_panel_draw_ctx_t *ctx = &draw_ctx;
-    if (ctx->y >= ctx->area.y2) {
-        draw_ctx.done = true;
-        draw_ctx.next = true;
-        if (NULL != ctx->drv) {
-            lv_disp_flush_ready(ctx->drv);
-        }
-    } else {
-        draw_ctx.next = true;
+    if (NULL != ctx->drv) {
+        lv_disp_flush_ready(ctx->drv);
     }
     return false;
 }
 
 void lcd_mcu_lvgl_flush_cb(lv_disp_drv_t *drv, const lv_area_t *area, lv_color_t *color_map)
 {
-    draw_ctx.area.x1=area->x1;
-    draw_ctx.area.y1=area->y1;
-    draw_ctx.area.x2=area->x2;
-    draw_ctx.area.y2=area->y2;
-    draw_ctx.color_map = color_map;
     draw_ctx.drv = drv;
 
-    draw_ctx.next_stripe = color_map;
-    draw_ctx.width = draw_ctx.area.x2 - draw_ctx.area.x1;
-    draw_ctx.max_rows = DISP_BUF_SIZE / draw_ctx.width;
-    draw_ctx.y = 0;
-    draw_ctx.done = false;
-
-    do {
-        flush_next_stripe(&draw_ctx);
-        while(!draw_ctx.next);
-    } while(!draw_ctx.done);
+    esp_lcd_panel_draw_bitmap(panel_handle, area->x1, area->y1, area->x2, area->y2, color_map);
 }
 
 #if defined CONFIG_LV_TFT_DISPLAY_CONTROLLER_HX8357

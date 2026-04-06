@@ -25,7 +25,7 @@
 #include "freertos/ringbuf.h"
 
 #include "esp_log.h"
-#define TAG "UART"
+#define TAG "RMT_UART"
 
 #define SAMPLES_PER_BIT 20
 typedef struct {
@@ -60,56 +60,104 @@ typedef struct {
 esp_err_t rmt_new_uart_encoder(etx_rmt_uart_hw_def_t *hw, const etx_serial_init* params, rmt_encoder_handle_t *ret_encoder);
 
 static void rmt_uart_rx_reset_byte(rmt_uart_t *ctx) {
+    // bit_num == -1 means the decoder is idle and waiting for the next UART start bit.
     ctx->bit_num = -1;
     ctx->currentByte = 0;
     ctx->count_ones = 0;
 }
 
-static void rmt_uart_decode_next_symbel(rmt_uart_t *ctx, uint16_t duration, uint16_t level) {
-    size_t dur = duration;
-    dur *= ctx->params.baudrate;
-    int bit_count_in_sym =  (dur / ctx->hw_def.resolution_hz) +
-            (((dur % ctx->hw_def.resolution_hz) << 1) / ctx->hw_def.resolution_hz);  // round to closest
+static void rmt_uart_finish_frame(rmt_uart_t *ctx)
+{
+    // Once the reconstructed frame is complete, validate parity/stop and publish the byte.
+    if ((ctx->parity != -1) && (((ctx->parity + ctx->count_ones) & 0x01) != 0)) {
+        ESP_LOGW(TAG, "invalid parity %04X", (uint16_t)(ctx->currentByte & 0xFFFF));
+    } else if ((ctx->stop_bits & ctx->currentByte) != ctx->stop_bits) {
+        ESP_LOGW(TAG, "invalid STOP %04X", (uint16_t)(ctx->currentByte & 0xFFFF));
+    } else {
+        uint8_t d = ctx->currentByte & 0xFF;
+        xRingbufferSend(ctx->rxRing, &d, 1, portMAX_DELAY);
+        if (NULL != ctx->on_idle_cb) {
+            ctx->on_idle_cb(ctx->on_idle_cb_param);
+        }
+    }
+}
+
+static void rmt_uart_apply_high_bits(rmt_uart_t *ctx, int bit_count_in_sym)
+{
+    // Long idle-high runs are normal. Only consume the portion that still fits inside
+    // the current UART frame so extra idle time does not spill into the next byte.
+    int valid_ones = bit_count_in_sym;
+    if (valid_ones > ctx->total_width - ctx->bit_num) {
+        valid_ones = ctx->total_width - ctx->bit_num;
+    }
+
+    if ((ctx->parity != -1) && (ctx->bit_num < ctx->info_width)) {
+        // Parity is reconstructed by counting the number of logic-1 bits that appeared
+        // in the data+parity region of the frame image.
+        int oc = valid_ones;
+        if (oc > ctx->info_width - ctx->bit_num) {
+            oc = ctx->info_width - ctx->bit_num;
+        }
+        ctx->count_ones += oc;
+    }
+
+    if (valid_ones > 0) {
+        // Expand this high run into the packed UART frame image stored in currentByte.
+        uint32_t mask;
+        if (valid_ones >= 32) {
+            mask = 0xFFFFFFFFU;
+        } else {
+            mask = (1U << valid_ones) - 1U;
+        }
+        ctx->currentByte |= mask << ctx->bit_num;
+    }
+}
+
+static void rmt_uart_decode_next_symbel(rmt_uart_t *ctx, uint16_t duration, uint16_t level)
+{
+    if (duration == 0) {
+        return;
+    }
+
+    // RMT gives us a run-length encoded waveform. Convert that duration back into an
+    // approximate number of UART bit cells at the configured baudrate.
+    uint64_t dur = (uint64_t)duration * ctx->params.baudrate;
+    int bit_count_in_sym = dur / ctx->hw_def.resolution_hz;
+    if (((dur % ctx->hw_def.resolution_hz) << 1) >= ctx->hw_def.resolution_hz) {
+        bit_count_in_sym++;
+    }
 
     if (ctx->bit_num == -1) {
-        if (1 == level) {
-            // still waiting for start, do nothing
-        } else {
-            bit_count_in_sym--; // start bit
-            ctx->bit_num = bit_count_in_sym;
+        if (level == 1) {
+            // UART idles high, so a high pulse while idle does not belong to any frame.
+            return;
         }
-    } else {
-        if (1 == level) {
-            if ((ctx->bit_num <= ctx->info_width) && (bit_count_in_sym == 0)) {
-                // recv done, means idle condition detected while the bits still pending
-                // Indicates that the rest of this byte are all 1s
-                bit_count_in_sym = ctx->total_width - ctx->bit_num;
-            }
-            if ((ctx->parity != -1) && (ctx->bit_num < ctx->info_width)) {
-                size_t oc = bit_count_in_sym;
-                if (oc > ctx->info_width - ctx->bit_num) {
-                    oc = ctx->info_width - ctx->bit_num;
-                }
-                ctx->count_ones += oc;
-            }
-            ctx->currentByte |= (((1 << bit_count_in_sym) - 1) << ctx->bit_num);
+        if (bit_count_in_sym <= 0) {
+            return;
         }
+        // The first low bit cell is the start bit. Any remaining low time already belongs
+        // to the first data bits, so keep the leftover width as the current in-frame offset.
+        bit_count_in_sym--;
+        ctx->bit_num = bit_count_in_sym;
+        return;
+    }
+
+    if (level == 1) {
+        if ((ctx->bit_num <= ctx->info_width) && (bit_count_in_sym == 0)) {
+            // At the end of a receive chunk, the driver may stop on idle without handing us
+            // a normal high symbol for the stop bit. Treat the unfinished tail as all 1s.
+            bit_count_in_sym = ctx->total_width - ctx->bit_num;
+        }
+        rmt_uart_apply_high_bits(ctx, bit_count_in_sym);
+    }
+
+    if (bit_count_in_sym > 0) {
+        // Advance across however many bit cells this run consumed, regardless of level.
         ctx->bit_num += bit_count_in_sym;
     }
-    //TRACE("RMT SYM %d %04X %d %d %d", ctx->bit_num, (uint16_t)(ctx->currentByte&0xFFFF), duration, bit_count_in_sym, level);
+
     if (ctx->bit_num >= ctx->total_width) {
-        if ((ctx->parity != -1) && (((ctx->parity + ctx->count_ones) & 0x01) != 0)) {
-            TRACE_ERROR("RMT_UART parity check failed %04X\n", (uint16_t)(ctx->currentByte&0xFFFF));
-        } else if ((ctx->stop_bits & ctx->currentByte) != ctx->stop_bits) {
-            TRACE_ERROR("RMT_UART invalid STOP %04X\n", (uint16_t)(ctx->currentByte&0xFFFF));
-        } else {
-            //TRACE("--- %04X", ctx->currentByte);
-            uint8_t d = ctx->currentByte & 0xFF;
-            xRingbufferSend(ctx->rxRing, &d, 1, portMAX_DELAY);
-            if (NULL != ctx->on_idle_cb) {
-                ctx->on_idle_cb(ctx->on_idle_cb_param);
-            }
-        }
+        rmt_uart_finish_frame(ctx);
         rmt_uart_rx_reset_byte(ctx);
     }
 }
@@ -117,11 +165,23 @@ static void rmt_uart_decode_next_symbel(rmt_uart_t *ctx, uint16_t duration, uint
 static void rmt_uart_decode_cb(void *ctx, rmt_rx_done_event_data_t *rxdata)
 {
     rmt_uart_t *uart = (rmt_uart_t *)ctx;
-    //TRACE("-------- %d", rxdata->num_symbols);
     for (size_t i = 0; i < rxdata->num_symbols; i++) {
         rmt_uart_decode_next_symbel(uart, rxdata->received_symbols[i].duration0, rxdata->received_symbols[i].level0);
         rmt_uart_decode_next_symbel(uart, rxdata->received_symbols[i].duration1, rxdata->received_symbols[i].level1);
     }
+
+    if ((uart->bit_num >= 0) && (uart->bit_num < uart->total_width)) {
+        // A callback boundary also means the line stayed idle long enough to terminate this
+        // receive chunk. Finish any partial byte as a run of trailing 1s, then validate it.
+        int bit_count_in_sym = uart->total_width - uart->bit_num;
+        rmt_uart_apply_high_bits(uart, bit_count_in_sym);
+        uart->bit_num += bit_count_in_sym;
+
+        if (uart->bit_num >= uart->total_width) {
+            rmt_uart_finish_frame(uart);
+        }
+    }
+
     rmt_uart_rx_reset_byte(uart);
 }
 
@@ -202,6 +262,7 @@ static void* rmtuartSerialStart(void *hw_def, const etx_serial_init* params)
     return (void *)rvalue;
 }
 
+static uint8_t txbuf_in_dram DRAM_ATTR;
 void rmtuartSendByte(void* ctx, uint8_t byte)
 {
     rmt_uart_t *port = (rmt_uart_t *)ctx;
@@ -212,7 +273,8 @@ void rmtuartSendByte(void* ctx, uint8_t byte)
             .queue_nonblocking = 0,
         }
     };
-    ESP_ERROR_CHECK(rmt_transmit(port->tx, port->encoder, &byte, 1, &trans_cfg));
+    txbuf_in_dram = byte;
+    ESP_ERROR_CHECK(rmt_transmit(port->tx, port->encoder, &txbuf_in_dram, 1, &trans_cfg));
 }
 
 void rmtuartSendBuffer(void* ctx, const uint8_t * data, uint32_t size)
@@ -227,7 +289,8 @@ void rmtuartSendBuffer(void* ctx, const uint8_t * data, uint32_t size)
     };
     for (int i = 0; i < size; i++) {
         // send data 1 byte at a time so the encoder can encode each byte
-        ESP_ERROR_CHECK(rmt_transmit(port->tx, port->encoder, &data[i], 1, &trans_cfg));
+        txbuf_in_dram = data[i];
+        ESP_ERROR_CHECK(rmt_transmit(port->tx, port->encoder, &txbuf_in_dram, 1, &trans_cfg));
     }
 }
 
@@ -235,6 +298,11 @@ void rmtuartWaitForTxCompleted(void* ctx)
 {
     rmt_uart_t *port = (rmt_uart_t *)ctx;
     ESP_ERROR_CHECK(rmt_tx_wait_all_done(port->tx, -1));
+}
+
+bool rmtuartTxCompleted(void* ctx) {
+    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    return (ESP_OK == rmt_tx_wait_all_done(port->tx, 0));
 }
 
 static int rmtuartGetByte(void* ctx, uint8_t* data)
@@ -251,21 +319,21 @@ static int rmtuartGetByte(void* ctx, uint8_t* data)
 
 static void rmtuartClearRxBuffer(void* ctx)
 {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
 }
 
 static void rmtuartSerialStop(void* ctx)
 {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
 }
 
 int rmtuartGetBufferedBytes(void* ctx) {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
     return 0;
 }
 
 int rmtuartCopyRxBuffer(void* ctx, uint8_t* buf, uint32_t len) {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
     return 0;
 }
 
@@ -274,6 +342,7 @@ const etx_serial_driver_t rmtuartSerialDriver = {
     .deinit = rmtuartSerialStop,
     .sendByte = rmtuartSendByte,
     .sendBuffer = rmtuartSendBuffer,
+    .txCompleted = rmtuartTxCompleted,
     .waitForTxCompleted = rmtuartWaitForTxCompleted,
     .getByte = rmtuartGetByte,
     .getBufferedBytes = rmtuartGetBufferedBytes,

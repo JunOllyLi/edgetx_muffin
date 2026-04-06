@@ -40,16 +40,14 @@ char* get_lvgl_mem(int nbytes)
 }
 #endif
 
+#if defined(DRAW_BUF_STRIP_DMA)
+pixel_t *LCD_FIRST_FRAME_BUFFER = NULL;
+pixel_t *LCD_SECOND_FRAME_BUFFER= NULL;
+#else
+#define DRAW_BUF_H LCD_H
 pixel_t LCD_FIRST_FRAME_BUFFER[DISPLAY_BUFFER_SIZE] __SDRAM;
 pixel_t LCD_SECOND_FRAME_BUFFER[DISPLAY_BUFFER_SIZE] __SDRAM;
-
-BitmapBuffer lcdBuffer1(BMP_RGB565, LCD_W, LCD_H,
-                        (uint16_t*)LCD_FIRST_FRAME_BUFFER);
-BitmapBuffer lcdBuffer2(BMP_RGB565, LCD_W, LCD_H,
-                        (uint16_t*)LCD_SECOND_FRAME_BUFFER);
-
-static BitmapBuffer* lcdFront = &lcdBuffer1;
-static BitmapBuffer* lcd = &lcdBuffer2;
+#endif
 
 static lv_disp_draw_buf_t disp_buf;
 static lv_disp_drv_t disp_drv;
@@ -71,7 +69,8 @@ static lv_disp_drv_t* refr_disp = nullptr;
 static void flushLcd(lv_disp_drv_t* disp_drv, const lv_area_t* area,
                      lv_color_t* color_p)
 {
-#if !defined(LCD_VERTICAL_INVERT) || defined(RADIO_F16)
+#if defined(DRAW_BUF_STRIP_DMA)
+#elif !defined(LCD_VERTICAL_INVERT) || defined(RADIO_F16)
 #if defined(RADIO_F16)
   if (hardwareOptions.pcbrev > 0)
 #endif
@@ -103,19 +102,21 @@ static void flushLcd(lv_disp_drv_t* disp_drv, const lv_area_t* area,
     lcd_flush_cb(disp_drv, (uint16_t*)color_p, copy_area);
   }
 
+#if !defined(DRAW_BUF_STRIP_DMA)
   lv_disp_flush_ready(disp_drv);
+#endif
 }
 
 static void clear_frame_buffers()
 {
-  memset(LCD_FIRST_FRAME_BUFFER, 0, sizeof(LCD_FIRST_FRAME_BUFFER));
-  memset(LCD_SECOND_FRAME_BUFFER, 0, sizeof(LCD_SECOND_FRAME_BUFFER));
+  memset(LCD_FIRST_FRAME_BUFFER, 0, sizeof(LCD_W * DRAW_BUF_H * sizeof(pixel_t)));
+  memset(LCD_SECOND_FRAME_BUFFER, 0, sizeof(LCD_W * DRAW_BUF_H * sizeof(pixel_t)));
 }
 
 static void init_lvgl_disp_drv()
 {
-  lv_disp_draw_buf_init(&disp_buf, lcdFront->getData(), lcd->getData(),
-                        LCD_W * LCD_H);
+  lv_disp_draw_buf_init(&disp_buf, LCD_FIRST_FRAME_BUFFER, LCD_SECOND_FRAME_BUFFER,
+                        LCD_W * DRAW_BUF_H);
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
   disp_drv.draw_buf = &disp_buf; /*Set an initialized buffer*/
@@ -126,7 +127,9 @@ static void init_lvgl_disp_drv()
   disp_drv.ver_res = LCD_H; /*Set the vertical resolution in pixels*/
   disp_drv.full_refresh = 0;
 
-#if !defined(LCD_VERTICAL_INVERT)
+#if defined(DRAW_BUF_STRIP_DMA)
+  disp_drv.direct_mode = 0;
+#elif !defined(LCD_VERTICAL_INVERT)
   disp_drv.direct_mode = 1;
 #elif defined(RADIO_F16)
   disp_drv.direct_mode = (hardwareOptions.pcbrev > 0) ? 1 : 0;
@@ -145,6 +148,9 @@ void lcdInitDisplayDriver()
 #if !LV_USE_GPU_STM32_DMA2D && !defined(SIMU)
   DMAInit();
 #endif
+#if defined(DRAW_BUF_STRIP_DMA)
+  board_get_drawbuf((void**)&LCD_FIRST_FRAME_BUFFER, (void**)&LCD_SECOND_FRAME_BUFFER);
+#endif
 
   // Full LVGL init in firmware mode
   lv_init();
@@ -153,7 +159,7 @@ void lcdInitDisplayDriver()
 
   // Clear buffers first
   clear_frame_buffers();
-  lcdSetInitalFrameBuffer(lcdFront->getData());
+  lcdSetInitalFrameBuffer(LCD_FIRST_FRAME_BUFFER);
 
   // Init hardware LCD driver
   lcdInit();

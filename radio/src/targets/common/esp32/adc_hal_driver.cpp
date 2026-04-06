@@ -24,9 +24,8 @@
 #include <stdio.h>
 #include "sdkconfig.h"
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/semphr.h"
+#include "os/task.h"
+#include "os/time.h"
 #include "esp_adc/adc_continuous.h"
 
 #define AVERAGE_POINTS 80
@@ -132,7 +131,7 @@ static const etx_hal_adc_driver_t arduino_hal_adc_driver = {
   .wait_completion = arduino_hal_adc_wait_completion
 };
 
-static void task_adc(void * pdata) {
+static void task_adc() {
     esp_err_t ret;
     uint32_t ret_num = 0;
     uint8_t result[ETX_READ_LEN] = {0};
@@ -183,11 +182,11 @@ static void task_adc(void * pdata) {
 #define TASKADC_STACK_SIZE (1024 * 4)
 #define TASKADC_PRIO 5
 
-static RTOS_TASK_HANDLE taskIdADC;
-RTOS_DEFINE_STACK(taskIdADC, taskADC_stack, TASKADC_STACK_SIZE);
+static task_handle_t taskIdADC DRAM_ATTR;
+TASK_DEFINE_STACK(taskADC_stack, TASKADC_STACK_SIZE);
 void adruino_adc_init(void) {
   adcInit(&arduino_hal_adc_driver);
 
   // The stuff on ADC are not that critical, so start a task and read it in the background
-  RTOS_CREATE_TASK_EX(taskIdADC,task_adc,"ADC task",taskADC_stack,TASKADC_STACK_SIZE,TASKADC_PRIO,MIXER_TASK_CORE);
+  task_create_on_core(&taskIdADC,task_adc,"ADC task",taskADC_stack,TASKADC_STACK_SIZE,TASKADC_PRIO,MIXER_TASK_CORE);
 }

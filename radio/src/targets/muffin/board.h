@@ -52,11 +52,13 @@ void boardInit();
 void boardOff();
 
 // TODO-Muffin cleanup
-#define TRAINER_PPM_OUT_TASK_CORE 0
+#define RMT_UART_TASK_CORE 1
 #define MIXER_TASK_CORE 0
 #define PULSES_TASK_CORE 0
 #define MENU_TASK_CORE 1
 #define AUDIO_TASK_CORE 1
+
+#define RMT_UART_TASK_PRIOTIRY 5
 
 #define SLAVE_MODE()                    (g_model.trainerData.mode == TRAINER_MODE_SLAVE)
 #define DMAInit()
@@ -89,7 +91,7 @@ From Kconfig
 #define BACKLITE_PIN GPIO_NUM_45
 
 #define USE_RMT -1
-#if CONFIG_ESP_CONSOLE_UART_NUM == 0
+#if (CONFIG_ESP_CONSOLE_UART_NUM == 0) || defined(CONFIG_ESP_SYSTEM_GDBSTUB_RUNTIME)
 #define FLYSKY_UART_PORT USE_RMT
 #define EXTMOD_UART_PORT UART_NUM_1
 #define INTMOD_UART_PORT UART_NUM_2
@@ -186,6 +188,7 @@ void lcdOff();
 // Top LCD driver
 void toplcdInit();
 void toplcdRefresh();
+void board_get_drawbuf(void **buf0, void **buf1);
 
 #if defined(CROSSFIRE)
 #define TELEMETRY_FIFO_SIZE             128
@@ -193,7 +196,13 @@ void toplcdRefresh();
 #define TELEMETRY_FIFO_SIZE             64
 #endif
 
-#define BATT_SCALE 1251
+// Battery divider: 1.1M (VBAT -> ADC) / 732k (ADC -> GND)
+// ADS1015 VBAT channel uses GAIN_TWO, so full scale is 2.048V over 2047 counts.
+// Chosen so old-style EdgeTX battery scaling produces:
+//   vbat_cV = raw * BATT_SCALE * (128 + txVoltageCalibration) / (BATTERY_DIVIDER * 100)
+// which matches:
+//   raw * 100 * 2.048 * ((1100 + 732) / 732) / 2047
+#define BATT_SCALE 62674
 #define BATTERY_DIVIDER 320384
 #define VOLTAGE_DROP 0
 

@@ -275,7 +275,7 @@ endif()
 
 set(SRC ${SRC} sdcard.cpp rtc.cpp logs.cpp lib_file.cpp)
 
-if(BLUETOOTH)
+if(BLUETOOTH AND NOT ESP_PLATFORM)
   add_definitions(-DBLUETOOTH)
   set(SRC ${SRC} bluetooth.cpp)
 endif()
@@ -591,13 +591,7 @@ if(NATIVE_BUILD)
   return()
 endif()
 
-if(ESP_PLATFORM)
-    # TODO-MUFFIN
-    add_library(radiolib_esp32 STATIC ${SRC})
-    target_compile_definitions(radiolib_esp32 PUBLIC FREE_RTOS)
-    add_dependencies(radiolib_esp32 ${RADIO_DEPENDENCIES})
-    set_target_properties(radiolib_esp32 PROPERTIES EXCLUDE_FROM_ALL TRUE)
-else() #ESP_PLATFORM
+if(!ESP_PLATFORM)
 # Silence CMake 2.8+ warning about unused variable (ie. if specified when not relevant)
 set(ignore_USE_UNSUPPORTED_TOOLCHAIN "${USE_UNSUPPORTED_TOOLCHAIN}")
 
@@ -643,13 +637,20 @@ else()
   add_definitions(-DUSE_CUSTOM_ALLOCATOR)
   set(SRC ${SRC} lua/custom_allocator.cpp)
 endif()
-endif() #ESP_PLATFORM
+endif() #!ESP_PLATFORM
 
 # Bootloader
 if(BOOTLOADER)
   add_subdirectory(bootloader)
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/bootloader)
   set(RADIO_DEPENDENCIES ${RADIO_DEPENDENCIES} bootloader)
+endif()
+
+if(ESP_PLATFORM)
+    add_library(radiolib_esp32 STATIC ${SRC})
+    target_compile_definitions(radiolib_esp32 PUBLIC FREE_RTOS)
+    add_dependencies(radiolib_esp32 ${RADIO_DEPENDENCIES})
+    set_target_properties(radiolib_esp32 PROPERTIES EXCLUDE_FROM_ALL TRUE)
 endif()
 
 add_executable(firmware ${SRC})

@@ -13,6 +13,9 @@ add_definitions(-DBATTGRAPH -DTHRTRACE)
 set(BITMAPS_TARGET bm480_bitmaps)
 set(STORAGE_MODELSLIST YES)
 
+set(GVARS YES)
+set(LUA YES)
+
 set(STATUS_LEDS NO)
 
 if(DEBUG)
@@ -20,10 +23,9 @@ add_definitions(-DDEBUG)
 endif()
 
 set(FLAVOUR muffin)
-set(NAVIGATION_TYPE 9x)  # TODO-MUFFIN
 set(ROTARY_ENCODER NO)
 set(LUA_EXPORT lua_export_muffin)
-set(BLUETOOTH NO)  # TODO-MUFFIN
+set(BLUETOOTH YES)
 set(USB_CHARGER NO) # SW does not control the USB charger
 
 set(SDCARD YES)
@@ -61,14 +63,9 @@ set(MUFFIN_TGT_SRC
   ${MUFFIN_SRC_DIR}/switch_driver.cpp
   ${MUFFIN_SRC_DIR}/module_drivers.cpp
   ${MUFFIN_SRC_DIR}/mcp23017_io_driver.cpp
-  )
-
-set(FIRMWARE_TARGET_SRC
-  ${FIRMWARE_TARGET_SRC}
-  board.cpp
-
-  pwr_driver.cpp
-  rtc_driver.cpp
+  ${MUFFIN_SRC_DIR}/rtc_driver.cpp
+  ${MUFFIN_SRC_DIR}/board.cpp
+  ${MUFFIN_SRC_DIR}/pwr_driver.cpp
   )
 
 set(RADIO_DEPENDENCIES ${RADIO_DEPENDENCIES} ${BITMAPS_TARGET})

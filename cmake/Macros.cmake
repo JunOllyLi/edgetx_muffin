@@ -43,6 +43,7 @@ macro(PrintTargetReport targetName)
   endif()
 endmacro(PrintTargetReport)
 
+if(ESP_PLATFORM)
 function(AddCompilerFlags output)
   get_property(flags DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY COMPILE_DEFINITIONS)
   set(ARGS "")
@@ -74,6 +75,24 @@ function(AddCompilerFlags output)
 
   set(${output} ${${output}} ${ARGS} PARENT_SCOPE)
 endfunction()
+else()
+function(AddCompilerFlags output)
+  get_property(flags DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY COMPILE_DEFINITIONS)
+  set(ARGS "")
+  foreach(flag ${flags})
+    set(ARGS ${ARGS} -D${flag})
+  endforeach()
+
+  get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+  foreach(dir ${dirs})
+    set(ARGS ${ARGS} -I${dir})
+  endforeach()
+
+  # Add hotfix for arm64
+
+  set(${output} ${${output}} ${ARGS} PARENT_SCOPE)
+endfunction()
+endif()
 
 function(GenerateDatacopy source output)
 

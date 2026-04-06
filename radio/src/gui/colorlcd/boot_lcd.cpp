@@ -217,6 +217,4 @@ void lcdRefresh()
 }
 
 void lcdSetInitalFrameBuffer(void* fbAddress) {
-  // TODO-Muffin
-  //initialFrameBuffer = fbAddress;
 }

@@ -11,9 +11,9 @@ uint16_t getTmr2MHz();
 
 extern "C" volatile tmr10ms_t g_tmr10ms;
 
-void per5ms();
-void per10ms();
 uint32_t timersGetMsTick();
 uint32_t timersGetUsTick();
+
+void per10ms();
 
 #endif
