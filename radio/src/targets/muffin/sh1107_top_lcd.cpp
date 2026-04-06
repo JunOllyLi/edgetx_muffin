@@ -136,7 +136,7 @@ static void sh1107_send_data(void *data, uint16_t length) {
     }
 }
 
-static void draw_str(uint32_t start_x, uint32_t start_y, char *str, LcdFlags flags) {
+static void draw_str(uint32_t start_x, uint32_t start_y, const char *str, LcdFlags flags) {
     const lv_font_t *pfont = getFont(flags);
     const unsigned char *bitmaps[MAX_CHAR_IN_STR] = {0};
     lv_font_glyph_dsc_t g[MAX_CHAR_IN_STR] = {0};

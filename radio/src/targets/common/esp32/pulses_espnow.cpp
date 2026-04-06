@@ -109,7 +109,7 @@ inline void process_bind(Event_t &evt) {
             storageDirty(EE_MODEL);
 
             rxPeer.channel = g_model.moduleData[INTERNAL_MODULE].espnow.ch;
-            rxPeer.ifidx = (wifi_interface_t)ESP_IF_WIFI_STA;
+            rxPeer.ifidx = (wifi_interface_t)WIFI_IF_STA;
             rxPeer.encrypt = false;
             if (esp_now_is_peer_exist(rxPeer.peer_addr) == false) {
                 esp_now_add_peer(&rxPeer);
@@ -204,10 +204,10 @@ static void tx_task(void *pvParameter)
     vTaskDelete(NULL);
 }
 
-static void send_cb(const uint8_t *mac_addr, esp_now_send_status_t status) {
+static void send_cb(const wifi_tx_info_t*info, esp_now_send_status_t status) {
     Event_t evt;
   
-    if (mac_addr == NULL) {
+    if (info->des_addr == NULL) {
         ESP_LOGE(TAG, "Send cb arg error");
         return;
     }
@@ -262,7 +262,7 @@ esp_err_t initTX(){
     ESP_ERROR_CHECK_WITHOUT_ABORT(esp_now_register_send_cb(send_cb));
     ESP_ERROR_CHECK_WITHOUT_ABORT(esp_now_register_recv_cb(recv_cb));
   
-    rxPeer.ifidx = (wifi_interface_t)ESP_IF_WIFI_STA;
+    rxPeer.ifidx = (wifi_interface_t)WIFI_IF_STA;
     rxPeer.encrypt = false;
     memcpy(rxPeer.peer_addr, broadcast_mac, ESPNOW_ETH_ALEN);
     rxPeer.channel = BIND_CH;
@@ -325,11 +325,6 @@ static void espNowDeInit(void* context)
     pulsesON = false;
 }
 
-static void espNowSetupPulses(void* context, int16_t* channels, uint8_t nChannels)
-{
-  // nothing to do
-}
-
 static void espNowSendPulses(void* context, uint8_t* buffer, int16_t* channels, uint8_t nChannels)
 {
     if (xPulsesQueue){
@@ -337,19 +332,8 @@ static void espNowSendPulses(void* context, uint8_t* buffer, int16_t* channels, 
     }
 }
 
-static int espNowGetByte(void* context, uint8_t* data)
-{
-#if 0
-    return IntmoduleSerialDriver.getByte(context, data);
-#endif
-    return 0;
-}
-
-static void espNowProcessData(void* context, uint8_t data, uint8_t* buffer, uint8_t* len)
-{
-#if 0
-    processMultiTelemetryData(data, INTERNAL_MODULE);
-#endif
+bool espNowTxCompleted(void* ctx) {
+    return 1;
 }
 
 #include "hal/module_driver.h"
@@ -358,8 +342,6 @@ const etx_proto_driver_t EspNowDriver = {
     .protocol = PROTOCOL_CHANNELS_ESPNOW,
     .init = espNowInit,
     .deinit = espNowDeInit,
-    //.setupPulses = espNowSetupPulses,
     .sendPulses = espNowSendPulses,
-    //.getByte = espNowGetByte,
-    //.processData = espNowProcessData,
+    .txCompleted = espNowTxCompleted,
 };

@@ -25,6 +25,9 @@
 #define LV_VER_RES_MAX 272
 #endif
 
+#define DRAW_BUF_STRIP_DMA
+#define DRAW_BUF_H 40
+
 #include "lv_conf.h"
 
 #endif /*LV_CONF_EDGETX_H*/

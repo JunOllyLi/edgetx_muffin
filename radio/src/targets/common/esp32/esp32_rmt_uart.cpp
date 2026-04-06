@@ -251,21 +251,21 @@ static int rmtuartGetByte(void* ctx, uint8_t* data)
 
 static void rmtuartClearRxBuffer(void* ctx)
 {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
 }
 
 static void rmtuartSerialStop(void* ctx)
 {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
 }
 
 int rmtuartGetBufferedBytes(void* ctx) {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
     return 0;
 }
 
 int rmtuartCopyRxBuffer(void* ctx, uint8_t* buf, uint32_t len) {
-    rmt_uart_t *port = (rmt_uart_t *)ctx;
+    (void) ctx;
     return 0;
 }
 

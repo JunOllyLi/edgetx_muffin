@@ -45,6 +45,9 @@ enum QMPage {
   QM_RADIO_GF,
   QM_RADIO_TRAINER,
   QM_RADIO_HARDWARE,
+#if defined(ETX_SUPPORT_WIFI)
+  QM_RADIO_WIFI,
+#endif
   QM_RADIO_VERSION,
   // UI menu
   QM_UI_THEMES,

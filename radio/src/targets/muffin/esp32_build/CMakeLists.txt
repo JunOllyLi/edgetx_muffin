@@ -10,7 +10,7 @@ set(EDGETX_TGT_CMN "${EDGETX_SRCDIR}/targets/common/esp32")
 
 list(APPEND EXTRA_COMPONENT_DIRS "${EDGETX_TGT_CMN}/components/nimble_central_utils")
 list(APPEND EXTRA_COMPONENT_DIRS "${EDGETX_TGT_CMN}/components/lvgl_esp32_drivers")
-add_definitions(-I${CMAKE_SOURCE_DIR} -I${EDGETX_SRCDIR})
+add_definitions(-I${CMAKE_SOURCE_DIR} -I${EDGETX_SRCDIR} -DETX_SUPPORT_WIFI)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 

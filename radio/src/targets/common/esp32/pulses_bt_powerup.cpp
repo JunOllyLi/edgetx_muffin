@@ -14,6 +14,8 @@
  */ 
  
 #include "edgetx.h"
+#include "os/task.h"
+#include "os/time.h"
 #include "pulses_esp32.h"
 #include "esp_random.h"
 
@@ -27,20 +29,20 @@ extern "C" {
     void ble_write_pwrup_thottle(uint8_t data);
     void ble_write_pwrup_rudder(int8_t data);
     void esp_end_ble(void);
-    void task_pwrup(void * pdata);
-    extern TaskHandle_t pwrup_task_handle;
+    void task_pwrup();
+    extern TaskHandle_t pwrup_task_handle; // TODO-MUFFIN
 }
 
 #define TASKPWRUP_STACK_SIZE (1024 * 4)
 #define TASKPWRUP_PRIO 5
 
-static RTOS_TASK_HANDLE taskIdPWRUP;
-RTOS_DEFINE_STACK(taskIdPWRUP, taskPWRUP_stack, TASKPWRUP_STACK_SIZE);
+static task_handle_t taskIdPWRUP;
+TASK_DEFINE_STACK(taskPWRUP_stack, TASKPWRUP_STACK_SIZE);
 static void* BtPowerUPInit(uint8_t module)
 {
     if (NULL == pwrup_task_handle) {
-        RTOS_CREATE_TASK_EX(taskIdPWRUP,task_pwrup,"PowerUP task",taskPWRUP_stack,TASKPWRUP_STACK_SIZE,TASKPWRUP_PRIO,MENU_TASK_CORE);
-        pwrup_task_handle = taskIdPWRUP.rtos_handle;
+        task_create_on_core(&taskIdPWRUP,task_pwrup,"PowerUP task",taskPWRUP_stack,TASKPWRUP_STACK_SIZE,TASKPWRUP_PRIO,MENU_TASK_CORE);
+        pwrup_task_handle = taskIdPWRUP._rtos_handle;
     }
 
     esp_start_ble_scan();
@@ -50,11 +52,6 @@ static void* BtPowerUPInit(uint8_t module)
 static void BtPowerUPDeInit(void* context)
 {
     esp_end_ble();
-}
-
-static void BtPowerUPSetupPulses(void* context, int16_t* channels, uint8_t nChannels)
-{
-    // nothing to do
 }
 
 static void BtPowerUPSendPulses(void* context, uint8_t* buffer, int16_t* channels, uint8_t nChannels)
@@ -69,7 +66,7 @@ static void BtPowerUPSendPulses(void* context, uint8_t* buffer, int16_t* channel
     
     static uint32_t thrTick = 0;
 
-    uint32_t now = RTOS_GET_MS();
+    uint32_t now = time_get_ms();
     if (prevThr != thr) {
         prevThr = thr;
         ble_write_pwrup_thottle(thr);
@@ -94,13 +91,8 @@ static void BtPowerUPSendPulses(void* context, uint8_t* buffer, int16_t* channel
     }
 }
 
-static int BtPowerUPGetByte(void* context, uint8_t* data)
-{
-    return 0;
-}
-
-static void BtPowerUPProcessData(void* context, uint8_t data, uint8_t* buffer, uint8_t* len)
-{
+bool BtPowerUPtxCompleted(void* ctx) {
+    return 1;
 }
 
 #include "hal/module_driver.h"
@@ -110,5 +102,5 @@ const etx_proto_driver_t BtPowerUPDriver = {
     .init = BtPowerUPInit,
     .deinit = BtPowerUPDeInit,
     .sendPulses = BtPowerUPSendPulses,
-    //.processData = BtPowerUPProcessData,
+    .txCompleted = BtPowerUPtxCompleted,
 };

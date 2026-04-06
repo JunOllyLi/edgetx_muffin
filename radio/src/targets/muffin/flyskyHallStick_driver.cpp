@@ -20,6 +20,9 @@
  */
 
 #include "edgetx.h"
+#include "os/task.h"
+#include "os/time.h"
+#include "os/sleep.h"
 #include "flyskyHallStick_driver.h"
 #include "esp32_rmt_rx.h"
 #include "hal/adc_driver.h"
@@ -170,7 +173,7 @@ bool flysky_gimbal_init()
 
     // Wait 70ms for FlySky gimbals to respond. According to LA trace, minimally 23ms is required
     for (uint8_t i = 0; i < 70; i++) {
-        RTOS_WAIT_MS(1);
+        sleep_ms(1);
         if (_fs_gimbal_detected) {
             // Mask the first 4 inputs (sticks)
             return true;

@@ -50,6 +50,7 @@
 #define TR_QM_GLOB_FUNC                 "Global\nFunctions"
 #define TR_QM_TRAINER                   "Trainer"
 #define TR_QM_HARDWARE                  "Hardware"
+#define TR_QM_WIFI                      "WiFi"
 #define TR_QM_ABOUT                     "About\nEdgeTX"
 #define TR_QM_THEMES                    "Themes"
 #define TR_QM_TOP_BAR                   "Top Bar"
@@ -100,6 +101,7 @@
 #define TR_MENUSPECIALFUNCS             TR_BW_COL("GLOBAL FUNCTIONS", "Global Functions")
 #define TR_MENUTRAINER                  TR_BW_COL("TRAINER", "Trainer")
 #define TR_HARDWARE                     TR_BW_COL("HARDWARE", "Hardware")
+#define TR_WIFI                         TR_BW_COL("WIFI", "WIFI")
 #define TR_USER_INTERFACE               "Top Bar"
 #define TR_SD_CARD                      TR_BW_COL("SD CARD", "Storage")
 #define TR_DEBUG                        "Debug"

@@ -72,7 +72,7 @@ void ble_write_pwrup_rudder(int8_t data) {
     current_rdr = data;
 }
 
-void task_pwrup(void * pdata) {
+void task_pwrup() {
     int next_send = 0;
 
     while(1) {
@@ -371,11 +371,8 @@ blecent_on_reset(int reason)
 static void
 blecent_on_sync(void)
 {
-    int rc;
-
     /* Make sure we have proper identity address set (public preferred) */
-    rc = ble_hs_util_ensure_addr(0);
-    assert(rc == 0);
+    assert(0 == ble_hs_util_ensure_addr(0));
 
     /* Begin scanning for a peripheral to connect to. */
     blecent_scan();
@@ -396,7 +393,6 @@ EXT_RAM_BSS_ATTR static StackType_t task_stack[NIMBLE_HS_STACK_SIZE];
 void
 esp_start_ble_scan(void)
 {
-    int rc;
     g_pwrup = NULL;
     thr = NULL;
     rdr = NULL;
@@ -412,12 +408,10 @@ esp_start_ble_scan(void)
     ble_hs_cfg.store_status_cb = ble_store_util_status_rr;
 
     /* Initialize data structures to track connected peers. */
-    rc = peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64);
-    assert(rc == 0);
+    assert(0 == peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64));
 
     /* Set the default device name. */
-    rc = ble_svc_gap_device_name_set("blecent-powerup");
-    assert(rc == 0);
+    assert(0 == ble_svc_gap_device_name_set("blecent-powerup"));
 
     /* XXX Need to have template for store */
     ble_store_config_init();

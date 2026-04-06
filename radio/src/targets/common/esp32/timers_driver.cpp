@@ -19,6 +19,8 @@
  */
 
 #include "edgetx.h"
+#include "os/task.h"
+#include "os/time.h"
 #include "driver/gptimer.h"
 #include <lvgl/lvgl.h>
 
@@ -44,7 +46,7 @@ static bool IRAM_ATTR alarm_5ms_cb(gptimer_handle_t timer, const gptimer_alarm_e
     return (high_task_awoken == pdTRUE);
 }
 
-static void task5ms(void * pdata) {
+static void task5ms() {
   static uint8_t pre_scale = 0;       // Used to get 10 Hz counter
 
   while (true) {
@@ -62,8 +64,8 @@ static void task5ms(void * pdata) {
 }
 
 #define TIM5MS_STACK_SIZE (1024 * 3)
-RTOS_TASK_HANDLE taskId5ms;
-RTOS_DEFINE_STACK(taskId5ms, task5ms_stack, TIM5MS_STACK_SIZE);
+static task_handle_t taskId5ms;
+TASK_DEFINE_STACK(task5ms_stack, TIM5MS_STACK_SIZE);
 #define TMR_5MS_CORE 1 // TODO
 
 // Start TIMER at 2000000Hz
@@ -71,7 +73,7 @@ void init2MhzTimer()
 {
     sem5ms = xSemaphoreCreateBinary();
 
-    RTOS_CREATE_TASK_EX(taskId5ms,task5ms,"5ms timer",task5ms_stack,TIM5MS_STACK_SIZE,5,TMR_5MS_CORE);  // TODO-feather priority
+    task_create_on_core(&taskId5ms,task5ms,"5ms timer",task5ms_stack,TIM5MS_STACK_SIZE,5,TMR_5MS_CORE);  // TODO-feather priority
 
     gptimer_config_t timer_config = {
         .clk_src = GPTIMER_CLK_SRC_DEFAULT,

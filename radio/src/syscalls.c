@@ -26,8 +26,10 @@
 #include <errno.h>
 #include "debug.h"
 
+#if !defined(ESP_PLATFORM)
 #undef errno
 extern int errno;
+#endif
 
 extern int _heap_start;
 extern int _heap_end;

@@ -20,8 +20,6 @@
 #include "esp_check.h"
 #include "ili9488.h"
 
-static uint8_t dmabuf[DISP_BUF_SIZE * sizeof(lv_color16_t)] DRAM_ATTR;
-
 typedef struct {
     uint8_t cmd;
     uint8_t data[16];
@@ -68,11 +66,11 @@ esp_err_t esp_lcd_new_panel_ili9488(const esp_lcd_panel_io_handle_t io, const es
         ESP_GOTO_ON_ERROR(gpio_config(&io_conf), err, TAG, "configure GPIO for RST line failed");
     }
 
-    switch (panel_dev_config->color_space) {
-    case ESP_LCD_COLOR_SPACE_RGB:
+    switch (panel_dev_config->rgb_ele_order) {
+    case LCD_RGB_ELEMENT_ORDER_RGB:
         ili9488->madctl_val = 0;
         break;
-    case ESP_LCD_COLOR_SPACE_BGR:
+    case LCD_RGB_ELEMENT_ORDER_BGR:
         ili9488->madctl_val |= LCD_CMD_BGR_BIT;
         break;
     default:
@@ -234,8 +232,7 @@ static esp_err_t panel_ili9488_draw_bitmap(esp_lcd_panel_t *panel, int x_start, 
     }, 4);
     // transfer frame buffer
     size_t len = (x_end - x_start) * (y_end - y_start) * ili9488->fb_bits_per_pixel / 8;
-    memcpy(dmabuf, color_data, len);
-    esp_lcd_panel_io_tx_color(io, ILI9488_CMD_MEMORY_WRITE, dmabuf, len);
+    esp_lcd_panel_io_tx_color(io, ILI9488_CMD_MEMORY_WRITE, color_data, len);
 
     return ESP_OK;
 }

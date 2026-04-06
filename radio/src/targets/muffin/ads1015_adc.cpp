@@ -24,9 +24,9 @@
 #include <stdio.h>
 #include "sdkconfig.h"
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/semphr.h"
+#include "os/task.h"
+#include "os/time.h"
+#include "os/sleep.h"
 #include "i2c_driver.h"
 #include "ads1x15.h"
 #include "hal_adc_inputs.inc"
@@ -116,7 +116,7 @@ static const etx_hal_adc_driver_t ads1015_hal_adc_driver = {
   .wait_completion = ads1015_hal_adc_wait_completion,
 };
 
-static void task_adc(void * pdata) {
+static void task_adc() {
     s_task_handle = xTaskGetCurrentTaskHandle();
     int channel_cnt = sizeof(ads_channels)/sizeof(ads_channels[0]);
     int index = 0;
@@ -125,7 +125,7 @@ static void task_adc(void * pdata) {
             // for RTC Batt, Muffin uses main batt
             setAnalogValue(ads_channels[index].etx_adc_channel, getAnalogValue(ADC_INPUT_VBAT));
         } else {
-            RTOS_WAIT_MS(MS_BETWEEN_CHANNEL);
+            sleep_ms(MS_BETWEEN_CHANNEL);
             startADCReading(ads[ads_channels[index].ads_index], ads_channels[index].mux, GAIN_TWO);
             while(!isConversionDone(ads[ads_channels[index].ads_index]));
             int16_t volt = getLastConversionResults(ads[ads_channels[index].ads_index]);
@@ -152,8 +152,8 @@ uint16_t getRTCBatteryVoltage()
 #define TASKADC_STACK_SIZE (1024 * 4)
 #define TASKADC_PRIO 5
 
-static RTOS_TASK_HANDLE taskIdADC;
-RTOS_DEFINE_STACK(taskIdADC, taskADC_stack, TASKADC_STACK_SIZE);
+static task_handle_t taskIdADC;
+TASK_DEFINE_STACK(taskADC_stack, TASKADC_STACK_SIZE);
 void ads1015_adc_init(void) {
     for (int i = 0; i < NUM_OF_ADS; i++) {
         ESP_ERROR_CHECK(i2c_master_bus_add_device(ads_i2c_bus_handle, &i2c_dev_conf[i], &ads[i]));
@@ -162,5 +162,5 @@ void ads1015_adc_init(void) {
     adcInit(&ads1015_hal_adc_driver);
 
     // The stuff (POTs, VBATT) on ADS1015 are not that critical, so start a task and read it in the background
-    RTOS_CREATE_TASK_EX(taskIdADC,task_adc,"ADC task",taskADC_stack,TASKADC_STACK_SIZE,TASKADC_PRIO,MIXER_TASK_CORE);
+    task_create_on_core(&taskIdADC,task_adc,"ADC task",taskADC_stack,TASKADC_STACK_SIZE,TASKADC_PRIO,MIXER_TASK_CORE);
 }

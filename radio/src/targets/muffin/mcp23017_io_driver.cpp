@@ -19,6 +19,9 @@
  */
 
 #include "edgetx.h"
+#include "os/task.h"
+#include "os/time.h"
+#include "os/sleep.h"
 #include "i2c_driver.h"
 #include "mcp23xxx.h"
 
@@ -140,10 +143,10 @@ void internal_protocol_led_on(bool on) {
 void pwrOff()
 {
     TRACE("Power off");
-    RTOS_WAIT_MS(200);
+    sleep_ms(200);
     mcp_set_gpio(MCP_5V_EN, 0);
     mcp_set_gpio(MCP_PWR_EN, 0);
-    while (1) RTOS_WAIT_MS(20); // should never return
+    while (1) sleep_ms(20); // should never return
 }
 
 bool pwrPressed()
