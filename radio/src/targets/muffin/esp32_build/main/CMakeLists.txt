@@ -1,6 +1,7 @@
 idf_component_register(SRCS "espidf_edgetx_main.cpp"
                     INCLUDE_DIRS ""
                     REQUIRES lvgl_esp32_drivers
+                    LDFRAGMENTS "linker_fragments/esp32_psram.lf"
                 )
 
 set(DISABLE_COMPANION YES)
@@ -42,7 +43,7 @@ target_include_directories(board PRIVATE
 
 target_compile_options(radiolib_esp32 PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>)
 target_compile_options(radiolib_esp32 PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-enum-enum-conversion> -Wno-error=overloaded-virtual= -Wno-error=address-of-packed-member)
-target_compile_options(radiolib_esp32 PRIVATE -Wno-ignored-qualifiers -Wno-error=dangling-pointer= -Wno-error=format -Wno-format -Wno-missing-field-initializers -Wno-extra)
+target_compile_options(radiolib_esp32 PRIVATE -Wno-error=strict-aliasing -Wno-ignored-qualifiers -Wno-error=dangling-pointer= -Wno-error=format -Wno-format -Wno-missing-field-initializers -Wno-extra)
 
 target_compile_options(board PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>)
 target_compile_options(board PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-enum-enum-conversion>)

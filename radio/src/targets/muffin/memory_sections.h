@@ -22,9 +22,10 @@
 #pragma once
 
 #define __CCMRAM  EXT_RAM_BSS_ATTR
-#define __DMA
+#define __DMA DRAM_ATTR
 #define __DMA_NO_CACHE
 #define __FLASH
-#define __IRAM
+#define __IRAM IRAM_ATTR
+#define __DRAM DRAM_ATTR
 //#define __SDRAM
 #define __SDRAM   EXT_RAM_BSS_ATTR

@@ -20,3 +20,4 @@ option(BOOTLOADER "Include Bootloader" OFF)
 project(edgetx)
 
 target_link_libraries(${project_elf} PRIVATE radiolib_esp32 board_lib board stdc++ gcc supc++)
+

@@ -152,7 +152,7 @@ uint16_t getRTCBatteryVoltage()
 #define TASKADC_STACK_SIZE (1024 * 4)
 #define TASKADC_PRIO 5
 
-static task_handle_t taskIdADC;
+static task_handle_t taskIdADC __DRAM;
 TASK_DEFINE_STACK(taskADC_stack, TASKADC_STACK_SIZE);
 void ads1015_adc_init(void) {
     for (int i = 0; i < NUM_OF_ADS; i++) {

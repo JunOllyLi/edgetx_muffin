@@ -182,7 +182,7 @@ static void task_adc() {
 #define TASKADC_STACK_SIZE (1024 * 4)
 #define TASKADC_PRIO 5
 
-static task_handle_t taskIdADC;
+static task_handle_t taskIdADC __DRAM;
 TASK_DEFINE_STACK(taskADC_stack, TASKADC_STACK_SIZE);
 void adruino_adc_init(void) {
   adcInit(&arduino_hal_adc_driver);

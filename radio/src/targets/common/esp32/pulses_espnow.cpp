@@ -51,7 +51,7 @@ static TXState_t volatile txState = PAUSED;
 
 #define ESPNOW_STACK_SIZE (1024 * 4)
 StackType_t espnow_stack[ESPNOW_STACK_SIZE];
-StaticTask_t espnowTaskBuffer;
+StaticTask_t espnowTaskBuffer DRAM_ATTR;
 
 void packet_prepare()
 {

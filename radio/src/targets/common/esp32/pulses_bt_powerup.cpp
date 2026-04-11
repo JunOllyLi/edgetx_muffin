@@ -36,7 +36,7 @@ extern "C" {
 #define TASKPWRUP_STACK_SIZE (1024 * 4)
 #define TASKPWRUP_PRIO 5
 
-static task_handle_t taskIdPWRUP;
+static task_handle_t taskIdPWRUP __DRAM;
 TASK_DEFINE_STACK(taskPWRUP_stack, TASKPWRUP_STACK_SIZE);
 static void* BtPowerUPInit(uint8_t module)
 {

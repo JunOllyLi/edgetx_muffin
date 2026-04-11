@@ -67,7 +67,7 @@ void esp32_rmt_rx_init(rmt_ctx_t *ctxmem, int pin, rmt_reserve_memsize_t memsize
     ctxmem->decoder = dec_fn;
 }
 
-StaticTask_t rx_task_buf;
+StaticTask_t rx_task_buf DRAM_ATTR;
 void esp32_rmt_rx_start(rmt_ctx_t *ctx, void *decoder_ctx, size_t rx_task_stack_size, size_t idle_threshold_in_ns, size_t min_pulse_in_ns) {
     assert(NULL != ctx);
     ctx->stack_size = rx_task_stack_size;

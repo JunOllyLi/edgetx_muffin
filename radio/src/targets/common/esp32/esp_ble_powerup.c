@@ -387,7 +387,7 @@ void blecent_host_task(void *param)
     vTaskDelete(NULL);
 }
 
-static StaticTask_t task_struct;
+static StaticTask_t task_struct DRAM_ATTR;
 EXT_RAM_BSS_ATTR static StackType_t task_stack[NIMBLE_HS_STACK_SIZE];
 
 void

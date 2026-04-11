@@ -1,0 +1,18 @@
+[mapping:radio_esp32]
+archive: libradiolib_esp32.a
+entries:
+    mixer_task(default)
+    tasks (default)
+    tasks (default)
+    cli (default)
+    * (extram_bss)
+
+[mapping:board]
+archive: libboard.a
+entries:
+    * (extram_bss)
+
+[mapping:board_lib]
+archive: libboard_lib.a
+entries:
+    * (extram_bss)

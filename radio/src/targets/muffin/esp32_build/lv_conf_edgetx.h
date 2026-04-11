@@ -26,7 +26,7 @@
 #endif
 
 #define DRAW_BUF_STRIP_DMA
-#define DRAW_BUF_H 40
+#define DRAW_BUF_H 80
 
 #include "lv_conf.h"
 

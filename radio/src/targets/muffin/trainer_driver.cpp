@@ -34,7 +34,7 @@ static void ppm_trainer_decode_cb(rmt_ctx_t *ctx, rmt_rx_done_event_data_t *rxda
     }
 }
 
-static StaticTask_t rx_task_buf;
+static StaticTask_t rx_task_buf DRAM_ATTR
 EXT_RAM_BSS_ATTR static rmt_ctx_t rxctxbuf;
 void init_trainer_capture()
 {
@@ -63,7 +63,7 @@ static size_t esp32_rmt_ppm_encode_cb(rmt_ctx_t *ctx) {
     return count;
 }
 
-static StaticTask_t tx_task_buf;
+static StaticTask_t tx_task_buf DRAM_ATTR;
 EXT_RAM_BSS_ATTR static rmt_ctx_t txctxbuf;
 void init_trainer_ppm()
 {

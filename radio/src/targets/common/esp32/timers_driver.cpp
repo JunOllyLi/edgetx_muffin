@@ -64,7 +64,7 @@ static void task5ms() {
 }
 
 #define TIM5MS_STACK_SIZE (1024 * 3)
-static task_handle_t taskId5ms;
+static task_handle_t taskId5ms __DRAM;
 TASK_DEFINE_STACK(task5ms_stack, TIM5MS_STACK_SIZE);
 #define TMR_5MS_CORE 1 // TODO
 
